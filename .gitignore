@@ -1,0 +1,21 @@
+# Archivos temporales LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.blg
+*.bbl
+*.run.xml
+
+# PDF compilado (opcional)
+*.pdf
+
+# Archivos auxiliares en subcarpetas
+**/*.aux
+**/*.log
+**/*.out
