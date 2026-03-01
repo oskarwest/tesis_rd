@@ -1,0 +1,26 @@
+\unhbox \voidb@x \nobreak \ \hfill \textbf {pág.}\par 
+\babel@toc {spanish}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1}{\ignorespaces Etapas de la retinopatía diabética y sus manifestaciones clínicas observables en oftalmoscopia}}{33}{table.caption.11}%
+\contentsline {table}{\numberline {2}{\ignorespaces Comparación de arquitecturas CNN utilizadas en este trabajo}}{56}{table.caption.21}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3}{\ignorespaces Distribución de imágenes por clase de severidad de retinopatía diabética en los distintos datasets}}{70}{table.caption.23}%
+\contentsline {table}{\numberline {4}{\ignorespaces Configuración de transformaciones de aumento de datos aplicadas}}{74}{table.caption.24}%
+\contentsline {table}{\numberline {5}{\ignorespaces Distribución de clases en el conjunto de datos aumentado y balanceado}}{75}{table.caption.25}%
+\contentsline {table}{\numberline {6}{\ignorespaces Especificaciones de hardware y tiempos de entrenamiento}}{81}{table.caption.28}%
+\contentsline {table}{\numberline {7}{\ignorespaces Configuración de hiperparámetros para clasificadores binario y multiclase}}{83}{table.caption.29}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {8}{\ignorespaces Desempeño de redes preentrenadas para clasificación binaria de retinopatía diabética usando el dataset original de Kaggle}}{91}{table.caption.31}%
+\contentsline {table}{\numberline {9}{\ignorespaces Comparación del rendimiento de las redes preentrenadas sin y con filtrado de imágenes}}{93}{table.caption.33}%
+\contentsline {table}{\numberline {10}{\ignorespaces Umbral de decisión óptimo obtenido para cada red preentrenada en clasificación binaria}}{94}{table.caption.35}%
+\contentsline {table}{\numberline {11}{\ignorespaces Comparación del rendimiento de las redes preentrenadas en clasificación binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado}}{95}{table.caption.36}%
+\contentsline {table}{\numberline {12}{\ignorespaces Intervalos de confianza (IC95\%) de las métricas de desempeño para el mejor modelo (MobileNetV2 con filtrado y umbral óptimo)}}{96}{table.caption.37}%
+\contentsline {table}{\numberline {13}{\ignorespaces Métricas de desempeño del modelo MobileNetV2 en validación externa}}{98}{table.caption.39}%
+\contentsline {table}{\numberline {14}{\ignorespaces Comparación del modelo propuesto con trabajos previos en clasificación binaria de RD}}{99}{table.caption.40}%
+\contentsline {table}{\numberline {15}{\ignorespaces Desempeño de redes preentrenadas para clasificación multiclase de RD según canal de color procesado}}{101}{table.caption.41}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsfinish 

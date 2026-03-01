@@ -1,0 +1,67 @@
+\unhbox \voidb@x \nobreak \ \hfill \textbf {pág.}\par 
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}INTRODUCCIÓN}{16}{chapter.1}%
+\contentsline {chapter}{\numberline {2}OBJETIVOS}{25}{chapter.2}%
+\contentsline {chapter}{\numberline {3}FUNDAMENTOS Y TRABAJO PREVIO}{27}{chapter.3}%
+\contentsline {section}{\numberline {3.1}IMÁGENES DEL FONDO DE OJO}{27}{section.3.1}%
+\contentsline {section}{\numberline {3.2}RETINOPATÍA DIABÉTICA}{30}{section.3.2}%
+\contentsline {section}{\numberline {3.3}CLASIFICACIÓN DE LA RETINOPATÍA DIABÉTICA EN IMÁGENES DEL FONDO DE OJO}{30}{section.3.3}%
+\contentsline {section}{\numberline {3.4}INTELIGENCIA ARTIFICIAL}{34}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}APRENDIZAJE AUTOMÁTICO}{35}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}REDES NEURONALES CONVOLUCIONALES}{37}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}SOBREAJUSTE Y REGULARIZACIÓN}{43}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}APRENDIZAJE POR TRANSFERENCIA}{46}{subsection.3.4.4}%
+\contentsline {section}{\numberline {3.5}ARQUITECTURAS DE REDES NEURONALES CONVOLUCIONALES UTILIZADAS}{48}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}MOBILENETV2}{48}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}RESNET50V2}{50}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}INCEPTIONV3}{52}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}VGG19}{54}{subsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.5.5}Comparación de arquitecturas}{55}{subsection.3.5.5}%
+\contentsline {section}{\numberline {3.6}TRABAJOS PREVIOS}{57}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Enfoques con CNN personalizadas}{57}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Enfoques con arquitecturas preentrenadas}{58}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Enfoques con modificaciones arquitectónicas innovadoras}{60}{subsection.3.6.3}%
+\contentsline {subsection}{\numberline {3.6.4}Limitaciones y brechas de investigación}{61}{subsection.3.6.4}%
+\contentsline {subsection}{\numberline {3.6.5}Contribución del presente trabajo}{62}{subsection.3.6.5}%
+\contentsline {chapter}{\numberline {4}METODOLOGÍA}{65}{chapter.4}%
+\contentsline {section}{\numberline {4.1}CONJUNTOS DE DATOS}{66}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Dataset de Kaggle (Entrenamiento)}{67}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}MESSIDOR-2 (Validación externa)}{68}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}IDRiD (Validación externa)}{69}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}FOSCAL (Validación externa)}{69}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.5}Distribución de datos}{70}{subsection.4.1.5}%
+\contentsline {subsection}{\numberline {4.1.6}División de datos para entrenamiento y validación}{70}{subsection.4.1.6}%
+\contentsline {section}{\numberline {4.2}PREPROCESAMIENTO DE LAS IMÁGENES}{71}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Depuración de imágenes defectuosas}{71}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Balanceo de clases}{72}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Aumento de datos}{73}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Filtrado y realce de características}{75}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}TECNOLOGÍAS EMPLEADAS EN EL DESARROLLO}{78}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Lenguaje de programación}{78}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Entorno de desarrollo integrado (IDE)}{78}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Bibliotecas y frameworks}{79}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Especificaciones de hardware y tiempos de entrenamiento}{80}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}CONFIGURACIÓN EXPERIMENTAL Y ENTRENAMIENTO}{81}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Configuración común para ambos clasificadores}{82}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Configuración experimental para el clasificador binario}{84}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Configuración experimental para el clasificador multiclase}{84}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Arquitectura completa del modelo}{85}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Reproducibilidad y disponibilidad de código}{86}{subsection.4.4.5}%
+\contentsline {section}{\numberline {4.5}MÉTRICAS DE EVALUACIÓN}{87}{section.4.5}%
+\contentsline {chapter}{\numberline {5}RESULTADOS EXPERIMENTALES}{90}{chapter.5}%
+\contentsline {section}{\numberline {5.1}CLASIFICACIÓN BINARIA}{90}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Comparación de arquitecturas CNN preentrenadas}{90}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Impacto del preprocesamiento mediante filtrado}{92}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Optimización del umbral de decisión}{93}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Análisis estadístico mediante bootstrap}{95}{subsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.1.5}Validación externa utilizando el mejor modelo}{96}{subsection.5.1.5}%
+\contentsline {subsection}{\numberline {5.1.6}Comparación con trabajos previos en el estado del arte}{98}{subsection.5.1.6}%
+\contentsline {section}{\numberline {5.2}CLASIFICACIÓN MULTICLASE}{100}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Resultados con imágenes RGB}{100}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Análisis comparativo por canal de color}{101}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Patrones de confusión y dificultades en clasificación multiclase}{102}{subsection.5.2.3}%
+\contentsline {chapter}{\numberline {6}DISCUSIÓN}{105}{chapter.6}%
+\contentsline {chapter}{\numberline {7}CONCLUSIONES}{112}{chapter.7}%
+\contentsline {chapter}{\numberline {8}TRABAJO A FUTURO}{114}{chapter.8}%
+\contentsline {chapter}{BIBLIOGRAFÍA}{116}{chapter*.42}%
+\contentsfinish 

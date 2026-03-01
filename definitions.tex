@@ -1,0 +1,52 @@
+\def\autora{CAMILO ERNESTO SERRANO LOZADA}
+\def\autorb{OSCAR MAURICIO CAMPOS SEPULVEDA}
+\def\titulo{Detección de retinopatía diabética en imágenes del fondo del ojo utilizando algoritmos de aprendizaje profundo}
+\def\director{Jorge Villamizar Morales}
+\def\codirectora{Lola Xiomara Bautista Rozo}
+\def\universidad{Universidad Industrial de Santander}
+\def\escuela{Escuela de Ingeniería de Sistemas e Informática}
+\def\facultad{Facultad de Ingenierías Fisicomecánicas}
+%\def\grupo{Grupo de Investigación en Diseño de Algoritmos y Procesamiento de Datos Multidimensionales (HDSP)}
+\def\fecha{2025}
+% \def\codigo{2171767} 
+
+\DeclareMathOperator*{\mini}{minimizar} % Declaración operador minimize
+\DeclareMathOperator*{\amin}{arg\ min}
+\DeclareMathOperator*{\rank}{rank}
+\DeclareMathOperator*{\vect}{vect}
+\DeclareMathOperator*{\subjectto}{sujeto \ a}
+\DeclareMathOperator*{\bmtd}{BM3D}
+\DeclareMathOperator*{\pc}{PC}
+
+
+% \DeclareMathOperator*{\maximize}{maximizar} % Declaración operador maximize
+% \DeclareMathOperator*{\subjectto}{sujeto \ a} % Declaración operador subjectto
+% \DeclareMathOperator*{\argmax}{arg \ max} % Declaración operador arg max
+
+% \DeclareMathOperator*{\argmin}{arg \ min} % Declaración operador arg min
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\minimize}[1]{\underset{#1}{\mini}}
+\newcommand{\argmin}[1]{\underset{#1}{\amin}}
+\newcommand{\lf}[1]{\| #1 \|_2^2}
+\newcommand{\highest}[1]{{\boldmath{#1}}}
+\newcommand{\high}[1]{{\underline{#1}}}
+
+%\DeclareMathOperator*{\min}{min} % Declaración operador min
+
+\newtheorem{definition}{Definición}% Declaración segmento definición matemática
+\newcolumntype{Y}{>{\centering\arraybackslash}X} % definir columna centrada
+%\DefineBibliographyStrings{spanish}{andothers={et~al\adddot}}
+% Traducción de palabras reservadas del algoritmo a español
+\newenvironment{algoritmo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{spanish}%
+     \floatname{algorithm}{Algoritmo}%
+     \renewcommand{\algorithmicif}{\textbf{si}}%
+     \renewcommand{\algorithmicthen}{\textbf{entonces}}%
+     \renewcommand{\algorithmicend}{\textbf{fin}}%
+     \renewcommand{\algorithmicfor}{\textbf{para}}%
+     \renewcommand{\algorithmicdo}{\textbf{hacer}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}

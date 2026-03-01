@@ -1,0 +1,42 @@
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+%                              Objetivos
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\chapter{OBJETIVOS} \label{chap:objetivos}
+
+\section*{Objetivo general}
+
+Desarrollar e implementar algoritmos de clasificación automática basados en aprendizaje profundo para la detección y gradación de severidad de retinopatía diabética en imágenes del fondo del ojo, mediante redes neuronales convolucionales con aprendizaje por transferencia.
+
+\section*{Objetivos específicos}
+
+\begin{enumerate}[label=\textbf{OE\arabic*.}, leftmargin=*, itemsep=0.5em]
+
+    \item Realizar una revisión sistemática de la literatura científica sobre la detección de retinopatía diabética utilizando técnicas de aprendizaje profundo, identificando las arquitecturas preentrenadas más efectivas, técnicas de preprocesamiento y métricas de evaluación estándar en el dominio.
+
+    \item Recopilar y consolidar conjuntos de datos de imágenes de fondo de ojo etiquetadas, integrando datasets públicos (Kaggle, MESSIDOR-2, IDRiD) y privados (FOSCAL), alcanzando un mínimo de 35,000 imágenes para entrenamiento y 3 datasets externos para validación.
+
+    \item Implementar y evaluar técnicas de preprocesamiento de imágenes (normalización de color, enmascaramiento periférico, balanceo de clases) y aumento de datos para optimizar la calidad del conjunto de entrenamiento y mitigar el desbalance entre clases.
+
+    \item Implementar y comparar cuatro arquitecturas de redes neuronales convolucionales preentrenadas (MobileNetV2, ResNet50V2, InceptionV3, VGG19) mediante aprendizaje por transferencia, incorporando técnicas de regularización (Dropout, L2, GaussianNoise, Multi-Head Attention) para prevenir sobreajuste.
+
+    \item Desarrollar un clasificador binario optimizado para detección de presencia/ausencia de retinopatía diabética, alcanzando una sensibilidad mínima del 90\% con optimización del umbral de decisión.
+
+    \item Desarrollar un clasificador multiclase para gradación de severidad de retinopatía diabética en cinco niveles (0: sin RD, 1: leve, 2: moderada, 3: severa, 4: proliferativa), analizando el desempeño diferencial de los canales de color RGB procesados independientemente.
+
+    \item Analizar comparativamente el desempeño de los modelos al procesar imágenes RGB completas versus canales de color individuales (rojo, verde, azul), identificando el canal más efectivo para la detección de lesiones específicas de retinopatía diabética.
+
+    \item Evaluar el desempeño de los modelos desarrollados utilizando métricas clínicas estándar (sensibilidad, especificidad, precisión, F1-score, AUC-ROC) con intervalos de confianza bootstrap, asegurando rigor estadístico en la presentación de resultados.
+
+    \item Validar la capacidad de generalización de los modelos mediante evaluación en datasets externos independientes (MESSIDOR-2, IDRiD, FOSCAL) con diferentes características de adquisición y distribución de clases.
+
+    \item Comparar el desempeño de los modelos desarrollados con trabajos previos reportados en la literatura científica, posicionando los resultados obtenidos dentro del contexto del estado del arte en detección automatizada de retinopatía diabética.
+
+\end{enumerate}
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------

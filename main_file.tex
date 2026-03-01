@@ -1,0 +1,140 @@
+% ------------------------------------------------------------------------
+%
+% -------------------      Plantilla_UIS.tex       -----------------------
+%
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% Versión de plantilla para realización de informes de trabajo de grado
+% construida para uso de la Universidad Industrial de Santander.
+%
+% Reservados todos los derechos
+%
+% Bucaramanga, Colombia
+%
+% Septiembre 17 de 2018
+%
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+%
+% ------------------------------------------------------------------------
+\documentclass[letterpaper,oneside,12pt,spanish]{report}          % Encabezados
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[spanish]{babel}
+
+
+%\usepackage[latin]{babel}
+% ------------------------------------------------------------------------
+\usepackage{icontec_style}                   % Libreria UIS ICONTEC
+% ------------------------------------------------------------------------
+% Ingrese en este punto las librerías específicas de usuario
+% ------------------------------------------------------------------------
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{stmaryrd}
+\usepackage{subfigure}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{soul}
+\usepackage{subcaption}
+\usepackage{booktabs}
+
+\usepackage[linesnumbered,ruled,vlined,spanish,onelanguage]{algorithm2e}
+\newcommand\mycommfont[1]{\small\ttfamily\textcolor{gray}{#1}}
+\SetCommentSty{mycommfont}
+
+\usepackage{tikz}
+\usetikzlibrary{calc, spy, positioning, fit}
+
+\usepackage[justification=justified]{caption}
+% \captionsetup[table]{name=Tabla}
+% \renewcommand{\listtablename}{LISTA DE TABLAS}
+% \usepackage{subcaption}
+
+\usepackage{booktabs}
+\usepackage{caption}
+\captionsetup{justification=centering}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{geometry} 
+
+\usepackage{placeins} % Para usar \FloatBarrier
+\usepackage{array} % Mejora el control de columnas en tabular
+\usepackage{caption} % 
+\newcommand{\tati}[1]{{\color{magenta}{#1}}}
+
+\setcounter{tocdepth}{4} % show also subsections in toc
+\setcounter{secnumdepth}{4} % show also subsections number in toc
+
+% ------------------------------------------------------------------------
+% Archivo de bibliografía
+% ------------------------------------------------------------------------
+
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{references.bib}
+% ------------------------------------------------------------------------
+\input{definitions}
+\begin{document}
+
+% Inicio de documento
+% ------------------------------------------------------------------------
+% Definición silábica de palabras
+% ------------------------------------------------------------------------
+\hyphenation{pro-por-cio-nal di-se-ño}
+\hypersetup {pdfborder = {0 0 0}}
+
+% ------------------------------------------------------------------------
+% Elementos previos al contenido del trabajo
+% ------------------------------------------------------------------------
+\input{secciones/portada}  %Portada,contraportada,formato de nota,autorización
+% ------------------------------------------------------------------------
+\input{secciones/dedicatoria}                                    % Dedicatoria
+% ------------------------------------------------------------------------
+\input{secciones/agradecimientos}                            % Agradecimientos
+% ------------------------------------------------------------------------
+\tableofcontents                                          % Tabla de contenido
+% ------------------------------------------------------------------------
+\listoffigures                             % Lista de figuras, tablas y anexos
+\listoftables                                                    %\listofanexo
+% ------------------------------------------------------------------------
+%\input{Secs/Glosario}                                  % Glosario de términos
+% ------------------------------------------------------------------------
+% Contenido del Informe
+% ------------------------------------------------------------------------
+\include{secciones_corregidas/resumen_corregido.tex}                                          % Resumen
+\include{secciones_corregidas/abstract_corregido.tex}                                        % Abstract
+
+
+% ------------------------------------------------------------------------
+% Capítulos
+% ------------------------------------------------------------------------
+\input{secciones_corregidas/introducción_corregido.tex} % Introducción
+\input{secciones_corregidas/objetivos_corregido.tex} % Objetivos
+\input{secciones_corregidas/marco_teorico_corregido.tex} % Marco de referencia
+\input{secciones_corregidas/metodologia_corregido.tex}  % Modelo CNN 
+\input{secciones_corregidas/resultados_corregido.tex} 
+\input{secciones/discusion.tex}
+\input{secciones/conclusiones.tex} % Conclusiones 
+\input{secciones/trabajo_futuro.tex}  % Trabajo Futuro
+
+
+% ------------------------------------------------------------------------
+% Bibliografía
+% ------------------------------------------------------------------------
+\printbibliography[heading=bibintoc,title={BIBLIOGRAFÍA},omitnumbers=true]
+% ------------------------------------------------------------------------
+
+% Anexos
+% ------------------------------------------------------------------------
+% \input{Secs/anexoA} % Fundamentos de sólidos rígidos
+% \input{Secs/anexoB} % Función ode45 de MATLAB
+% \input{Secs/anexoC} % Interfaz de animación de la dinámica del sistema
+% ------------------------------------------------------------------------
+\end{document}                                          % Fin de documento
+% ------------------------------------------------------------------------ 

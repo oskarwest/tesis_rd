@@ -1,0 +1,597 @@
+\chapter{RESULTADOS EXPERIMENTALES}
+
+
+\section{CLASIFICACIÓN BINARIA}
+
+\subsection{VARIANDO REDES PREENTRENADAS:} Se implementó una estrategia de Transfer Learning utilizando diversas redes preentrenadas disponibles en Keras Applications. Debido a que cada red requiere un tamaño de entrada específico, se seleccionaron finalmente VGG19, ResNet50V2, InceptionV3 y MobileNetV2, todas con tamaños de entrada compatibles. Estas arquitecturas permiten analizar la estrategia tanto desde el punto de vista de desempeño como de eficiencia computacional, considerando la velocidad de inferencia y la cantidad de parámetros. Además, se eligieron para comparar el comportamiento de redes clásicas, como VGG19, frente a arquitecturas más modernas, como MobileNetV2. En la Tabla 4 se presentan los resultados obtenidos al entrenar el modelo CNN variando entre estas redes preentrenadas, fijando un umbral de decisión de 0.5, con el objetivo de identificar la red base con mejor desempeño en la clasificación binaria (RD / NoRD) en términos de precisión, sensibilidad, F1-score y exactitud.
+
+\begin{table}[ht!]
+	\centering
+	\renewcommand{\arraystretch}{1.2} 
+	\caption{Desempeño de redes pre-entrenadas para la clasificación binaria de Retinopatía Diabética usando el dataset original de Kaggle}
+	\label{tab:comparacion_redes}
+	\begin{tabularx}{\textwidth}{l l Y Y Y Y}
+		\toprule
+		Red Pre-entrenada & Clase & Sensibilidad & Especificidad &  Precisión & F1-score \\
+		\midrule
+		\multirow{2}{*}{MobileNetV2} & RD   & \textbf{0.95} & \textbf{0.94} & \textbf{0.95} & \textbf{0.95} \\
+		& NoRD & \textbf{0.93} & \textbf{0.94} & \textbf{0.93} & \textbf{0.93} \\
+		\midrule
+		\multirow{2}{*}{ResNet50V2}    & RD   & 0.77 & 0.78 & 0.77 & 0.77 \\
+		& NoRD & 0.79 & 0.78 & 0.79 & 0.79 \\
+		\midrule
+		\multirow{2}{*}{InceptionV3} & RD   & 0.71 & 0.72 & 0.71 & 0.71 \\
+		& NoRD & 0.72 & 0.71 & 0.72 & 0.72 \\
+		\midrule
+		\multirow{2}{*}{VGG19}       & RD   & 0.86 & 0.85 & 0.86 & 0.86 \\
+		& NoRD & 0.85 & 0.86 & 0.85 & 0.85 \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor exactitud (0.95) y F1-score (0.95), combinando además un tiempo de inferencia relativamente bajo en comparación con las demás redes. VGG19 presentó métricas intermedias (F1 $\approx$ 0.86) pero con un tiempo de inferencia mayor, mientras que ResNet50V2 y InceptionV3 mostraron rendimientos inferiores (F1 $\approx$ 0.77 y 0.71, respectivamente), con tiempos de inferencia moderados. En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone} para los experimentos adicionales, al equilibrar precisión, sensibilidad y eficiencia computacional, lo que la hace más adecuada para un escenario de tamizaje clínico.
+
+
+\begin{figure}[ht!] 
+	\centering 
+	\renewcommand{\arraystretch}{1.2} 
+	
+	% Matriz 1 - VGG19
+	\begin{minipage}{0.45\textwidth} 
+		\centering 
+		\begin{tabular}{c c c} 
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\
+			& \textbf{No DR} & \textbf{DR} \\ \hline 
+			\multirow{2}{*}{\textbf{Real}} 
+			No DR & 90 & 15 \\
+			\multicolumn{1}{r}{DR} & 15 & 90 \\
+		\end{tabular} 
+		\caption*{(a) VGG19}
+	\end{minipage} 
+	\hfill 
+	% Matriz 2 - MobileNetV2
+	\begin{minipage}{0.45\textwidth} 
+		\centering 
+		\begin{tabular}{c c c}
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\ 
+			& \textbf{No DR} & \textbf{DR} \\ \hline 
+			\multirow{2}{*}{\textbf{Real}} 
+			No DR & 99 & 6 \\ 
+			\multicolumn{1}{r}{DR} & 5 & 100 \\
+		\end{tabular} 
+		\caption*{(b) MobileNetV2} 
+	\end{minipage} 
+	
+	\vspace{0.5cm} 
+	
+	% Matriz 3 - ResNet50V2
+	\begin{minipage}{0.45\textwidth} 
+		\centering
+		\begin{tabular}{c c c} 
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\ 
+			& \textbf{No DR} & \textbf{DR} \\ \hline 
+			\multirow{2}{*}{\textbf{Real}} 
+			No DR & 82 & 23 \\ 
+			\multicolumn{1}{r}{DR} & 28 & 77 \\
+		\end{tabular}
+		\caption*{(c) ResNet50V2} 
+	\end{minipage}
+	\hfill 
+	% Matriz 4 - InceptionV3
+	\begin{minipage}{0.45\textwidth} 
+		\centering 
+		\begin{tabular}{c c c} 
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\ 
+			& \textbf{No DR} & \textbf{DR} \\ \hline 
+			\multirow{2}{*}{\textbf{Real}} 
+			No DR & 80 & 25 \\ 
+			\multicolumn{1}{r}{DR} & 30 & 75 \\
+		\end{tabular} 
+		\caption*{(d) InceptionV3} 
+	\end{minipage} 
+	\caption{Matrices de confusión para las diferentes redes preentrenadas.}
+\end{figure}
+
+ 
+\subsection{IMPACTO DEL FILTRADO DE IMÁGENES:} Con el objetivo de mejorar la calidad visual y resaltar características relevantes, se aplicó un filtrado previo a las imágenes del fondo de ojo utilizando las mismas redes pre-entrenadas. Tras evaluar el modelo se observó una mejora en el rendimiento: el tiempo de inferencia se redujo respecto al experimento sin filtrado, y se alcanzaron métricas más altas de desempeño, con F1-score de 0.96 para MobileNetV2, reflejando su superioridad.
+
+\begin{table}[ht!]
+	\centering
+	\renewcommand{\arraystretch}{1.2} 
+	\caption{Comparación del rendimiento de las redes pre-entrenadas sin y con filtrado de imágenes}
+	\begin{tabularx}{\textwidth}{Y Y Y Y Y Y}
+		\toprule
+		Red Pre-entrenada & Sensibilidad & Especificidad &  Precisión & F1-score & Dataset  \\
+		\midrule
+		\multirow{2}{*}{MobileNetV2} & 0.95 & 0.95 & 0.95 & 0.95 & Original \\
+		& 0.96 & 0.95 & 0.96 & 0.96 & Filtrado \\
+		\midrule
+		\multirow{2}{*}{ResNet50V2}    & 0.77 & 0.78 & 0.77 & 0.77 & Original \\
+		& 0.81 & 0.82 & 0.81 & 0.81 & Filtrado  \\
+		\midrule
+		\multirow{2}{*}{InceptionV3} & 0.71 & 0.72 & 0.71 & 0.71 & Original \\
+		& 0.74 & 0.75 & 0.74 & 0.74 & Filtrado \\
+		\midrule
+		\multirow{2}{*}{VGG19}       & 0.86 & 0.85 & 0.86 & 0.86 & Original \\
+		& 0.89 & 0.88 & 0.89 & 0.89 & Filtrado\\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+%\begin{table}[ht!]
+%	\centering
+%	\renewcommand{\arraystretch}{1.2} 
+%	\caption{Desempeño de redes pre-entrenadas para la clasificación binaria de Retinopatía Diabética usando filtrado en las imágenes}
+%	\begin{tabularx}{\textwidth}{l l Y Y Y Y}
+%		\toprule
+%		Red Pre-entrenada & Clase & Sensibilidad & Especificidad &  Precisión & F1-score \\
+%		\midrule
+%		\multirow{2}{*}{\textbf{MobileNetV2}} & RD   & \textbf{0.96} & \textbf{0.95} & \textbf{0.96} & \textbf{0.96} \\
+%		& NoRD & \textbf{0.94} & \textbf{0.95} & \textbf{0.94} & \textbf{0.94} \\
+%		\midrule
+%		\multirow{2}{*}{ResNet50V2}    & RD   & 0.81 & 0.82 & 0.81 & 0.81 \\
+%		& NoRD & 0.82 & 0.81 & 0.82 & 0.82 \\
+%		\midrule
+%		\multirow{2}{*}{InceptionV3} & RD   & 0.74 & 0.75 & 0.74 & 0.74 \\
+%		& NoRD & 0.75 & 0.74 & 0.75 & 0.75 \\
+%		\midrule
+%		\multirow{2}{*}{VGG19}       & RD   & 0.89 & 0.88 & 0.89 & 0.89 \\
+%		& NoRD & 0.88 & 0.89 & 0.88 & 0.88 \\
+%		\bottomrule
+%	\end{tabularx}
+%\end{table}
+
+
+
+\begin{figure}[ht!] 
+	\centering 
+	\renewcommand{\arraystretch}{1.2} 
+	
+	% Matriz 1 - VGG19
+	\begin{minipage}{0.45\textwidth} 
+		\centering 
+		\begin{tabular}{c c c} 
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\
+			& \textbf{No DR} & \textbf{DR} \\ \hline 
+			\multirow{2}{*}{\textbf{Real}} 
+			No DR & 88 & 12 \\
+			\multicolumn{1}{r}{DR} & 10 & 89 \\
+		\end{tabular} 
+		\caption*{(a) VGG19 con filtrado}
+	\end{minipage} 
+	\hfill 
+	% Matriz 2 - MobileNetV2
+	\begin{minipage}{0.45\textwidth} 
+		\centering 
+		\begin{tabular}{c c c}
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\ 
+			& \textbf{No DR} & \textbf{DR} \\ \hline 
+			\multirow{2}{*}{\textbf{Real}} 
+			No DR & 96 & 4 \\ 
+			\multicolumn{1}{r}{DR} & 3 & 96 \\
+		\end{tabular} 
+		\caption*{(b) MobileNetV2 con filtrado} 
+	\end{minipage} 
+	
+	\vspace{0.5cm} 
+	
+	% Matriz 3 - ResNet50V2
+	\begin{minipage}{0.45\textwidth} 
+		\centering
+		\begin{tabular}{c c c} 
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\ 
+			& \textbf{No DR} & \textbf{DR} \\ \hline 
+			\multirow{2}{*}{\textbf{Real}} 
+			No DR & 82 & 23 \\ 
+			\multicolumn{1}{r}{DR} & 22 & 81 \\
+		\end{tabular}
+		\caption*{(c) ResNet50V2 con filtrado} 
+	\end{minipage}
+	\hfill 
+	% Matriz 4 - InceptionV3
+	\begin{minipage}{0.45\textwidth} 
+		\centering 
+		\begin{tabular}{c c c} 
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\ 
+			& \textbf{No DR} & \textbf{DR} \\ \hline 
+			\multirow{2}{*}{\textbf{Real}} 
+			No DR & 75 & 25 \\ 
+			\multicolumn{1}{r}{DR} & 26 & 74 \\
+		\end{tabular} 
+		\caption*{(d) InceptionV3 con filtrado} 
+	\end{minipage} 
+	\caption{Matrices de confusión para las redes preentrenadas utilizando las imágenes con filtrado.}
+\end{figure}
+
+
+La aplicación de filtrado incrementó levemente el rendimiento de las demás redes, manteniendo la jerarquía de desempeño: VGG19 mostró un F1-score intermedio (~0.89), mientras que ResNet50V2 e InceptionV3 tuvieron incrementos moderados (~0.81 y 0.74, respectivamente). El cambio más notable fue la reducción de falsos positivos en MobileNetV2 (aproximadamente 4 vs. 6 sin filtrado), lo que mejora la especificidad clínica y disminuye derivaciones innecesarias. Los falsos negativos aumentaron ligeramente (3 vs. 5), pero permanecieron dentro de márgenes aceptables de confianza.
+
+
+
+
+
+\subsection{OPTIMIZACIÓN DEL UMBRAL DE DECISIÓN:} El umbral de decisión de los modelos fue optimizado mediante la maximización del F1-score en el conjunto de validación. Como se observa en la Tabla, MobileNetV2 alcanzó un umbral óptimo de 0.4826, mientras que las demás redes presentan valores ligeramente superiores o inferiores.
+
+\begin{table}[ht!]
+	\centering
+	\renewcommand{\arraystretch}{1.2}
+	\caption{Umbral de decisión óptimo obtenido para cada red preentrenada en clasificación binaria.}
+	\begin{tabular}{lc}
+		\hline
+		Modelo & Umbral Óptimo\\ \hline
+		VGG19       & 0.4903 \\
+		ResNet50V2    & 0.4607 \\
+		InceptionV3 & 0.4532 \\
+		MobileNetV2 & 0.4826 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F1-score de 0.9519 para MobileNetV2 con filtrado. El modelo muestra un balance adecuado entre la detección de casos positivos y la reducción de falsos positivos, lo que lo hace apropiado para tareas de tamizaje. Con este umbral, por cada 1.000 pacientes examinados, se esperarían aproximadamente: 476 verdaderos positivos y 451 verdaderos negativos, 50 falsos negativos (casos no detectados de RD) y 24 falsos positivos (pacientes sin RD que serían derivados innecesariamente).
+
+\begin{table}[ht!]
+	\centering
+	\renewcommand{\arraystretch}{1.2}
+	\caption{Comparación del rendimiento de las redes preentrenadas en clasificación binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado.}
+	\begin{tabularx}{\textwidth}{Y Y Y Y Y Y}
+		\toprule
+		Modelo & Umbral & Exactitud & Precisión & Recall & F1-score \\ 
+		\midrule
+		\multirow{2}{*}{VGG19}     & 0.5     & 0.88 & 0.87 & 0.86 & 0.86 \\
+		& Óptimo  & 0.87 & 0.86 & 0.89 & 0.87  \\ 
+		\midrule
+		\multirow{2}{*}{ResNet50V2}    & 0.5     & 0.81 & 0.81 & 0.81  & 0.81 \\
+		& Óptimo  & 0.80 & 0.80 & 0.83 & 0.81  \\ 
+		\midrule
+		\multirow{2}{*}{InceptionV3} & 0.5     & 0.74 & 0.74 & 0.74 & 0.74  \\
+		& Óptimo  & 0.73 & 0.73 & 0.76 & 0.74 \\ 
+		\midrule
+		\multirow{2}{*}{MobileNetV2} & 0.5     & 0.95 & 0.95 & 0.95 & 0.95 \\
+		& Óptimo  & 0.96 & 0.96 & 0.96 & 0.96  \\ 
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+
+\vspace{1.0cm}
+
+
+\textbf{BOOTSTRAP:} Con el fin de estimar la variabilidad e incertidumbre de las métricas de desempeño, se aplicó la técnica de remuestreo bootstrap. Este método consiste en generar múltiples subconjuntos del conjunto de prueba mediante muestreo aleatorio con reemplazo, recalculando en cada iteración las métricas de interés (exactitud, precisión, sensibilidad, especificidad, F1-score y AUC-ROC). A partir de la distribución de estos valores se obtuvieron los intervalos de confianza al 95\%, permitiendo evaluar la robustez y estabilidad estadística de los resultados, como se muestra en la Tabla correspondiente.
+
+\begin{table}[ht!]
+	\centering
+	\renewcommand{\arraystretch}{1.2}
+	\caption{Intervalos de confianza (IC95\%) de las métricas de desempeño para el mejor modelo (MobileNetV2 con filtrado).}
+	\begin{tabular}{lc}
+		\hline
+		Métrica & IC95\% \\ \hline
+		Exactitud        & [0.9100 – 0.9750] \\
+		Precisión        & [0.8611 – 0.9626] \\
+		Sensibilidad     & [0.9510 – 1.0000] \\
+		Especificidad    & [0.8511 – 0.9600] \\
+		F1-score         & [0.9132 – 0.9765] \\
+		AUC-ROC          & [0.9636 – 0.9936] \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{VALIDACIÓN EXTERNA UTILIZANDO EL MEJOR MODELO:} Para evaluar la generalización del modelo MobileNetV2 con filtrado y umbral óptimo, se realizaron pruebas en conjuntos de datos externos (FOSCAL, IDRiD y MESSIDOR). Como se observa en la Tabla, el modelo mantiene un desempeño sólido, aunque con una leve disminución en comparación con el dataset original, lo que es consistente con la literatura y se atribuye a diferencias en la calidad de las imágenes, adquisición y distribución de clases. En particular, MESSIDOR mostró los mejores resultados, reflejando su alta calidad de imágenes, mientras que IDRiD presentó métricas más bajas debido a su tamaño reducido y mayor heterogeneidad. Estos resultados confirman que el modelo generaliza de manera robusta, aunque el desempeño puede variar según las características específicas de cada dataset externo.
+
+\begin{figure}[H] 
+	\centering 
+	\renewcommand{\arraystretch}{1.2} 
+	
+	% Matriz 1
+	\begin{minipage}{0.45\textwidth} 
+		\centering 
+		\begin{tabular}{c c c} 
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\
+			& \textbf{No DR} & \textbf{DR} \\ \hline \multirow{2}{*}{\textbf{Real}} 
+			No DR & 95 & 18 \\  % 113 nord
+			\multicolumn{1}{r}{DR} & 36 & 266 \\  % 302 rd
+		\end{tabular} 
+		\caption*{(a) FOSCAL}
+	\end{minipage} 
+	\hfill 
+	% Matriz 2
+	\begin{minipage}{0.45\textwidth} 
+		\centering 
+		\begin{tabular}{c c c}
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\ 
+			& \textbf{No DR} & \textbf{DR} \\ \hline \multirow{2}{*}{\textbf{Real}} 
+			No DR & 270 & 33 \\  % 303 nord
+			\multicolumn{1}{r}{DR} & 38 & 175 \\  % 213 rd
+		\end{tabular} 
+		\caption*{(b) IDRiD} 
+	\end{minipage} 
+	
+	\vspace{0.5cm} 
+	
+	% Matriz 3 
+	\begin{minipage}{0.45\textwidth} 
+		\centering
+		\begin{tabular}{c c c} 
+			& \multicolumn{2}{c}{\textbf{Predicción}} \\ 
+			& \textbf{No DR} & \textbf{DR} \\ \hline \multirow{2}{*}{\textbf{Real}} 
+			No DR & 650 & 81 \\  % 731 nord
+			\multicolumn{1}{r}{DR} & 80 & 937 \\  % 1,017 rd
+		\end{tabular}
+		\caption*{(c) MESSIDOR-2} 
+	\end{minipage}
+	\hfill 
+	\caption{Matrices de confusión del modelo MobileNetV2 con filtrado evaluado en datasets externos}
+\end{figure}
+
+
+\subsection{COMPARACIÓN CON TRABAJOS PREVIOS:} Aqui falta encontrar trabajos previos que hayan utilizado estas redes preentrenadas para resolver el mismo problema de clasificacion
+
+\begin{table}[ht!]
+	\centering
+	\renewcommand{\arraystretch}{1.2} 
+	\caption{Comparación del modelo propuesto con modelos existentes}
+	\begin{tabularx}{\textwidth}{l l Y Y Y }
+		\toprule
+		Red & Método & Dataset & Sensibilidad & F1-score \\
+		\midrule
+		\multirow{2}{*}{MobileNetV2} & Trabajo previo 1   & Kaggle & -- & --   \\
+		& Modelo propuesto & Kaggle & -- & -- \\
+		\midrule
+		\multirow{3}{*}{ResNet50V2}    & Trabajo previo 2   &  IDRiD & -- & --   \\
+		& Trabajo previo 3 &  MESSIDOR & -- & -- \\
+		& Modelo propuesto &  Kaggle & -- & -- \\
+		\midrule
+		\multirow{3}{*}{InceptionV3} & Trabajo previo 4   & Privado & -- & --   \\
+		& Trabajo previo 5 & Kaggle & -- & -- \\
+		& Modelo propuesto & Kaggle & -- & -- \\
+		\midrule
+		\multirow{2}{*}{VGG19}       & Trabajo previo 6   & -- & -- & --   \\
+		& Modelo propuesto & Kaggle & -- & -- \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+ 
+\section{CLASIFICACIÓN MULTICLASE}
+
+Tras determinar la configuración óptima para la clasificación binaria de retinopatía diabética mediante diversos experimentos, este estudio escala dicho enfoque hacia modelos multiclase. Esta transición se justifica por la relevancia de estos modelos en entornos clínicos y su mayor impacto en la investigación médica. Partiendo del conocimiento previo, se definieron los hiperparámetros y se evaluaron distintas arquitecturas preentrenadas. Asimismo, se amplió el análisis al procesamiento de color, comparando el rendimiento de imágenes RGB completas frente al uso independiente de cada canal, dado que estos proporcionan mapas de características distintos. Debido a que la clasificación multiclase conlleva una mayor complejidad y riesgo de confusión entre categorías, se incrementó la variabilidad de los parámetros explorados. El propósito final fue identificar la combinación ideal de preprocesamiento, arquitectura base y topología densa para maximizar el rendimiento en un entorno multiclase riguroso
+
+\begin{table}[ht!]
+	\centering
+	\renewcommand{\arraystretch}{0.8}
+	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el dataset de Kaggle \textbf{RGB}}
+	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
+		\toprule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{941} & 52 & 39 & 9 & 9 \\
+		Leve & 576 & \textbf{362} & 40 & 54 & 18 \\
+		Moderada& 479 & 119 & \textbf{124} & 126 & 52 \\
+		Severa& 104 & 66 & 67 & \textbf{379} & 133\\
+		PDR & 24 & 28 & 42 & 173 & \textbf{483} \\
+		\midrule
+		\multicolumn{6}{c}{(a) MobileNetV2} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{803} & 131 & 74 & 28 & 14 \\
+		Leve & 386 & \textbf{466} & 51 & 132 & 15 \\
+		Moderada& 361 & 165 & \textbf{136} & 180 & 58 \\
+		Severa& 53 & 107 & 50 & \textbf{428} & 111\\
+		PDR & 18 & 25 & 33 & 196 & \textbf{478} \\
+		\midrule
+		\multicolumn{6}{c}{(b) ResNet50V2} \\ 
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{696} & 207 & 92 & 26 & 29 \\
+		Leve & 577 & \textbf{260} & 139 & 38 & 36 \\
+		Moderada& 325 & 202 & \textbf{174} & 91 & 108 \\
+		Severa& 87 & 110 & 132 & \textbf{150} & 270\\
+		PDR & 13 & 42 & 68 & 102 & \textbf{525} \\
+		\midrule
+		\multicolumn{6}{c}{(c) InceptionV3} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{651} & 359 & 1 & 1 & 38 \\
+		Leve & 274 & \textbf{625} & 0 & 1 & 150 \\
+		Moderada& 271 & 454 & \textbf{10} & 1 & 164 \\
+		Severa& 94 & 401 & 0 & \textbf{3} & 251\\
+		PDR & 18 & 25 & 33 & 196 & \textbf{478} \\
+		\midrule
+		\multicolumn{6}{c}{(d) VGG19} \\ 
+	\end{tabularx}
+\end{table}
+
+	
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{0.8}
+	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el dataset de Kaggle canal \textbf{VERDE}}
+	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
+		\toprule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{872} & 49 & 121 & 5 & 3 \\
+		Leve & 471 & \textbf{387} & 131 & 49 & 12 \\
+		Moderada& 366 & 109 & \textbf{275} & 109 & 41 \\
+		Severa& 44 & 61 & 121 & \textbf{425} & 98\\
+		PDR & 5 & 22 & 81 & 138 & \textbf{504} \\
+		\midrule
+		\multicolumn{6}{c}{(a) MobileNetV2} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{901} & 19 & 121 & 6 & 3 \\
+		Leve & 437 & \textbf{365} & 178 & 63 & 7 \\
+		Moderada& 370 & 101 & \textbf{286} & 114 & 29 \\
+		Severa& 49 & 47 & 132 & \textbf{462} & 59\\
+		PDR & 7 & 21 & 75 & 186 & \textbf{461} \\
+		\midrule
+		\multicolumn{6}{c}{(b) ResNet50V2} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{724} & 234 & 87 & 3 & 2 \\
+		Leve & 422 & \textbf{441} & 130 & 45 & 12 \\
+		Moderada& 292 & 257 & \textbf{213} & 110 & 28 \\
+		Severa& 58 & 94 & 129 & \textbf{393} & 75\\
+		PDR & 4 & 29 & 106 & 239 & \textbf{372} \\
+		\midrule
+		\multicolumn{6}{c}{(c) InceptionV3} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{927} & 85 & 17 & 3 & 18 \\
+		Leve & 504 & \textbf{380} & 36 & 49 & 81 \\
+		Moderada& 543 & 185 & \textbf{41} & 31 & 100 \\
+		Severa& 205 & 269 & 30 & \textbf{66} & 179\\
+		PDR & 108 & 103 & 38 & 42 & \textbf{459} \\
+		\midrule
+		\multicolumn{6}{c}{(d) VGG19} \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{0.8}
+	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el dataset de Kaggle canal \textbf{AZUL}}
+	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
+		\toprule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{854} & 50 & 97 & 26 & 23 \\
+		Leve & 475 & \textbf{349} & 93 & 89 & 44 \\
+		Moderada& 436 & 127 & \textbf{128} & 117 & 92 \\
+		Severa& 105 & 108 & 62 & \textbf{284} & 190\\
+		PDR & 35 & 39 & 36 & 125 & \textbf{515} \\
+		\midrule
+		\multicolumn{6}{c}{(a) MobileNetV2} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{686} & 261 & 70 & 15 & 18 \\
+		Leve & 272 & \textbf{598} & 85 & 58 & 37 \\
+		Moderada& 310 & 275 & \textbf{146} & 87 & 82 \\
+		Severa& 60 & 172 & 103 & \textbf{247} & 167\\
+		PDR & 10 & 64 & 79 & 111 & \textbf{486} \\
+		\midrule
+		\multicolumn{6}{c}{(b) ResNet50V2} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{542} & 310 & 161 & 5 & 32 \\
+		Leve & 336 & \textbf{462} & 165 & 29 & 58 \\
+		Moderada& 247 & 222 & \textbf{267} & 29 & 135 \\
+		Severa& 91 & 124 & 196 & \textbf{38} & 300\\
+		PDR & 18 & 46 & 118 & 43 & \textbf{525} \\
+		\midrule
+		\multicolumn{6}{c}{(c) InceptionV3} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{874} & 113 & 0 & 0 & 63 \\
+		Leve & 576 & \textbf{288} & 0 & 0 & 186 \\
+		Moderada& 539 & 192 & \textbf{0} & 0 & 169 \\
+		Severa& 377 & 206 & 0 & \textbf{0} & 166\\
+		PDR & 265 & 219 & 0 & 0 & \textbf{266} \\
+		\midrule
+		\multicolumn{6}{c}{(d) VGG19} \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{0.8}
+	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el dataset de Kaggle canal \textbf{ROJO}}
+	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
+		\toprule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{839} & 160 & 35 & 5 & 11 \\
+		Leve & 439 & \textbf{529} & 24 & 29 & 29 \\
+		Moderada& 439 & 238 & \textbf{64} & 67 & 92 \\
+		Severa& 102 & 189 & 41 & \textbf{225} & 192\\
+		PDR & 25 & 60 & 48 & 72 & \textbf{545} \\
+		\midrule
+		\multicolumn{6}{c}{(a) MobileNetV2} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{705} & 287 & 29 & 8 & 21 \\
+		Leve & 321 & \textbf{594} & 22 & 78 & 35 \\
+		Moderada& 348 & 280 & \textbf{82} & 92 & 98 \\
+		Severa& 82 & 193 & 43 & \textbf{193} & 238\\
+		PDR & 25 & 70 & 23 & 75 & \textbf{557} \\
+		\midrule
+		\multicolumn{6}{c}{(b) ResNet50V2} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{669} & 246 & 78 & 33 & 24 \\
+		Leve & 492 & \textbf{326} & 80 & 117 & 35 \\
+		Moderada& 302 & 261 & \textbf{83} & 133 & 121 \\
+		Severa& 82 & 151 & 75 & \textbf{188} & 253\\
+		PDR & 14 & 44 & 32 & 123 & \textbf{537} \\
+		\midrule
+		\multicolumn{6}{c}{(c) InceptionV3} \\
+		\midrule
+		& Normal & Leve &  Moderada & Severa & PDR \\
+		\midrule
+		Normal    & \textbf{785} & 212 & 0 & 0 & 53 \\
+		Leve & 526 & \textbf{296} & 0 & 0 & 228 \\
+		Moderada& 424 & 256 & \textbf{0} & 0 & 220 \\
+		Severa& 196 & 204 & 0 & \textbf{0} & 349\\
+		PDR & 64 & 130 & 0 & 0 & \textbf{556} \\
+		\midrule
+		\multicolumn{6}{c}{(d) VGG19} \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{0.8} 
+	\caption{Desempeño de redes pre-entrenadas para la clasificación multiclase de Retinopatía Diabética usando todos y cada uno de los canales \textbf{RGB}}
+	\begin{tabularx}{\textwidth}{l  Y Y Y r}
+		\toprule
+		\multicolumn{5}{c}{RGB} \\
+		\midrule
+		Red Pre-entrenada  & Sensibilidad & Especificidad &  Precisión & F1-score \\
+		\midrule
+		MobileNetV2    & 55 & 50 & 52 & 50 \\
+		ResNet50V2 & 51 & 50 & 51 & 49 \\
+		InceptionV3& 39 & 42 & 40 & 39 \\
+		VGG19& 50 & 40 & 38 & 31\\
+		\multicolumn{5}{c}{Canal rojo} \\
+		\midrule
+		Red Pre-entrenada  & Sensibilidad & Especificidad &  Precisión & F1-score \\
+		\midrule
+		MobileNetV2    & 48 & 49 & 48 & 45 \\
+		ResNet50V2 & 47 & 47 & 46 & 43 \\
+		InceptionV3& 40 & 40 & 37 & 37 \\
+		VGG19& 35 & 36 & 21 & 26 \\
+		\midrule
+		\multicolumn{5}{c}{Canal Verde} \\
+		\midrule
+		Red Pre-entrenada  & Sensibilidad & Especificidad &  Precisión & F1-score \\
+		\midrule
+		\textbf{MobileNetV2}    & \textbf{65} & \textbf{51} & \textbf{53} & \textbf{54} \\
+		ResNet50V2 & 58 & 50 & 55 & 54 \\
+		InceptionV3 & 48 & 48 & 50 & 47 \\
+		VGG19 & 38 & 36 & 40 & 34 \\
+		\midrule
+		\multicolumn{5}{c}{Canal Azul} \\
+		\midrule
+		Red Pre-entrenada  & Sensibilidad & Especificidad &  Precisión & F1-score \\
+		\midrule
+		MobileNetV2    & 47 & 48 & 46 & 44 \\
+		ResNet50V2 & 48 & 45 & 46 & 46 \\
+		InceptionV3& 41 & 36 & 38 & 38 \\
+		VGG19& 29 & 20 & 19 & 22 \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+
