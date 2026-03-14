@@ -2,7 +2,7 @@
 
 \begin{figure}[H]
 	\centering
-	\caption{Estructura propuesta para la clasificacion de retinopatia diabetica}
+	\caption{Estructura metodológica propuesta para la clasificacion de retinopatia diabetica mediante aprendizaje profundo}
 	\includegraphics[width=1\textwidth]{imágenes/metodología/MODELO.png} 
 \end{figure}
 
@@ -10,7 +10,7 @@ En esta sección se explica el procedimiento que se desarrolló para implementar
 
 
 
-\section{CONJUNTOS DE DATOS:}
+\section{CONJUNTOS DE DATOS}
 
 Una etapa clave en la construcción de una red neuronal convolucional (CNN) es la recopilación de datos, ya que el rendimiento del modelo depende en gran medida tanto de la calidad como de la diversidad del conjunto utilizado. Para que el entrenamiento sea efectivo, las imágenes deben reflejar con precisión las distintas condiciones del problema y pueden obtenerse a partir de repositorios públicos, fuentes en línea o mediante técnicas de generación artificial. Es esencial que cada imagen esté correctamente clasificada según corresponda, ya que una mala etiquetación puede afectar negativamente el aprendizaje del modelo. Por ello, es importante realizar una curaduría rigurosa del dataset, priorizando imágenes representativas y bien definidas. En el desarrollo de este proyecto, se utilizaron distintos conjuntos de datos para garantizar la robustez y generalización del modelo. Inicialmente, se exploraron datasets disponibles en repositorios públicos, junto con un conjunto de datos de propiedad interna. La fase experimental inicial se llevó a cabo con el dataset de Kaggle, debido a su gran volumen de imágenes. Posteriormente, se utilizaron los datasets públicos MESSIDOR, IDRiD y uno privado que se nombró como FOSCAL para evaluar la capacidad de generalización del modelo final.\vspace{0.5cm}
 
@@ -84,7 +84,7 @@ Para reducir la variabilidad entre  las imágenes de fondo de ojo asociada a dif
 
 \begin{figure}[H]
 \centering
-\caption{}
+\caption{Pseudocódigo del algoritmo de preprocesamiento de Ben Graham}
 \includegraphics[width=1\textwidth]{imágenes/metodología/algoritmo_braham.jpg} 
 \caption*{\textit{Fuente: }} 
 \end{figure}
@@ -94,7 +94,7 @@ De este modo, el algoritmo garantiza que las imágenes procesadas presentan una 
 
 \begin{figure}[H]
 	\centering
-	\caption{}
+	\caption{Prueba del preprocesamiento aplicado a imagenes del fondo del ojo}
 	\includegraphics[width=1\textwidth]{imágenes/metodología/preprocesamiento.jpg} 
 	\caption*{\textit{Fuente: }} 
 \end{figure}
