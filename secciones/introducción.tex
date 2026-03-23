@@ -1,6 +1,6 @@
 % Introducción
 
-\nnchapter{INTRODUCCIÓN}
+\chapter{INTRODUCCIÓN} \label{chap:introduccion}
 
 La diabetes mellitus (DM) es una enfermedad metabólica crónica que se caracteriza por
 niveles elevados de glucosa en la sangre. Esto ocurre cuando el cuerpo no produce
@@ -8,7 +8,9 @@ suficiente insulina, una hormona producida por el páncreas que regula la cantid
 glucosa en la sangre, o cuando las células no responden adecuadamente a la insulina.
 Alrededor de 463 millones de adultos entre 20 y 79 años tienen diabetes mellitus (DM) en
 la actualidad, lo que representa el 9.3\% de la población mundial en este grupo de edad
-\myfootcite{antonetti2021current}. La retinopatía diabética (RD) es una complicación
+\myfootcite{antonetti2021current}.
+
+La retinopatía diabética (RD) es una complicación
 microvascular específica de la diabetes mellitus (DM) que afecta a 1 de cada 3 personas
 con esta enfermedad, dañando los vasos sanguíneos de la retina y convirtiéndose en una de
 las principales causas de pérdida de visión en la población adulta activa. Los pacientes
@@ -29,6 +31,7 @@ pesar de la preocupación por una posible epidemia de diabetes en regiones de As
 datos epidemiológicos sobre la retinopatía diabética en este continente son relativamente
 limitados. De manera similar, en África no se han realizado estudios significativos al
 respecto.
+
 Como indica la Federación Internacional de Diabetes (IDF) \myfootcite{sun2022idf}, en el
 2021 en Latinoamérica habían 32 millones de personas adultas con diabetes, de las cuales
 el 40\% presenta algún tipo de RD y el 17\% requiere tratamiento.
@@ -128,52 +131,67 @@ Este tipo de problemáticas requieren herramientas capaz de procesar grandes vol
 imágenes en poco tiempo y con bastante precisión, en este contexto las soluciones
 digitales ofrecen una herramienta adecuada y eficiente para este tipo de problemas , si
 bien desde los años setenta existen sistemas de diagnostico asistido
-\myfootcite{arias2019introduccion} es en los últimos diez años donde se ha visto una
+\myfootcite{arias2019introduccion} es en los últimos años donde se ha visto una
 injerencia e impactos muchos mas significativos, con el aumento de la capacidad de
 computo, el diseño de unidades de procesamiento gráfica dedicadas y las mejoras en los
 diseños de arquitecturas de redes neuronales convolucionales (CNN, por su siglas en
-inglés), las soluciones digitales han tomado una relevancia de primer nivel, estas CNN
-están diseñadas para extraer características relevantes de las imágenes y aprender
-patrones complejos, de esta forma con un volumen de datos lo suficientemente grande, se
+inglés), las soluciones digitales han tomado una relevancia de primer nivel.
+
+Estas CNN están diseñadas para extraer características relevantes de las imágenes y aprender
+patrones complejos. De esta forma, con un volumen de datos lo suficientemente grande, se
 puede clasificar imágenes a partir de sus características mas relevantes. investigaciones
 previas \myfootcite{kandel2020transfer} han demostrado que este tipo de redes son capaces
 de lograr una detección y clasificación automatizada de la retinopatía diabética con un
 grado de precisión y rapidez aceptable.
 
  
-Este proyecto utiliza estas redes en la construcción de un clasificador binario (presencia
-o ausencia de la enfermedad), dado que este enfoque ha mostrado obtener los mejores
-resultados. El modelo binario permite una rápida detección de la enfermedad, optimizando
-el tiempo de diagnóstico y brindando una solución viable para su implementación en
-escenarios de alta demanda, como en áreas con recursos limitados. No obstante, también se
-incluyen pruebas con clasificadores multiclase, con el objetivo de explorar su viabilidad
-y desempeño en la clasificación de distintos niveles de severidad de la retinopatía
-diabética. A través de experimentos, se buscó no solo validar la eficacia del clasificador
-binario, sino también investigar si la clasificación por grados de severidad puede aportar
-un valor adicional en términos de tratamiento personalizado y seguimiento de los
+Este proyecto utiliza estas redes en la construcción de clasificadores binarios 
+(presencia o ausencia de la enfermedad) y multiclase (cinco niveles de severidad), dado que
+este enfoque combinado ha mostrado obtener resultados prometedores tanto para tamizaje como 
+para gradación clíinica. El modelo binario permite una rápida detección de la enfermedad, 
+optimizando el tiempo de diagnóstico y brindando una solución viable para su implementación en
+escenarios de alta demanda, como en áreas con recursos limitados. Por su parte, los 
+clasificadores multiclase aportan valor adicional en terminos de tratamiento personalizado y 
+seguimiento de los pacientes al distinguir entre los diferentes grados de severidad de la retinopatía
+diabética.
+
+Una de las principales contribuciones de este proyecto es la experimentación con diferentes 
+configuraciones de redes neuronales, explorando cómo las variaciones en el preprocesamiento 
+y las arquitecturas afectan el desempeño del modelo. Se implementaron y compararon cuatro 
+arquitecturas preentrenadas: MobileNetV2, ResNet50V2, InceptionV3 y VGG19, utilizando 
+aprendizaje por transferencia con 35.121 imágenes del dataset de Kaggle para entrenamiento 
+y datasets externos (MESSIDOR-2, IDRiD, FOSCAL) para validación. Un aspecto distintivo es 
+el análisis de imágenes a través de los tres canales de color RGB (rojo, verde y azul) de 
+forma independiente, un enfoque que no ha sido ampliamente explorado en investigaciones 
+previas. La idea es determinar cuál de estos canales, por separado, proporciona la mejor 
+representación de las características relevantes para la detección de la RD. Este análisis 
+permitió identificar el canal verde como el más efectivo para la clasificación multiclase 
+debido a su mejor contraste para lesiones hemorrágicas.
+
+Adicionalmente, se implementaron distintas técnicas de regularización, como Dropout, 
+regularización L2, capas GaussianNoise, bloques Multi-Head Attention y Data Augmentation, 
+con el fin de reducir el sobreajuste y mejorar la generalización del modelo. Estas técnicas 
+se evaluaron de manera exhaustiva para identificar cuáles son más efectivas en el contexto 
+específico de clasificación de imágenes de retinopatía diabética. La combinación de estas 
+estrategias no solo mejoró el rendimiento del modelo, sino que también contribuyó a 
+desarrollar un sistema robusto y adaptable a diferentes tipos de datos, mejorando su 
+aplicabilidad en diversas poblaciones. Este trabajo logró una sensibilidad de 96.5\% 
+en clasificación binaria (con intervalos de confianza bootstrap del 95\%: AUC-ROC 0.9636–0.9936) 
+y 65\% de sensibilidad en clasificación multiclase, demostrando la viabilidad de estas 
+tecnologías para tamizaje automatizado.
+
+Esta investigación busca impulsar el uso de tecnologías recientes en salud ocular. Su 
+aplicación permitirá abordar la falta de especialistas en oftalmología, promover la 
+detección oportuna de enfermedades y ampliar el alcance del diagnóstico, optimizando 
+así la eficiencia y accesibilidad de los servicios de salud visual. Además, esta 
+metodología podría sentar las bases para implementar soluciones similares en otros países 
+en vías de desarrollo, generando un impacto significativo en la calidad de vida de los 
 pacientes.
 
-Una de las principales contribuciones de este proyecto es la experimentación con
-diferentes configuraciones de redes neuronales, explorando cómo las variaciones en el
-preprocesamiento y las arquitecturas afectan el desempeño del modelo. Un aspecto
-distintivo será el análisis de imágenes a través de los tres canales de color RGB (rojo,
-verde y azul), un enfoque que no ha sido ampliamente explorado en investigaciones previas.
-La idea es determinar cuál de estos canales, por separado, proporciona la mejor
-representación de las características relevantes para la detección de la RD. Este análisis
-permitirá optimizar el modelo, ya que podría revelarse cuales canales contienen
-información crucial que otros no. Adicionalmente, se implementaron distintas técnicas de
-regularización, como Dropout, L2 regularization y Data Augmentation, con el fin de reducir
-el sobreajuste y mejorar la generalización del modelo. Estas técnicas se evaluaron de
-manera exhaustiva para identificar cuáles son más efectivas en el contexto específico de
-clasificación de imágenes de retinopatía diabética. La combinación de estas estrategias no
-solo mejorará el rendimiento del modelo, sino que también contribuirá a desarrollar un
-sistema robusto y adaptable a diferentes tipos de datos, mejorando su aplicabilidad en
-diversas poblaciones.
+El presente documento se estructura de la siguiente manera: en el Capitulo 2 se detallan los
+objetivos del trabajo; en el Capítulo 3 se presentan los fundamentos teóricos y el estado del 
+arte; el Capítulo 4 describe la metodología implementada; los Capítulos 4 y 5 exponen la configuración 
+experimental y los resultados obtenidos; finalmente los Capitulos 6,7 y 8 presentan la discusión, 
+conclusiones y trabajo futuro respectivamente.
 
-Esta investigación busca impulsar el uso de tecnologías recientes en salud ocular. Su
-aplicación permitirá abordar la falta de especialistas en oftalmología, promover la
-detección oportuna de enfermedades y ampliar el alcance del diagnóstico, optimizando así
-la eficiencia y accesibilidad de los servicios de salud visual. Además, esta metodología
-podría sentar las bases para implementar soluciones similares en otros países en vías de
-desarrollo, generando un impacto significativo en la calidad de vida de los pacientes.
 
