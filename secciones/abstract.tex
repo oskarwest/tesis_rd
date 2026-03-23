@@ -8,25 +8,30 @@
   \astfootnote{Bachelor Thesis}
   \item[AUTHOR:] {\autora}, {\autorb}
   \asttfootnote{\facultad. \escuela. Advisor: \director. Co-advisor: \codirectora}
-  \item[KEYWORDS:] DIABETIC RETINOPATHY, CONVOLUTIONAL NEURONAL NETWORKS, DEEP LEARNING,
+  \item[KEYWORDS:] DIABETIC RETINOPATHY, CONVOLUTIONAL NEURAL NETWORKS, DEEP LEARNING,
   FUNDUS IMAGES, DIGITAL IMAGE PROCESSING, TRANSFER LEARNING.
-  \item[DESCRIPTION:]\hfill \\ Diabetic retinopathy (DR) is an ocular complication caused
-  by damage to the blood vessels in the retina due to elevated blood sugar levels,
-  commonly found in people with diabetes. It is considered one of the leading causes of
-  blindness worldwide, highlighting the importance of early diagnosis to prevent or
-  minimize visual impairment. This disease is typically diagnosed through eye exams that
-  assess the retina. However, manual diagnosis is challenging because it is costly and
-  time-consuming, limiting access in areas with scarce medical resources. This underscores
-  the need for automated methods that enable faster and more accurate disease detection.
-  This study proposes two models based on convolutional neural networks (CNNs) that not
-  only detect the disease but also classify its different severity levels. The model is
-  trained using a public dataset and later tested with a private dataset provided by the
-  Santander Ophthalmological Foundation. This study addresses the issue of data imbalance
-  through preprocessing and image augmentation techniques. Additionally, various
-  architectures are built using pretrained networks to extract features from the images.
-  The models performance is evaluated and compared using different metrics, where the best
-  binary classification model achieves a sensitivity of 96.5\%, and the best multiclass
-  classification model reaches 76.8\%
+  \item[DESCRIPTION:]\hfill \\ Diabetic retinopathy (DR) is a microvascular complication
+  caused by damage to the blood vessels of the retina due to elevated blood sugar levels,
+  common in people with diabetes and considered one of the leading causes of blindness
+  worldwide. This disease is typically diagnosed through eye exams that assess the fundus.
+  However, manual diagnosis is challenging because it is costly and time-consuming,
+  limiting access in areas with scarce medical resources. This makes it necessary to
+  seek automated methods that enable faster and more accurate disease detection. This
+  work develops models based on convolutional neural networks (CNNs) to detect the
+  disease and classify its severity levels using binary classifiers (presence/absence)
+  and multiclass classifiers (five levels). Transfer learning was applied with the
+  MobileNetV2, ResNet50V2, InceptionV3, and VGG19 architectures, trained on 35,121
+  images from the public Kaggle dataset. Preprocessing included color normalization,
+  peripheral masking, class balancing via subsampling and data augmentation,
+  incorporating Multi-Head Attention blocks, GaussianNoise layers, and regularization
+  techniques (Dropout, L2, early stopping). Models were evaluated using sensitivity,
+  precision, F1-score, and AUC-ROC. MobileNetV2 was the best-performing model,
+  achieving a sensitivity of 96.5\% in binary classification with confidence intervals
+  (CI95\%: AUC-ROC 0.9636--0.99). For multiclass classification, a sensitivity of 65\%
+  was achieved, identifying the green channel as the most effective due to its contrast
+  for hemorrhagic lesions. External validation on the MESSIDOR-2, IDRiD, and FOSCAL
+  datasets confirmed the model's generalization capability, demonstrating its viability
+  as a clinical screening support tool for diabetic retinopathy.
 
 \end{description}}\normalsize
-% ------------------------------------------------------------------------ 
+% ------------------------------------------------------------------------
