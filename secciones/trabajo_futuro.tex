@@ -1,26 +1,44 @@
 
 \chapter{TRABAJO A FUTURO}
 
-Los resultados obtenidos en esta investigación abren múltiples líneas de desarrollo que permitirían consolidar y extender el alcance del sistema propuesto. A continuación se detallan las direcciones prioritarias identificadas para futuras investigaciones.
+Los resultados obtenidos en esta investigación abren múltiples líneas de desarrollo
+que permitirían consolidar y extender el alcance del sistema propuesto. A continuación
+se detallan las direcciones prioritarias identificadas para futuras investigaciones.
 
-\subsection*{Mejora de la clasificación multiclase mediante arquitecturas avanzadas}
+La dificultad persistente en la discriminación de clases intermedias (RD moderada y
+severa) requiere la exploración de arquitecturas más sofisticadas. Se propone investigar
+el uso de redes con mecanismos de atención especializados, como Vision Transformers
+(ViT) o arquitecturas híbridas CNN--Transformer, que han demostrado capacidad superior
+para capturar dependencias de largo alcance en imágenes médicas. Asimismo, la
+implementación de tecnicas que puedan mitigar el sesgo hacia categorías mayoritarias y
+mejorar la sensibilidad en etapas intermedias de la enfermedad.
 
-La dificultad persistente en la discriminación de clases intermedias (RD moderada y severa) requiere la exploración de arquitecturas más sofisticadas. Se propone investigar el uso de redes con mecanismos de atención especializados, como Vision Transformers (ViT) o arquitecturas híbridas CNN--Transformer, que han demostrado capacidad superior para capturar dependencias de largo alcance en imágenes médicas. Asimismo, la implementación de funciones de pérdida focal ponderadas por clase podría mitigar el sesgo hacia categorías mayoritarias y mejorar la sensibilidad en etapas intermedias de la enfermedad.
+La generalización del modelo se beneficiaría de la incorporación de conjuntos de datos
+adicionales que representen mayor variabilidad demográfica, étnica y de equipamiento.
+Esta estrategia fortalecería la robustez del modelo ante la heterogeneidad inherente a
+escenarios de implementación real.
 
-\subsection*{Expansión y diversificación del conjunto de datos}
+La generación de muestras sintéticas mediante redes generativas adversariales (GANs)
+específicas para imágenes de fondo de ojo representa una oportunidad para abordar el
+desbalance de clases de manera más efectiva. Se plantea explorar arquitecturas para
+sintetizar imágenes con lesiones características de las clases minoritarias, preservando
+la coherencia anatómica y patológica necesaria para el entrenamiento supervisado.
 
-La generalización del modelo se beneficiaría de la incorporación de conjuntos de datos adicionales que representen mayor variabilidad demográfica, étnica y de equipamiento. Se proyecta establecer colaboraciones con instituciones oftalmológicas nacionales e internacionales para construir un repositorio multicéntrico que incluya imágenes capturadas con diferentes tipos de retinógrafos y bajo diversas condiciones clínicas. Esta estrategia fortalecería la robustez del modelo ante la heterogeneidad inherente a escenarios de implementación real.
+El marco metodológico desarrollado posee potencial de adaptación para la detección de
+otras condiciones visuales frecuentes en la práctica clínica, incluyendo
+generación macular asociada a la edad y oclusiones vasculares retinianas. La
+implementación de modelos de clasificación multitarea permitiría desarrollar sistemas de
+tamizaje integral que maximicen el valor diagnóstico de cada imagen de fondo de ojo
+capturada.
 
-\subsection*{Técnicas avanzadas de aumento de datos}
+La transición del modelo hacia entornos de producción requiere el desarrollo de una
+aplicación que permita la captura de imágenes mediante adaptadores para smartphones y
+la inferencia en tiempo real, facilitando así el acceso al tamizaje en regiones con
+infraestructura tecnológica limitada. De forma complementaria, la implementación de una
+plataforma web con backend en la nube permitiría procesar estudios desde cualquier
+centro de atención primaria que cuente con conectividad básica.
 
-La generación de muestras sintéticas mediante redes generativas adversariales (GANs) específicas para imágenes de fondo de ojo representa una oportunidad para abordar el desbalance de clases de manera más efectiva. Se plantea explorar arquitecturas como StyleGAN o CycleGAN para sintetizar imágenes con lesiones características de las clases minoritarias, preservando la coherencia anatómica y patológica necesaria para el entrenamiento supervisado.
-
-\subsection*{Extensión a otras patologías oculares}
-
-El marco metodológico desarrollado posee potencial de adaptación para la detección de otras condiciones visuales frecuentes en la práctica clínica, incluyendo glaucoma, degeneración macular asociada a la edad y oclusiones vasculares retinianas. La implementación de modelos de clasificación multitarea permitiría desarrollar sistemas de tamizaje integral que maximicen el valor diagnóstico de cada imagen de fondo de ojo capturada.
-
-\subsection*{Implementación en plataformas de despliegue clínico}
-
-La transición del modelo hacia entornos de producción requiere su optimización mediante técnicas de compresión (cuantización, poda de pesos) y su empaquetado en formatos portables como TensorFlow Lite o ONNX. Se proyecta el desarrollo de una aplicación móvil que permita la captura de imágenes mediante adaptadores para smartphones y la inferencia en tiempo real, facilitando el acceso al tamizaje en regiones con infraestructura tecnológica limitada. Complementariamente, la implementación de una plataforma web con backend en la nube habilitaría el procesamiento de estudios desde cualquier centro de atención primaria con conectividad básica.
-
-La convergencia de estas líneas de investigación contribuiría a consolidar un sistema de detección automatizada de retinopatía diabética con potencial de implementación a escala poblacional, aportando a la reducción de la carga de ceguera prevenible asociada a esta complicación de la diabetes mellitus.
+La convergencia de estas líneas de investigación contribuiría a consolidar un sistema de
+detección automatizada de retinopatía diabética con potencial de implementación a escala
+poblacional, aportando a la reducción de la carga de ceguera prevenible asociada a esta
+complicación de la diabetes mellitus.

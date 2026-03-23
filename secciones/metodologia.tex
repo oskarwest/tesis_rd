@@ -2,19 +2,52 @@
 
 \begin{figure}[H]
 	\centering
-	\caption{Estructura metodológica propuesta para la clasificacion de retinopatia diabetica mediante aprendizaje profundo}
+	\caption{Estructura metodológica propuesta para la clasificacion de retinopatia diabetica
+	mediante aprendizaje profundo}
 	\includegraphics[width=1\textwidth]{imágenes/metodología/MODELO.png} 
 \end{figure}
 
-En esta sección se explica el procedimiento que se desarrolló para implementar los modelos que clasifican la retinopatía diabética. El proceso comenzó con la exploración de conjuntos de datos disponibles, tanto públicos como privados. Posteriormente, se implementaron métodos de aumento y preprocesamiento de datos con el fin de equilibrar el volumen de los datos de entrenamiento, mejorar el efecto de clasificación y optimizar el rendimiento de la red de aprendizaje profundo utilizada en el conjunto de datos de laboratorio. Finalmente, se expone la fase de entrenamiento, donde se detallan las herramientas que permitieron llevar a cabo los experimentos, así como la configuración experimental utilizada para la clasificación binaria y multiclase.
+En esta sección se explica el procedimiento que se desarrolló para implementar los modelos
+que clasifican la retinopatía diabética. El proceso comenzó con la exploración de
+conjuntos de datos disponibles, tanto públicos como privados. Posteriormente, se
+implementaron métodos de aumento y preprocesamiento de datos con el fin de equilibrar el
+volumen de los datos de entrenamiento, mejorar el efecto de clasificación y optimizar el
+rendimiento de la red de aprendizaje profundo utilizada en el conjunto de datos de
+laboratorio. Finalmente, se expone la fase de entrenamiento, donde se detallan las
+herramientas que permitieron llevar a cabo los experimentos, así como la configuración
+experimental utilizada para la clasificación binaria y multiclase.
 
 
 
 \section{CONJUNTOS DE DATOS}
 
-Una etapa clave en la construcción de una red neuronal convolucional (CNN) es la recopilación de datos, ya que el rendimiento del modelo depende en gran medida tanto de la calidad como de la diversidad del conjunto utilizado. Para que el entrenamiento sea efectivo, las imágenes deben reflejar con precisión las distintas condiciones del problema y pueden obtenerse a partir de repositorios públicos, fuentes en línea o mediante técnicas de generación artificial. Es esencial que cada imagen esté correctamente clasificada según corresponda, ya que una mala etiquetación puede afectar negativamente el aprendizaje del modelo. Por ello, es importante realizar una curaduría rigurosa del dataset, priorizando imágenes representativas y bien definidas. En el desarrollo de este proyecto, se utilizaron distintos conjuntos de datos para garantizar la robustez y generalización del modelo. Inicialmente, se exploraron datasets disponibles en repositorios públicos, junto con un conjunto de datos de propiedad interna. La fase experimental inicial se llevó a cabo con el dataset de Kaggle, debido a su gran volumen de imágenes. Posteriormente, se utilizaron los datasets públicos MESSIDOR, IDRiD y uno privado que se nombró como FOSCAL para evaluar la capacidad de generalización del modelo final.\vspace{0.5cm}
+Una etapa clave en la construcción de una red neuronal convolucional (CNN) es la
+recopilación de datos, ya que el rendimiento del modelo depende en gran medida tanto de la
+calidad como de la diversidad del conjunto utilizado. Para que el entrenamiento sea
+efectivo, las imágenes deben reflejar con precisión las distintas condiciones del problema
+y pueden obtenerse a partir de repositorios públicos, fuentes en línea o mediante técnicas
+de generación artificial. Es esencial que cada imagen esté correctamente clasificada según
+corresponda, ya que una mala etiquetación puede afectar negativamente el aprendizaje del
+modelo. Por ello, es importante realizar una curaduría rigurosa del dataset, priorizando
+imágenes representativas y bien definidas. En el desarrollo de este proyecto, se
+utilizaron distintos conjuntos de datos para garantizar la robustez y generalización del
+modelo. Inicialmente, se exploraron datasets disponibles en repositorios públicos, junto
+con un conjunto de datos de propiedad interna. La fase experimental inicial se llevó a
+cabo con el dataset de Kaggle, debido a su gran volumen de imágenes. Posteriormente, se
+utilizaron los datasets públicos MESSIDOR, IDRiD y uno privado que se nombró como FOSCAL
+para evaluar la capacidad de generalización del modelo final.\vspace{0.5cm}
 
-\textbf{KAGGLE:} Es el \textit{dataset} principal que se utilizó para hacer los experimentos. Cuenta con un amplio conjunto de datos compuesto por imágenes de retina en alta resolución, obtenidas a partir del repositorio \textit{Diabetic Retinopathy Detection 2015}, disponibles en la plataforma \textit{Kaggle}. Las imágenes fueron capturadas bajo diversas condiciones y con distintos tipos de cámaras, lo que introduce variabilidad en aspectos como la resolución, la iluminación y la orientación.Cada registro corresponde a un paciente, identificándose ambos ojos mediante un nombre de archivo que incluye el número de paciente seguido de ``izquierda'' o ``derecha'' (por ejemplo: \texttt{1\_izquierda.jpg}). Cada imagen fue evaluada por un especialista clínico, quien asignó un grado de severidad de retinopatía diabética utilizando una escala ordinal de 0 a 4, donde:
+\textbf{KAGGLE:} Es el \textit{dataset} principal que se utilizó para hacer los
+experimentos. Cuenta con un amplio conjunto de datos compuesto por imágenes de retina en
+alta resolución, obtenidas a partir del repositorio \textit{Diabetic Retinopathy Detection
+2015}, disponibles en la plataforma \textit{Kaggle}. Las imágenes fueron capturadas bajo
+diversas condiciones y con distintos tipos de cámaras, lo que introduce variabilidad en
+aspectos como la resolución, la iluminación y la orientación.Cada registro corresponde a
+un paciente, identificándose ambos ojos mediante un nombre de archivo que incluye el
+número de paciente seguido de ``izquierda'' o ``derecha'' (por ejemplo:
+\texttt{1\_izquierda.jpg}). Cada imagen fue evaluada por un especialista clínico, quien
+asignó un grado de severidad de retinopatía diabética utilizando una escala ordinal de 0 a
+4, donde:
 
 \begin{enumerate}
 	\item[0.] Sin retinopatía diabética
@@ -24,20 +57,58 @@ Una etapa clave en la construcción de una red neuronal convolucional (CNN) es l
 	\item[4.] Retinopatía diabética proliferativa
 \end{enumerate}
 
-La naturaleza heterogénea del conjunto se evidencia en las diferencias anatómicas y de orientación presentes en las imágenes: algunas muestran la retina con una disposición convencional (mácula a la izquierda y nervio óptico a la derecha en el caso del ojo derecho), mientras que otras presentan una orientación invertida, similar a la observada a través de un microscopio durante un examen clínico. 
-La orientación puede determinarse a partir de la posición relativa entre la mácula y el nervio óptico, así como por la presencia de muescas laterales en la imagen.
+La naturaleza heterogénea del conjunto se evidencia en las diferencias anatómicas y de
+orientación presentes en las imágenes: algunas muestran la retina con una disposición
+convencional (mácula a la izquierda y nervio óptico a la derecha en el caso del ojo
+derecho), mientras que otras presentan una orientación invertida, similar a la observada a
+través de un microscopio durante un examen clínico.
+La orientación puede determinarse a partir de la posición relativa entre la mácula y el
+nervio óptico, así como por la presencia de muescas laterales en la imagen.
 
-Es importante señalar que el conjunto contiene  ruido, tanto en las imágenes (como artefactos, desenfoque, subexposición o sobreexposición), como en las etiquetas, debido a la subjetividad inherente a la evaluación clínica. Por esta razón, uno de los retos principales de este estudio es desarrollar algoritmos robustos, capaces de enfrentar dicha variabilidad y el ruido presente en los datos, asegurando un desempeño confiable en escenarios reales de aplicación. \vspace{0.5cm}
+Es importante señalar que el conjunto contiene ruido, tanto en las imágenes (como
+artefactos, desenfoque, subexposición o sobreexposición), como en las etiquetas, debido a
+la subjetividad inherente a la evaluación clínica. Por esta razón, uno de los retos
+principales de este estudio es desarrollar algoritmos robustos, capaces de enfrentar dicha
+variabilidad y el ruido presente en los datos, asegurando un desempeño confiable en
+escenarios reales de aplicación. \vspace{0.5cm}
 
-\textbf{MESSIDOR-2}: Es una base de datos de imágenes de fondo de ojo diseñada para evaluar algoritmos de detección de retinopatía diabética, particularmente para la clasificación de casos referibles. Contiene un total de 1,748 imágenes correspondientes a 874 exámenes de pacientes, capturadas con cámaras no midriáticas \textit{Topcon TRC NW6}, \textit{NW7} y \textit{Nidek AFC-210}, con un campo de visión de 45°. Las imágenes presentan resoluciones variables, típicamente entre $1440 \times 960$ y $2304 \times 1536$ píxeles, y están centradas en la mácula. Este conjunto cuenta con: Etiquetas de gradación de retinopatía diabética (RD) en una escala de 0 a 3. Etiquetas de edema macular, validadas por especialistas. Metadatos como el diámetro pupilar y la calidad técnica de cada imagen.
-Gracias a su calidad, volumen y amplia adopción en la comunidad científica, \textit{Messidor-2} es ampliamente empleado como \textit{benchmark} para evaluar el rendimiento y la generalización de modelos de clasificación de RD, especialmente en escenarios de validación externa y estudios comparativos.
+\textbf{MESSIDOR-2}: Es una base de datos de imágenes de fondo de ojo diseñada para
+evaluar algoritmos de detección de retinopatía diabética, particularmente para la
+clasificación de casos referibles. Contiene un total de 1,748 imágenes correspondientes a
+874 exámenes de pacientes, capturadas con cámaras no midriáticas \textit{Topcon TRC NW6},
+\textit{NW7} y \textit{Nidek AFC-210}, con un campo de visión de 45°. Las imágenes
+presentan resoluciones variables, típicamente entre $1440 \times 960$ y $2304 \times 1536$
+píxeles, y están centradas en la mácula. Este conjunto cuenta con: Etiquetas de gradación
+de retinopatía diabética (RD) en una escala de 0 a 3. Etiquetas de edema macular,
+validadas por especialistas. Metadatos como el diámetro pupilar y la calidad técnica de
+cada imagen.
+Gracias a su calidad, volumen y amplia adopción en la comunidad científica,
+\textit{Messidor-2} es ampliamente empleado como \textit{benchmark} para evaluar el
+rendimiento y la generalización de modelos de clasificación de RD, especialmente en
+escenarios de validación externa y estudios comparativos.
 
 \vspace{0.5cm}
 
-\textbf{IDRiD}: El \textit{Indian Diabetic Retinopathy Image Dataset} contiene un total de 516 imágenes de retina en alta resolución ($4288 \times 2848$ píxeles), capturadas con una cámara \textit{Kowa VX-10$\alpha$} con un campo de visión de 50°, centradas en la mácula. Las imágenes provienen de pacientes del \textit{Aravind Eye Hospital} en India y están acompañadas de anotaciones detalladas realizadas por expertos clínicos. Este conjunto incluye: etiquetas de clasificación de severidad de RD. Segmentaciones a nivel de píxel para lesiones específicas como microaneurismas, hemorragias, exudados duros y blandos. Segmentaciones de estructuras anatómicas como la fóvea y el disco óptico.
-El dataset se divide en un conjunto de entrenamiento con 413 imágenes y un conjunto de prueba con 103 imágenes, lo que lo hace especialmente útil tanto para tareas de clasificación como de segmentación.\vspace{0.5cm}
+\textbf{IDRiD}: El \textit{Indian Diabetic Retinopathy Image Dataset} contiene un total de
+516 imágenes de retina en alta resolución ($4288 \times 2848$ píxeles), capturadas con una
+cámara \textit{Kowa VX-10$\alpha$} con un campo de visión de 50°, centradas en la mácula.
+Las imágenes provienen de pacientes del \textit{Aravind Eye Hospital} en India y están
+acompañadas de anotaciones detalladas realizadas por expertos clínicos. Este conjunto
+incluye: etiquetas de clasificación de severidad de RD. Segmentaciones a nivel de píxel
+para lesiones específicas como microaneurismas, hemorragias, exudados duros y blandos.
+Segmentaciones de estructuras anatómicas como la fóvea y el disco óptico.
+El dataset se divide en un conjunto de entrenamiento con 413 imágenes y un conjunto de
+prueba con 103 imágenes, lo que lo hace especialmente útil tanto para tareas de
+clasificación como de segmentación.\vspace{0.5cm}
 
-\textbf{FOSCAL}: está compuesto por 1,538 imágenes de fondo de ojo, obtenidas gracias al centro de prevención y consultoría en Glaucoma de Bucaramanga. Las imágenes estaban acompañadas de un archivo plano que detalla las anomalías presentes, incluyendo el nivel de retinopatía diabética (RD), lo que permitió organizarlas con sus respectivas etiquetas. El proceso de etiquetado fue realizado por especialistas médicos mediante una plataforma web diseñada específicamente para la lectura y tamizaje. Esta plataforma incluía funcionalidades para descartar imágenes de baja calidad o no evaluables, garantizando así la confiabilidad de los datos.
+\textbf{FOSCAL}: está compuesto por 1,538 imágenes de fondo de ojo, obtenidas gracias al
+centro de prevención y consultoría en Glaucoma de Bucaramanga. Las imágenes estaban
+acompañadas de un archivo plano que detalla las anomalías presentes, incluyendo el nivel
+de retinopatía diabética (RD), lo que permitió organizarlas con sus respectivas etiquetas.
+El proceso de etiquetado fue realizado por especialistas médicos mediante una plataforma
+web diseñada específicamente para la lectura y tamizaje. Esta plataforma incluía
+funcionalidades para descartar imágenes de baja calidad o no evaluables, garantizando así
+la confiabilidad de los datos.
 
 \begin{table}
 	\centering
@@ -54,33 +125,97 @@ El dataset se divide en un conjunto de entrenamiento con 413 imágenes y un conj
 		FOSCAL    & 302 & 34 & 23 & 40 & 16 & 415 \\
 		\hline
 	\end{tabularx}
-	\caption{Distribución de imágenes por clase de severidad de retinopatía diabética en los distintos datasets.}
+	\caption{Distribución de imágenes por clase de severidad de retinopatía diabética en los
+	distintos datasets.}
 \end{table}
 
 
 
 \section{PREPROCESAMIENTO DE LAS IMÁGENES}
 
-Durante el análisis exhaustivo del conjunto de datos, se identificaron varios problemas que afectan negativamente el desempeño de los modelos. Entre los principales desafíos se encontraron una cantidad significativa de imágenes dañadas o de baja calidad, las cuales dificultan el proceso de aprendizaje del modelo, así como un notable desbalance entre las clases, especialmente por la predominancia de la clase correspondiente a pacientes sanos. Este desbalance puede llevar al modelo a sesgar sus predicciones hacia la clase mayoritaria, reduciendo su capacidad de generalización. Por ello, fue necesario aplicar estrategias específicas de limpieza, filtrado y balanceo, orientadas a mejorar la calidad de los datos sin eliminar muestras valiosas ni conservar imágenes que pudieran perjudicar el entrenamiento.
+Durante el análisis exhaustivo del conjunto de datos, se identificaron varios problemas
+que afectan negativamente el desempeño de los modelos. Entre los principales desafíos se
+encontraron una cantidad significativa de imágenes dañadas o de baja calidad, las cuales
+dificultan el proceso de aprendizaje del modelo, así como un notable desbalance entre las
+clases, especialmente por la predominancia de la clase correspondiente a pacientes sanos.
+Este desbalance puede llevar al modelo a sesgar sus predicciones hacia la clase
+mayoritaria, reduciendo su capacidad de generalización. Por ello, fue necesario aplicar
+estrategias específicas de limpieza, filtrado y balanceo, orientadas a mejorar la calidad
+de los datos sin eliminar muestras valiosas ni conservar imágenes que pudieran perjudicar
+el entrenamiento.
 
 \vspace{0.5cm}
 
-\textbf{DEPURACIÓN DE IMÁGENES DEFECTUOSAS:} Durante el proceso de exploración y limpieza del conjunto de datos, se identificó un número considerable de imágenes que presentaban problemas severos de iluminación: algunas eran casi completamente oscuras y otras excesivamente brillantes. En ambas situaciones resultaba imposible distinguir adecuadamente la circunferencia del globo ocular o las estructuras internas relevantes para la detección de retinopatía diabética. A pesar de ello, estas imágenes estaban etiquetadas con niveles de severidad entre 0 y 4, lo que indicaba que habían sido consideradas válidas en el conjunto original. No obstante, su falta de información visual útil no solo limita su valor diagnóstico, sino que también puede introducir ruido y dificultar el proceso de aprendizaje del modelo. 
+\textbf{DEPURACIÓN DE IMÁGENES DEFECTUOSAS:} Durante el proceso de exploración y limpieza
+del conjunto de datos, se identificó un número considerable de imágenes que presentaban
+problemas severos de iluminación: algunas eran casi completamente oscuras y otras
+excesivamente brillantes. En ambas situaciones resultaba imposible distinguir
+adecuadamente la circunferencia del globo ocular o las estructuras internas relevantes
+para la detección de retinopatía diabética. A pesar de ello, estas imágenes estaban
+etiquetadas con niveles de severidad entre 0 y 4, lo que indicaba que habían sido
+consideradas válidas en el conjunto original. No obstante, su falta de información visual
+útil no solo limita su valor diagnóstico, sino que también puede introducir ruido y
+dificultar el proceso de aprendizaje del modelo.
 
-Para abordar este problema, se diseñó un procedimiento automático de limpieza basado en el análisis del brillo promedio de las imágenes. Esta estrategia consistió en convertir cada imagen a escala de grises y calcular su luminosidad media. Si el valor promedio se encontraba por debajo de un umbral establecido para imágenes demasiado oscuras o por encima de un umbral para imágenes excesivamente brillantes, la imagen se consideraba no apta para el entrenamiento. Aquellas que cumplían con estos criterios eran automáticamente separadas del conjunto principal y movidas a una carpeta de exclusión. Este proceso se implementó utilizando OpenCV y NumPy en Python, y permitió filtrar de manera eficiente las imágenes que no aportan información significativa.
+Para abordar este problema, se diseñó un procedimiento automático de limpieza basado en el
+análisis del brillo promedio de las imágenes. Esta estrategia consistió en convertir cada
+imagen a escala de grises y calcular su luminosidad media. Si el valor promedio se
+encontraba por debajo de un umbral establecido para imágenes demasiado oscuras o por
+encima de un umbral para imágenes excesivamente brillantes, la imagen se consideraba no
+apta para el entrenamiento. Aquellas que cumplían con estos criterios eran automáticamente
+separadas del conjunto principal y movidas a una carpeta de exclusión. Este proceso se
+implementó utilizando OpenCV y NumPy en Python, y permitió filtrar de manera eficiente las
+imágenes que no aportan información significativa.
 \vspace{0.5cm}
 
-\textbf{BALANCEO DE CLASES:} El conjunto de datos original presenta un marcado desbalance entre las clases, lo cual representa un desafío importante para la construcción de clasificadores. En particular, y en el escenario multiclase, la clase 0 (pacientes sanos) representa aproximadamente el 73 \% del total de muestras, mientras que la clase 4 (retinopatía diabética proliferativa), la forma más severa de la enfermedad, apenas alcanza el 2 \%. Esta relación —muy superior a 4:1 en el caso multiclase— tiende a sesgar el aprendizaje hacia la clase mayoritaria y reduce la capacidad del modelo para detectar correctamente las clases menos representadas. Este efecto del desbalance en el rendimiento de clasificadores ha sido ampliamente documentado \myfootcite{johnson2019survey} en la literatura sobre aprendizaje con datos desbalanceados. \myfootcite{mustapha2024class} En general, para mitigar los problemas derivados del desbalance, se aplicaron dos estrategias principales: una reducción de la clase 0 y un aumento artificial de las clases minoritarias. En el escenario multiclase, un muestreo aleatorio directo sobre la clase 0 no resultó óptimo, ya que esta contenía un número considerable de imágenes con ruido o baja calidad. Para evitar descartar ejemplos útiles y conservar otros potencialmente perjudiciales, se realizó primero una limpieza manual, con lo que se obtuvo una base más depurada que facilitó el posterior balanceo entre las cinco categorías. En el clasificador binario, en cambio, el enfoque consistió en agrupar todas las categorías con retinopatía en una sola clase (RD) frente a las imágenes sin enfermedad (NORD). Tras esta unificación, la clase NORD seguía siendo claramente mayoritaria, por lo que se aplicó un submuestreo aleatorio hasta lograr una proporción cercana al 50:50 entre ambas clases. Esta estrategia garantizó un entrenamiento más equilibrado y redujo el riesgo de sesgo hacia la clase mayoritaria. 
+\textbf{BALANCEO DE CLASES:} El conjunto de datos original presenta un marcado desbalance
+entre las clases, lo cual representa un desafío importante para la construcción de
+clasificadores. En particular, y en el escenario multiclase, la clase 0 (pacientes sanos)
+representa aproximadamente el 73 \% del total de muestras, mientras que la clase 4
+(retinopatía diabética proliferativa), la forma más severa de la enfermedad, apenas
+alcanza el 2 \%. Esta relación —muy superior a 4:1 en el caso multiclase— tiende a sesgar
+el aprendizaje hacia la clase mayoritaria y reduce la capacidad del modelo para detectar
+correctamente las clases menos representadas. Este efecto del desbalance en el rendimiento
+de clasificadores ha sido ampliamente documentado \myfootcite{johnson2019survey} en la
+literatura sobre aprendizaje con datos desbalanceados. \myfootcite{mustapha2024class} En
+general, para mitigar los problemas derivados del desbalance, se aplicaron dos estrategias
+principales: una reducción de la clase 0 y un aumento artificial de las clases
+minoritarias. En el escenario multiclase, un muestreo aleatorio directo sobre la clase 0
+no resultó óptimo, ya que esta contenía un número considerable de imágenes con ruido o
+baja calidad. Para evitar descartar ejemplos útiles y conservar otros potencialmente
+perjudiciales, se realizó primero una limpieza manual, con lo que se obtuvo una base más
+depurada que facilitó el posterior balanceo entre las cinco categorías. En el clasificador
+binario, en cambio, el enfoque consistió en agrupar todas las categorías con retinopatía
+en una sola clase (RD) frente a las imágenes sin enfermedad (NORD). Tras esta unificación,
+la clase NORD seguía siendo claramente mayoritaria, por lo que se aplicó un submuestreo
+aleatorio hasta lograr una proporción cercana al 50:50 entre ambas clases. Esta estrategia
+garantizó un entrenamiento más equilibrado y redujo el riesgo de sesgo hacia la clase
+mayoritaria.
 \vspace{0.5cm}
 
 
-\textbf{AUMENTO DE DATOS:} El aumento de datos, aunque es una técnica común y poderosa dentro del aprendizaje profundo, debe ser aplicado con cautela, especialmente cuando se trabaja con modelos preentrenados. Estos modelos, al contar con una gran cantidad de parámetros ajustables, pueden ser más propensos al sobreajuste si se les expone a transformaciones que alteran excesivamente la naturaleza de los datos originales.
+\textbf{AUMENTO DE DATOS:} El aumento de datos, aunque es una técnica común y poderosa
+dentro del aprendizaje profundo, debe ser aplicado con cautela, especialmente cuando se
+trabaja con modelos preentrenados. Estos modelos, al contar con una gran cantidad de
+parámetros ajustables, pueden ser más propensos al sobreajuste si se les expone a
+transformaciones que alteran excesivamente la naturaleza de los datos originales.
 
-Para mitigar este riesgo, se priorizó el uso de transformaciones que introducen variabilidad sin modificar la estructura fundamental de la imagen. Estas técnicas preservan la integridad visual de las retinografías al tiempo que enriquecen la diversidad del conjunto de entrenamiento \myfootcite{shorten2019survey}. Entre las transformaciones más efectivas y menos invasivas se encuentran las alteraciones geométricas simples, los ajustes de brillo o color, la introducción de ruido controlado y las técnicas de mezcla como el mixup o cutmix.
+Para mitigar este riesgo, se priorizó el uso de transformaciones que introducen
+variabilidad sin modificar la estructura fundamental de la imagen. Estas técnicas
+preservan la integridad visual de las retinografías al tiempo que enriquecen la diversidad
+del conjunto de entrenamiento \myfootcite{shorten2019survey}. Entre las transformaciones
+más efectivas y menos invasivas se encuentran las alteraciones geométricas simples, los
+ajustes de brillo o color, la introducción de ruido controlado y las técnicas de mezcla
+como el mixup o cutmix.
 
 \textbf{FILTRADO Y REALCE DE CARACTERÍSTICAS:}
 
-Para reducir la variabilidad entre  las imágenes de fondo de ojo asociada a diferencias en iluminación, resolución de las cámaras y condiciones de captura, se implementó una técnica de preprocesamiento basado en la metodología de [autor]. Este proceso, ilustrado en el pseudocódigo de la Figura X, consta de tres etapas secuenciales diseñadas para homogeneizar las características visuales de las imágenes y priorizar las regiones anatómicas relevantes.
+Para reducir la variabilidad entre las imágenes de fondo de ojo asociada a diferencias en
+iluminación, resolución de las cámaras y condiciones de captura, se implementó una técnica
+de preprocesamiento basado en la metodología de [autor]. Este proceso, ilustrado en el
+pseudocódigo de la Figura X, consta de tres etapas secuenciales diseñadas para
+homogeneizar las características visuales de las imágenes y priorizar las regiones
+anatómicas relevantes.
 
 \begin{figure}[H]
 \centering
@@ -89,8 +224,20 @@ Para reducir la variabilidad entre  las imágenes de fondo de ojo asociada a dif
 \caption*{\textit{Fuente: }} 
 \end{figure}
 
-Inicialmente, las imágenes se redimensionaron para estandarizar el radio del área de interés en 300 o 500 píxeles, según el caso. Este paso no solo normaliza la escala entre muestras, sino que también optimiza el uso de recursos computacionales en etapas posteriores. A continuación, se aplicó una normalización del color mediante la sustracción del promedio local de intensidad —calculado con un filtro gaussiano— y su remapeo a un nivel de gris medio (50\%). Esta corrección mitiga las variaciones de brillo y contraste, frecuentes en entornos clínicos reales. Por último, se enmascaró el 10\% periférico de cada imagen mediante una máscara circular, eliminando así artefactos y regiones no informativas mientras se enfoca el análisis en la zona central de la retina.
-De este modo, el algoritmo garantiza que las imágenes procesadas presentan una mayor consistencia, lo cual resulta fundamental para etapas posteriores de análisis y entrenamiento de modelos. La Figura X muestra la implementación paso a paso del procedimiento en Python, donde se observa el escalado, la normalización del color y el recorte aplicados a cada imagen.
+Inicialmente, las imágenes se redimensionaron para estandarizar el radio del área de
+interés en 300 o 500 píxeles, según el caso. Este paso no solo normaliza la escala entre
+muestras, sino que también optimiza el uso de recursos computacionales en etapas
+posteriores. A continuación, se aplicó una normalización del color mediante la sustracción
+del promedio local de intensidad —calculado con un filtro gaussiano— y su remapeo a un
+nivel de gris medio (50\%). Esta corrección mitiga las variaciones de brillo y contraste,
+frecuentes en entornos clínicos reales. Por último, se enmascaró el 10\% periférico de
+cada imagen mediante una máscara circular, eliminando así artefactos y regiones no
+informativas mientras se enfoca el análisis en la zona central de la retina.
+De este modo, el algoritmo garantiza que las imágenes procesadas presentan una mayor
+consistencia, lo cual resulta fundamental para etapas posteriores de análisis y
+entrenamiento de modelos. La Figura X muestra la implementación paso a paso del
+procedimiento en Python, donde se observa el escalado, la normalización del color y el
+recorte aplicados a cada imagen.
 
 \begin{figure}[H]
 	\centering
@@ -101,35 +248,146 @@ De este modo, el algoritmo garantiza que las imágenes procesadas presentan una 
 
 \section{TECNOLOGÍAS EMPLEADAS EN EL DESARROLLO:}
 
-\textbf{LENGUAJE DE PROGRAMACIÓN:} En el desarrollo de este trabajo de investigación, se consideraron algunos lenguajes de programación para la implementación de las CNNs cada uno con aspectos particulares en el ámbito del procesamiento de imágenes y el aprendizaje profundo. En primer lugar se tomó en cuenta R, un lenguaje con una gran variedad de paquetes especializados en modelos estadísticos y aprendizaje automático. Sin embargo, su desempeño en tareas de deep learning es limitado en comparación con otros lenguajes como C++, un lenguaje altamente eficiente y optimizado, utilizado en aplicaciones donde el rendimiento es crítico. No obstante, su curva de aprendizaje es más pronunciada y el desarrollo de modelos de aprendizaje profundo en este lenguaje requiere una mayor cantidad de código en comparación con lenguajes de alto nivel. De este modo, se optó por Python debido a su sintaxis clara y legible que facilita la implementación de modelos complejos. Además, cuenta con una amplia comunidad de desarrolladores y científicos que contribuyen con documentación, foros de discusión y soluciones a problemas frecuentes, lo que resulta en un entorno de desarrollo altamente colaborativo. Python cuenta con un ecosistema robusto de herramientas, incluyendo librerías como NumPy, Pandas y Matplotlib, que son fundamentales para la manipulación y análisis de datos, así como para la visualización de resultados. Asimismo, su compatibilidad con aceleradores de hardware, como GPUs y TPUs, permite el entrenamiento eficiente de modelos a gran escala, reduciendo significativamente el tiempo de cómputo requerido.\vspace{0.5cm}
+\textbf{LENGUAJE DE PROGRAMACIÓN:} En el desarrollo de este trabajo de investigación, se
+consideraron algunos lenguajes de programación para la implementación de las CNNs cada uno
+con aspectos particulares en el ámbito del procesamiento de imágenes y el aprendizaje
+profundo. En primer lugar se tomó en cuenta R, un lenguaje con una gran variedad de
+paquetes especializados en modelos estadísticos y aprendizaje automático. Sin embargo, su
+desempeño en tareas de deep learning es limitado en comparación con otros lenguajes como
+C++, un lenguaje altamente eficiente y optimizado, utilizado en aplicaciones donde el
+rendimiento es crítico. No obstante, su curva de aprendizaje es más pronunciada y el
+desarrollo de modelos de aprendizaje profundo en este lenguaje requiere una mayor cantidad
+de código en comparación con lenguajes de alto nivel. De este modo, se optó por Python
+debido a su sintaxis clara y legible que facilita la implementación de modelos complejos.
+Además, cuenta con una amplia comunidad de desarrolladores y científicos que contribuyen
+con documentación, foros de discusión y soluciones a problemas frecuentes, lo que resulta
+en un entorno de desarrollo altamente colaborativo. Python cuenta con un ecosistema
+robusto de herramientas, incluyendo librerías como NumPy, Pandas y Matplotlib, que son
+fundamentales para la manipulación y análisis de datos, así como para la visualización de
+resultados. Asimismo, su compatibilidad con aceleradores de hardware, como GPUs y TPUs,
+permite el entrenamiento eficiente de modelos a gran escala, reduciendo significativamente
+el tiempo de cómputo requerido.\vspace{0.5cm}
 
 
-\textbf{ENTORNO DE DESARROLLO INTEGRADO (IDE):} Se evaluaron distintos entornos de desarrollo integrados (IDE) donde cada uno ofrece ventajas y características específicas que pueden influir en la ejecución de los modelos. Uno de ellos es Jupyter Notebook, una herramienta ampliamente utilizada en investigación y desarrollo de proyectos de ciencia de datos debido a su flexibilidad y capacidad para ejecutar código de manera interactiva. Sin embargo, su uso requiere una configuración manual del entorno y la disponibilidad de recursos computacionales locales. Google Colab, en cambio,  es una opción muy utilizada para el desarrollo en la nube, ya que proporciona acceso gratuito a GPUs/TPUS y facilita la colaboración en tiempo real. No obstante, presenta ciertas limitaciones en cuanto a la estabilidad de las sesiones, acceder a una de sus GPUs gratuitas es difícil debido a la alta demanda, y el entorno se desconecta con frecuencia, lo que interrumpe el flujo de trabajo. En definitiva, se seleccionó los notebooks en la nube de Kaggle para la implementación debido a su estabilidad y a la posibilidad de activar una GPU en cualquier momento, con un límite de uso de 30 horas semanales. Esta plataforma proporciona una GPU NVIDIA Tesla P100 con 16 GB de memoria, además de la opción de utilizar una NVIDIA T4 x2. Este hardware de alto rendimiento optimiza las tareas de aprendizaje automático, agilizando tanto el entrenamiento de modelos como la inferencia.\vspace{0.5cm}
+\textbf{ENTORNO DE DESARROLLO INTEGRADO (IDE):} Se evaluaron distintos entornos de
+desarrollo integrados (IDE) donde cada uno ofrece ventajas y características específicas
+que pueden influir en la ejecución de los modelos. Uno de ellos es Jupyter Notebook, una
+herramienta ampliamente utilizada en investigación y desarrollo de proyectos de ciencia de
+datos debido a su flexibilidad y capacidad para ejecutar código de manera interactiva. Sin
+embargo, su uso requiere una configuración manual del entorno y la disponibilidad de
+recursos computacionales locales. Google Colab, en cambio, es una opción muy utilizada
+para el desarrollo en la nube, ya que proporciona acceso gratuito a GPUs/TPUS y facilita
+la colaboración en tiempo real. No obstante, presenta ciertas limitaciones en cuanto a la
+estabilidad de las sesiones, acceder a una de sus GPUs gratuitas es difícil debido a la
+alta demanda, y el entorno se desconecta con frecuencia, lo que interrumpe el flujo de
+trabajo. En definitiva, se seleccionó los notebooks en la nube de Kaggle para la
+implementación debido a su estabilidad y a la posibilidad de activar una GPU en cualquier
+momento, con un límite de uso de 30 horas semanales. Esta plataforma proporciona una GPU
+NVIDIA Tesla P100 con 16 GB de memoria, además de la opción de utilizar una NVIDIA T4 x2.
+Este hardware de alto rendimiento optimiza las tareas de aprendizaje automático,
+agilizando tanto el entrenamiento de modelos como la inferencia.\vspace{0.5cm}
 
-\textbf{BIBLIOTECAS:} Se seleccionó TensorFlow junto con su API de alto nivel Keras como framework principal, esta decisión se basó principalmente en que Tensorflow cuenta con una amplia adopción en el ámbito clínico y de investigación biomédica, ofreciendo herramientas probadas para el procesamiento de imágenes médicas \myfootcite{stanescu2023tensorflow}. Su integración con Keras simplifica la implementación de arquitecturas complejas (p. ej., ResNet, EfficientNet) mientras mantiene robustez en entornos productivos. Proporciona un rendimiento eficiente en entornos con GPUs limitadas (como las ofrecidas por Kaggle: Tesla P10/T4), gracias a optimizaciones integradas (XLA, Grappler). Keras ofrece acceso directo a modelos preentrenados en TensorFlow Hub, ajustables para clasificación multiclase de retinopatía. Además, su ecosistema facilita el despliegue en clínicas mediante TensorFlow Lite o TF Serving, crucial para una futura implementación en entornos hospitalarios. La suite TensorFlow Extended incluye módulos para aumento de datos (tf.image) y preprocesamiento de imágenes médicas (normalización de histogramas, ajuste de contraste), esenciales para abordar variabilidad en las imágenes de fondo de ojo (iluminación, artefactos). Si bien PyTorch es destacable por su flexibilidad en investigación experimental requiere más desarrollo manual para estas tareas, TensorFlow/Keras demostró mayores ventajas en este proyecto al equilibrar productividad, eficiencia computacional y facilidad de integración.
+\textbf{BIBLIOTECAS:} Se seleccionó TensorFlow junto con su API de alto nivel Keras como
+framework principal, esta decisión se basó principalmente en que Tensorflow cuenta con una
+amplia adopción en el ámbito clínico y de investigación biomédica, ofreciendo herramientas
+probadas para el procesamiento de imágenes médicas \myfootcite{stanescu2023tensorflow}. Su
+integración con Keras simplifica la implementación de arquitecturas complejas (p. ej.,
+ResNet, EfficientNet) mientras mantiene robustez en entornos productivos. Proporciona un
+rendimiento eficiente en entornos con GPUs limitadas (como las ofrecidas por Kaggle: Tesla
+P10/T4), gracias a optimizaciones integradas (XLA, Grappler). Keras ofrece acceso directo
+a modelos preentrenados en TensorFlow Hub, ajustables para clasificación multiclase de
+retinopatía. Además, su ecosistema facilita el despliegue en clínicas mediante TensorFlow
+Lite o TF Serving, crucial para una futura implementación en entornos hospitalarios. La
+suite TensorFlow Extended incluye módulos para aumento de datos (tf.image) y
+preprocesamiento de imágenes médicas (normalización de histogramas, ajuste de contraste),
+esenciales para abordar variabilidad en las imágenes de fondo de ojo (iluminación,
+artefactos). Si bien PyTorch es destacable por su flexibilidad en investigación
+experimental requiere más desarrollo manual para estas tareas, TensorFlow/Keras demostró
+mayores ventajas en este proyecto al equilibrar productividad, eficiencia computacional y
+facilidad de integración.
 
 \section{ENTRENAMIENTO}
 
-El proceso de entrenamiento se estructuró en dos fases consecutivas. La primera fase se centró en el desarrollo de un modelo para la detección binaria de retinopatía diabética (RD), discriminando entre casos positivos (presencia de la enfermedad) y negativos (ausencia de la enfermedad). Una vez validado este modelo, se procedió a una segunda fase de adaptación para clasificación multiclase, orientada a la categorización de la RD en los cinco niveles de gravedad definidos por los estándares clínicos (0: sin RD, 1: leve, 2: moderada, 3: severa, 4: proliferativa). Esta transición responde a la necesidad de alinear el sistema de diagnóstico automático con los protocolos médicos establecidos, donde la gradación precisa de la enfermedad es crucial para la toma de decisiones terapéuticas.\vspace{0.5cm}
+El proceso de entrenamiento se estructuró en dos fases consecutivas. La primera fase se
+centró en el desarrollo de un modelo para la detección binaria de retinopatía diabética
+(RD), discriminando entre casos positivos (presencia de la enfermedad) y negativos
+(ausencia de la enfermedad). Una vez validado este modelo, se procedió a una segunda fase
+de adaptación para clasificación multiclase, orientada a la categorización de la RD en los
+cinco niveles de gravedad definidos por los estándares clínicos (0: sin RD, 1: leve, 2:
+moderada, 3: severa, 4: proliferativa). Esta transición responde a la necesidad de alinear
+el sistema de diagnóstico automático con los protocolos médicos establecidos, donde la
+gradación precisa de la enfermedad es crucial para la toma de decisiones
+terapéuticas.\vspace{0.5cm}
 
 \textbf{CONFIGURACIÓN EXPERIMENTAL PARA EL CLASIFICADOR BINARIO:}
 
-El entrenamiento se estructuró en dos fases consecutivas. La primera fase se centró en el desarrollo de un modelo para la detección binaria de retinopatía diabética (RD), discriminando entre casos positivos (presencia de la enfermedad) y negativos (ausencia de la enfermedad). Una vez validado este modelo, se procedió a una segunda fase de adaptación para clasificación multiclase, orientada a la categorización de la RD en los cinco niveles de gravedad definidos por los estándares clínicos (0: sin RD, 1: leve, 2: moderada, 3: severa, 4: proliferativa). 
+El entrenamiento se estructuró en dos fases consecutivas. La primera fase se centró en el
+desarrollo de un modelo para la detección binaria de retinopatía diabética (RD),
+discriminando entre casos positivos (presencia de la enfermedad) y negativos (ausencia de
+la enfermedad). Una vez validado este modelo, se procedió a una segunda fase de adaptación
+para clasificación multiclase, orientada a la categorización de la RD en los cinco niveles
+de gravedad definidos por los estándares clínicos (0: sin RD, 1: leve, 2: moderada, 3:
+severa, 4: proliferativa).
 
-Para ambos clasificadores se mantuvo un marco común, por lo que para ambos  modelos  se utilizaron las mismas estrategias de capas, implementado bloques Multi-Head Attention luego de la salida del mapa de características de la red previamente entrenada  y capas  de GaussianNoise entre las capas densas,  además, también se implemento una estrategia de  regularización similar, utilizando en ambos casos , abandono, regularización L2 y parada temprana. En cuestión de otros hiperparámetros se mantuvo el mismo optimizador, Adam con con un learning rate de 1e-4 . Se eligió un tamaño de imagen de 224x224 píxeles, que es estándar para muchos modelos pre entrenados, lo que permite un equilibrio entre el rendimiento computacional y la calidad de la información contenida en las imágenes. Por último para ambos  clasificadores se crearon modelos utilizando las mismas redes preentrenadas:  ResNet50V2, InceptionV3, VGG19 y MobileNetV2.
+Para ambos clasificadores se mantuvo un marco común, por lo que para ambos modelos se
+utilizaron las mismas estrategias de capas, implementado bloques Multi-Head Attention
+luego de la salida del mapa de características de la red previamente entrenada y capas de
+GaussianNoise entre las capas densas, además, también se implemento una estrategia de
+regularización similar, utilizando en ambos casos , abandono, regularización L2 y parada
+temprana. En cuestión de otros hiperparámetros se mantuvo el mismo optimizador, Adam con
+con un learning rate de 1e-4 . Se eligió un tamaño de imagen de 224x224 píxeles, que es
+estándar para muchos modelos pre entrenados, lo que permite un equilibrio entre el
+rendimiento computacional y la calidad de la información contenida en las imágenes. Por
+último para ambos clasificadores se crearon modelos utilizando las mismas redes
+preentrenadas: ResNet50V2, InceptionV3, VGG19 y MobileNetV2.
 
 
 \vspace{0.5cm}
 
 \textbf{CONFIGURACIÓN EXPERIMENTAL PARA EL CLASIFICADOR MULTICLASE:}
 
-Para este clasificador se utilizaron capas densas  con 256 y 128 neuronas, intercaladas entre ellas,  este tipo de configuración de top model suele ser de los más utilizados en en problemas similares \myfootcite{mutawa2023transfer}, las funciones de activación utilizadas en estas capas fue ReLU , la capa de salida fue una densa con cinco neuronas, una para cada nivel de RD  y función de activación Softmax  ,  esta combinación de funciones de activación ha tenido bastante éxito pues han demostrado un alto rendimiento y eficiencia, en muchos trabajos recopilatorios se puede ver que esta combinación de funciones de activación, para capas intermedias con  ReLu y capa de salida  con Softmax, suele ser la más común y la que mejores resultados arroja \myfootcite{nadeem2022deep}.  En una investigación del 2020 realizada por Asadi y  Jiang  \myfootcite{asadi2020approximation}, se demostró que ambas funciones de activación son aproximadores universales, dándole un fundamento teórico más robusto a su uso práctico. 
+Para este clasificador se utilizaron capas densas con 256 y 128 neuronas, intercaladas
+entre ellas, este tipo de configuración de top model suele ser de los más utilizados en en
+problemas similares \myfootcite{mutawa2023transfer}, las funciones de activación
+utilizadas en estas capas fue ReLU , la capa de salida fue una densa con cinco neuronas,
+una para cada nivel de RD y función de activación Softmax , esta combinación de funciones
+de activación ha tenido bastante éxito pues han demostrado un alto rendimiento y
+eficiencia, en muchos trabajos recopilatorios se puede ver que esta combinación de
+funciones de activación, para capas intermedias con ReLu y capa de salida con Softmax,
+suele ser la más común y la que mejores resultados arroja \myfootcite{nadeem2022deep}. En
+una investigación del 2020 realizada por Asadi y Jiang
+\myfootcite{asadi2020approximation}, se demostró que ambas funciones de activación son
+aproximadores universales, dándole un fundamento teórico más robusto a su uso práctico.
 
-Todas las capas convolucionales de cada red base fueron congeladas durante esta fase de experimentación permitiendo entrenar únicamente las capas densas superiores. Esto facilitó evaluar la capacidad de transferencia de características desde el dominio general de ImageNet al dominio específico de imágenes médicas, con un entrenamiento rápido y controlado. Se utilizó el optimizador Adam y la función de pérdida sparse categorical crossentropy, adecuada para clasificación multiclase con etiquetas en formato entero además el uso de esta ha demostrado ser más efectivo en tareas similares \myfootcite{palaniappan2023wide} Al concluir el entrenamiento, los modelos fueron evaluados tanto en el conjunto de entrenamiento como en el de validación. Se generaron métricas clave, recuperación (recall), puntuación F1 y exactitud (accuracy) mediante el informe de clasificación de scikit-learn. Los resultados se almacenarony organizaron para su análisis comparativo. Además, se elaboraron gráficos que muestran la evolución de la pérdida y exactitud durante el entrenamiento, lo que permitió observar visualmente el rendimiento diferencial de cada arquitectura.
+Todas las capas convolucionales de cada red base fueron congeladas durante esta fase de
+experimentación permitiendo entrenar únicamente las capas densas superiores. Esto facilitó
+evaluar la capacidad de transferencia de características desde el dominio general de
+ImageNet al dominio específico de imágenes médicas, con un entrenamiento rápido y
+controlado. Se utilizó el optimizador Adam y la función de pérdida sparse categorical
+crossentropy, adecuada para clasificación multiclase con etiquetas en formato entero
+además el uso de esta ha demostrado ser más efectivo en tareas similares
+\myfootcite{palaniappan2023wide} Al concluir el entrenamiento, los modelos fueron
+evaluados tanto en el conjunto de entrenamiento como en el de validación. Se generaron
+métricas clave, recuperación (recall), puntuación F1 y exactitud (accuracy) mediante el
+informe de clasificación de scikit-learn. Los resultados se almacenarony organizaron para
+su análisis comparativo. Además, se elaboraron gráficos que muestran la evolución de la
+pérdida y exactitud durante el entrenamiento, lo que permitió observar visualmente el
+rendimiento diferencial de cada arquitectura.
 
-Adicionalmente, se implementó un conjunto de transformaciones geométricas moderadas utilizando la clase ImageDataGenerator de Keras, que permitió generar nuevas muestras a partir de imágenes existentes de forma controlada. Las transformaciones incluyen rotaciones aleatorias de hasta 10 grados, zoom aleatorio de hasta un 5\% , desplazamientos horizontales y verticales leves, volteo horizontal de las imágenes, relleno con interpolación para preservar bordes y evitar errores visuales durante las transformaciones. Estas operaciones fueron aplicadas únicamente a las clases minoritarias (1,2,3,4) con el objetivo de equilibrar la distribución del conjunto de datos.
+Adicionalmente, se implementó un conjunto de transformaciones geométricas moderadas
+utilizando la clase ImageDataGenerator de Keras, que permitió generar nuevas muestras a
+partir de imágenes existentes de forma controlada. Las transformaciones incluyen
+rotaciones aleatorias de hasta 10 grados, zoom aleatorio de hasta un 5\% , desplazamientos
+horizontales y verticales leves, volteo horizontal de las imágenes, relleno con
+interpolación para preservar bordes y evitar errores visuales durante las
+transformaciones. Estas operaciones fueron aplicadas únicamente a las clases minoritarias
+(1,2,3,4) con el objetivo de equilibrar la distribución del conjunto de datos.
 
-Al concluir los procesos de limpieza y aumento de datos, obtenemos un conjunto de datos significativamente más robusto, con menos información que pudiera interferir con el aprendizaje del modelo. Además, se ha logrado un balance adecuado entre las clases, lo que favorece una mayor capacidad de generalización en el modelo. El dataset resultante, optimizado y equilibrado, tiene la siguiente distribución:
+Al concluir los procesos de limpieza y aumento de datos, obtenemos un conjunto de datos
+significativamente más robusto, con menos información que pudiera interferir con el
+aprendizaje del modelo. Además, se ha logrado un balance adecuado entre las clases, lo que
+favorece una mayor capacidad de generalización en el modelo. El dataset resultante,
+optimizado y equilibrado, tiene la siguiente distribución:
 
 
 \begin{table}[ht!]
@@ -151,7 +409,11 @@ Al concluir los procesos de limpieza y aumento de datos, obtenemos un conjunto d
 \end{table}
 
 
-\section{MÉTRICAS DE EVALUACIÓN:} En los estudios de clasificación médica, existen diferentes cálculos de medidas de desempeño ampliamente utilizados. La precisión, la sensibilidad y la especificidad son algunos de ellos, y estas medidas se emplean para evaluar la precisión de un método utilizado. Las ecuaciones utilizadas para calcular estas medidas son las siguientes:
+\section{MÉTRICAS DE EVALUACIÓN:} En los estudios de clasificación médica, existen
+diferentes cálculos de medidas de desempeño ampliamente utilizados. La precisión, la
+sensibilidad y la especificidad son algunos de ellos, y estas medidas se emplean para
+evaluar la precisión de un método utilizado. Las ecuaciones utilizadas para calcular estas
+medidas son las siguientes:
 
 \begin{equation}
 	\text{Exactitud} = \frac{TP + TN}{N}
@@ -166,8 +428,20 @@ Al concluir los procesos de limpieza y aumento de datos, obtenemos un conjunto d
 \end{equation}
 
 \begin{equation}
-	F_{\text{score}} = 2 \cdot \frac{\text{Precisión} \cdot \text{Sensibilidad}}{\text{Precisión} + \text{Sensibilidad}}
+	F_{\text{score}} = 2 \cdot \frac{\text{Precisión} \cdot
+	\text{Sensibilidad}}{\text{Precisión} + \text{Sensibilidad}}
 \end{equation}
 
-En las anteriores ecuaciones, TP y FP se utilizan para definir el número de diagnósticos verdaderos positivos y el número de diagnósticos falsos positivos. Por otro lado, TN y FN son para el número de diagnósticos verdaderos negativos y el número de diagnósticos falsos negativos. N es el número de muestras totales, lo que significa también la suma de muestras positivas y negativas en el proceso de clasificación.
-Para un problema de clasificación, la capacidad de diagnosticar correctamente se calcula a través de la precisión. Además, la tasa de sensibilidad define el grado en el que el modelo define correctamente la clase objetivo. Por otro lado, la tasa de precisión es para comprender cómo el clasificador proporciona cierta determinación de clase. Finalmente, el valor Fscore es una media armónica de la precisión y la sensibilidad para entender mejor ambas capacidades con un valor. En este estudio, todos los parámetros de evaluación relacionados se utilizaron para probar el rendimiento del enfoque de solución a través de diferentes perspectivas requeridas. 
+En las anteriores ecuaciones, TP y FP se utilizan para definir el número de diagnósticos
+verdaderos positivos y el número de diagnósticos falsos positivos. Por otro lado, TN y FN
+son para el número de diagnósticos verdaderos negativos y el número de diagnósticos falsos
+negativos. N es el número de muestras totales, lo que significa también la suma de
+muestras positivas y negativas en el proceso de clasificación.
+Para un problema de clasificación, la capacidad de diagnosticar correctamente se calcula a
+través de la precisión. Además, la tasa de sensibilidad define el grado en el que el
+modelo define correctamente la clase objetivo. Por otro lado, la tasa de precisión es para
+comprender cómo el clasificador proporciona cierta determinación de clase. Finalmente, el
+valor Fscore es una media armónica de la precisión y la sensibilidad para entender mejor
+ambas capacidades con un valor. En este estudio, todos los parámetros de evaluación
+relacionados se utilizaron para probar el rendimiento del enfoque de solución a través de
+diferentes perspectivas requeridas.

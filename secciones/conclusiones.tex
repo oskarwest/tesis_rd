@@ -1,14 +1,45 @@
 
 \chapter{CONCLUSIONES}
 
-La presente investigación abordó el desarrollo de un algoritmo de clasificación basado en aprendizaje profundo para la detección de retinopatía diabética en imágenes del fondo del ojo, partiendo de una revisión exhaustiva de la literatura científica sobre técnicas de aprendizaje profundo aplicadas a la detección de retinopatía diabética, lo que permitió identificar las arquitecturas más prometedoras y las estrategias de preprocesamiento más efectivas para este dominio. Este análisis fundamentó las decisiones metodológicas adoptadas y contextualizó los resultados obtenidos dentro del estado del arte.
+La presente investigación abordó el desarrollo de un algoritmo de clasificación basado en
+aprendizaje profundo para la detección de retinopatía diabética en imágenes del fondo del
+ojo, partiendo de una revisión exhaustiva de la literatura científica sobre técnicas de
+aprendizaje profundo aplicadas a la detección de retinopatía diabética, lo que permitió
+identificar las arquitecturas más prometedoras y las estrategias de preprocesamiento más
+efectivas para este dominio. Este análisis fundamentó las decisiones metodológicas
+adoptadas y contextualizó los resultados obtenidos dentro del estado del arte.
 
-Se recopiló y organizó un conjunto de datos clínicos compuesto por múltiples fuentes: el dataset público de Kaggle con 35{,}121 imágenes para entrenamiento, complementado con los conjuntos MESSIDOR-2, IDRiD y FOSCAL para validación externa. La implementación de técnicas de preprocesamiento ---incluyendo normalización del color mediante filtro gaussiano, enmascaramiento periférico y balanceo de clases--- demostró ser determinante para optimizar la calidad de los datos de entrada.
+Se recopiló y organizó un conjunto de datos clínicos compuesto por múltiples fuentes: el
+dataset público de Kaggle con 35{,}121 imágenes para entrenamiento, complementado con los
+conjuntos MESSIDOR-2, IDRiD y FOSCAL para validación externa. La implementación de
+técnicas de preprocesamiento ---incluyendo normalización del color mediante filtro
+gaussiano, enmascaramiento periférico y balanceo de clases--- demostró ser determinante
+para optimizar la calidad de los datos de entrada.
 
-Se desarrolló un algoritmo de clasificación basado en redes neuronales convolucionales utilizando aprendizaje por transferencia con cuatro arquitecturas preentrenadas: MobileNetV2, ResNet50V2, InceptionV3 y VGG19. La arquitectura propuesta incorporó bloques Multi-Head Attention y capas GaussianNoise como estrategias de regularización, logrando un equilibrio efectivo entre capacidad de generalización y eficiencia computacional.
+Se desarrolló un algoritmo de clasificación basado en redes neuronales convolucionales
+utilizando aprendizaje por transferencia con cuatro arquitecturas preentrenadas:
+MobileNetV2, ResNet50V2, InceptionV3 y VGG19. La arquitectura propuesta incorporó bloques
+Multi-Head Attention y capas GaussianNoise como estrategias de regularización, logrando un
+equilibrio efectivo entre capacidad de generalización y eficiencia computacional.
 
-Se validó la efectividad del sistema mediante evaluación comparativa con trabajos previos y validación en conjuntos de datos externos. El modelo MobileNetV2 con filtrado alcanzó una sensibilidad del 96.5\% y un F1-score de 0.96 en clasificación binaria, con intervalos de confianza del 95\% que confirman la robustez estadística de estos resultados (AUC-ROC: 0.9636--0.9936). En clasificación multiclase, se determinó que el canal verde proporciona el mejor desempeño (exactitud de 0.55), hallazgo que posee fundamento fisiológico dada la absorción diferencial de la hemoglobina en esta longitud de onda.
+Se validó la efectividad del sistema mediante evaluación comparativa con trabajos previos
+y validación en conjuntos de datos externos. El modelo MobileNetV2 con filtrado alcanzó
+una sensibilidad del 96.5\% y un F1-score de 0.96 en clasificación binaria, con intervalos
+de confianza del 95\% que confirman la robustez estadística de estos resultados (AUC-ROC:
+0.9636--0.9936). En clasificación multiclase, se determinó que el canal verde proporciona
+el mejor desempeño (exactitud de 0.55), hallazgo que posee fundamento fisiológico dada la
+absorción diferencial de la hemoglobina en esta longitud de onda.
 
-Los resultados demuestran que la implementación de modelos de aprendizaje profundo con arquitecturas ligeras y preprocesamiento robusto constituye una alternativa técnicamente viable para el tamizaje automatizado de retinopatía diabética. Esta solución posee potencial para abordar la escasez de especialistas en oftalmología documentada en Colombia, donde la proporción actual de 1.56 oftalmólogos por cada 100{,}000 habitantes resulta insuficiente para atender a los aproximadamente 1.2 millones de personas con retinopatía diabética en el país.
+Los resultados demuestran que la implementación de modelos de aprendizaje profundo con
+arquitecturas ligeras y preprocesamiento robusto constituye una alternativa técnicamente
+viable para el tamizaje automatizado de retinopatía diabética. Esta solución posee
+potencial para abordar la escasez de especialistas en oftalmología documentada en
+Colombia, donde la proporción actual de 1.56 oftalmólogos por cada 100{,}000 habitantes
+resulta insuficiente para atender a los aproximadamente 1.2 millones de personas con
+retinopatía diabética en el país.
 
-Se concluye que los algoritmos de aprendizaje profundo, particularmente cuando se combinan con técnicas de aprendizaje por transferencia y preprocesamiento especializado, ofrecen un enfoque prometedor para la detección temprana de retinopatía diabética, con métricas de desempeño comparables a las reportadas en la literatura internacional y capacidad de generalización validada en múltiples conjuntos de datos clínicos.
+Se concluye que los algoritmos de aprendizaje profundo, particularmente cuando se combinan
+con técnicas de aprendizaje por transferencia y preprocesamiento especializado, ofrecen un
+enfoque prometedor para la detección temprana de retinopatía diabética, con métricas de
+desempeño comparables a las reportadas en la literatura internacional y capacidad de
+generalización validada en múltiples conjuntos de datos clínicos.

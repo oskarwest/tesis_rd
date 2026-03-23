@@ -5,7 +5,7 @@
 % ------------------------------------------------------------------------
 % ------------------------------------------------------------------------
 % ------------------------------------------------------------------------
-% Librería para realización de informes de trabajo de grado en formato APA
+% Librería para realización de informes de trabajo de grado en formato ICONTEC
 % construida para uso de la Universidad Industrial de Santander.
 %
 % Reservados todos los derechos
@@ -54,11 +54,9 @@
 \usepackage[labelsep=period]{caption}
 \captionsetup{justification=raggedright,singlelinecheck=false}
 % ------------------------------------------------------------------------
-% Márgenes de documento
+% Márgenes de documento (Guía UIS-ICONTEC: Superior 2cm, Izquierdo 3cm, Derecho 2cm, Inferior 2cm)
 % ------------------------------------------------------------------------
-\usepackage[top=3cm, bottom=3cm, left=4cm, right=2cm]{geometry}
-\topmargin 0pt
-\textheight 21 cm
+\usepackage[top=2cm, bottom=2cm, left=3cm, right=2cm]{geometry}
 % ------------------------------------------------------------------------
 % Librería que permite manipular el formato de bibliografía
 % ------------------------------------------------------------------------
@@ -107,16 +105,16 @@
 % ------------------------------------------------------------------------
 % Definición de estilo para secciones y subsecciones en el texto
 % ------------------------------------------------------------------------
-\titleformat{\chapter}{\normalfont\normalsize\bfseries\centering}{\thechapter. }{0pt}{}
+\titleformat{\chapter}{\normalfont\normalsize\bfseries\centering}{\thechapter. }{0pt}{\MakeUppercase}
 \titlespacing{\chapter}{0pt}{0pt}{20pt}
 
-\titleformat{\section}{\normalfont\normalsize\bfseries}{\thesection. }{0pt}{}
+\titleformat{\section}{\normalfont\normalsize\bfseries}{\thesection. }{0pt}{\MakeUppercase}
 
-\titleformat{\subsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsection. }{0pt}{}
-\titlespacing{\subsection}{0pt}{20pt}{20pt}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection. }{0pt}{}
+\titlespacing{\subsection}{0pt}{20pt}{6pt}
 
-\titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection. }{0pt}{}
-\titlespacing{\subsubsection}{0pt}{20pt}{20pt}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection. }{0pt}{}
+\titlespacing{\subsubsection}{0pt}{20pt}{6pt}
 % ------------------------------------------------------------------------
 % Definición para capítulo sin número en tabla de contenidos
 % ------------------------------------------------------------------------

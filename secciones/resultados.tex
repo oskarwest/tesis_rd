@@ -3,12 +3,24 @@
 
 \section{CLASIFICACIÓN BINARIA}
 
-\subsection{VARIANDO REDES PREENTRENADAS:} Se implementó una estrategia de Transfer Learning utilizando diversas redes preentrenadas disponibles en Keras Applications. Debido a que cada red requiere un tamaño de entrada específico, se seleccionaron finalmente VGG19, ResNet50V2, InceptionV3 y MobileNetV2, todas con tamaños de entrada compatibles. Estas arquitecturas permiten analizar la estrategia tanto desde el punto de vista de desempeño como de eficiencia computacional, considerando la velocidad de inferencia y la cantidad de parámetros. Además, se eligieron para comparar el comportamiento de redes clásicas, como VGG19, frente a arquitecturas más modernas, como MobileNetV2. En la Tabla 4 se presentan los resultados obtenidos al entrenar el modelo CNN variando entre estas redes preentrenadas, fijando un umbral de decisión de 0.5, con el objetivo de identificar la red base con mejor desempeño en la clasificación binaria (RD / NoRD) en términos de precisión, sensibilidad, F1-score y exactitud.
+\subsection{VARIANDO REDES PREENTRENADAS:} Se implementó una estrategia de Transfer
+Learning utilizando diversas redes preentrenadas disponibles en Keras Applications. Debido
+a que cada red requiere un tamaño de entrada específico, se seleccionaron finalmente
+VGG19, ResNet50V2, InceptionV3 y MobileNetV2, todas con tamaños de entrada compatibles.
+Estas arquitecturas permiten analizar la estrategia tanto desde el punto de vista de
+desempeño como de eficiencia computacional, considerando la velocidad de inferencia y la
+cantidad de parámetros. Además, se eligieron para comparar el comportamiento de redes
+clásicas, como VGG19, frente a arquitecturas más modernas, como MobileNetV2. En la Tabla 4
+se presentan los resultados obtenidos al entrenar el modelo CNN variando entre estas redes
+preentrenadas, fijando un umbral de decisión de 0.5, con el objetivo de identificar la red
+base con mejor desempeño en la clasificación binaria (RD / NoRD) en términos de precisión,
+sensibilidad, F1-score y exactitud.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2} 
-	\caption{Desempeño de redes pre-entrenadas para la clasificación binaria de Retinopatía Diabética usando el dataset original de Kaggle}
+	\caption{Desempeño de redes pre-entrenadas para la clasificación binaria de Retinopatía
+	Diabética usando el dataset original de Kaggle}
 	\label{tab:comparacion_redes}
 	\begin{tabularx}{\textwidth}{l l Y Y Y Y}
 		\toprule
@@ -29,7 +41,14 @@
 	\end{tabularx}
 \end{table}
 
-MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor exactitud (0.95) y F1-score (0.95), combinando además un tiempo de inferencia relativamente bajo en comparación con las demás redes. VGG19 presentó métricas intermedias (F1 $\approx$ 0.86) pero con un tiempo de inferencia mayor, mientras que ResNet50V2 y InceptionV3 mostraron rendimientos inferiores (F1 $\approx$ 0.77 y 0.71, respectivamente), con tiempos de inferencia moderados. En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone} para los experimentos adicionales, al equilibrar precisión, sensibilidad y eficiencia computacional, lo que la hace más adecuada para un escenario de tamizaje clínico.
+MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor exactitud
+(0.95) y F1-score (0.95), combinando además un tiempo de inferencia relativamente bajo en
+comparación con las demás redes. VGG19 presentó métricas intermedias (F1 $\approx$ 0.86)
+pero con un tiempo de inferencia mayor, mientras que ResNet50V2 y InceptionV3 mostraron
+rendimientos inferiores (F1 $\approx$ 0.77 y 0.71, respectivamente), con tiempos de
+inferencia moderados. En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone}
+para los experimentos adicionales, al equilibrar precisión, sensibilidad y eficiencia
+computacional, lo que la hace más adecuada para un escenario de tamizaje clínico.
 
 
 \begin{figure}[ht!] 
@@ -93,12 +112,18 @@ MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor e
 \end{figure}
 
  
-\subsection{IMPACTO DEL FILTRADO DE IMÁGENES:} Con el objetivo de mejorar la calidad visual y resaltar características relevantes, se aplicó un filtrado previo a las imágenes del fondo de ojo utilizando las mismas redes pre-entrenadas. Tras evaluar el modelo se observó una mejora en el rendimiento: el tiempo de inferencia se redujo respecto al experimento sin filtrado, y se alcanzaron métricas más altas de desempeño, con F1-score de 0.96 para MobileNetV2, reflejando su superioridad.
+\subsection{IMPACTO DEL FILTRADO DE IMÁGENES:} Con el objetivo de mejorar la calidad
+visual y resaltar características relevantes, se aplicó un filtrado previo a las imágenes
+del fondo de ojo utilizando las mismas redes pre-entrenadas. Tras evaluar el modelo se
+observó una mejora en el rendimiento: el tiempo de inferencia se redujo respecto al
+experimento sin filtrado, y se alcanzaron métricas más altas de desempeño, con F1-score de
+0.96 para MobileNetV2, reflejando su superioridad.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2} 
-	\caption{Comparación del rendimiento de las redes pre-entrenadas sin y con filtrado de imágenes}
+	\caption{Comparación del rendimiento de las redes pre-entrenadas sin y con filtrado de
+	imágenes}
 	\begin{tabularx}{\textwidth}{Y Y Y Y Y Y}
 		\toprule
 		Red Pre-entrenada & Sensibilidad & Especificidad &  Precisión & F1-score & Dataset  \\
@@ -200,22 +225,33 @@ MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor e
 		\end{tabular} 
 		\caption*{(d) InceptionV3 con filtrado} 
 	\end{minipage} 
-	\caption{Matrices de confusión para las redes preentrenadas utilizando las imágenes con filtrado.}
+	\caption{Matrices de confusión para las redes preentrenadas utilizando las imágenes con
+	filtrado.}
 \end{figure}
 
 
-La aplicación de filtrado incrementó levemente el rendimiento de las demás redes, manteniendo la jerarquía de desempeño: VGG19 mostró un F1-score intermedio (~0.89), mientras que ResNet50V2 e InceptionV3 tuvieron incrementos moderados (~0.81 y 0.74, respectivamente). El cambio más notable fue la reducción de falsos positivos en MobileNetV2 (aproximadamente 4 vs. 6 sin filtrado), lo que mejora la especificidad clínica y disminuye derivaciones innecesarias. Los falsos negativos aumentaron ligeramente (3 vs. 5), pero permanecieron dentro de márgenes aceptables de confianza.
+La aplicación de filtrado incrementó levemente el rendimiento de las demás redes,
+manteniendo la jerarquía de desempeño: VGG19 mostró un F1-score intermedio (~0.89),
+mientras que ResNet50V2 e InceptionV3 tuvieron incrementos moderados (~0.81 y 0.74,
+respectivamente). El cambio más notable fue la reducción de falsos positivos en
+MobileNetV2 (aproximadamente 4 vs. 6 sin filtrado), lo que mejora la especificidad clínica
+y disminuye derivaciones innecesarias. Los falsos negativos aumentaron ligeramente (3 vs.
+5), pero permanecieron dentro de márgenes aceptables de confianza.
 
 
 
 
 
-\subsection{OPTIMIZACIÓN DEL UMBRAL DE DECISIÓN:} El umbral de decisión de los modelos fue optimizado mediante la maximización del F1-score en el conjunto de validación. Como se observa en la Tabla, MobileNetV2 alcanzó un umbral óptimo de 0.4826, mientras que las demás redes presentan valores ligeramente superiores o inferiores.
+\subsection{OPTIMIZACIÓN DEL UMBRAL DE DECISIÓN:} El umbral de decisión de los modelos fue
+optimizado mediante la maximización del F1-score en el conjunto de validación. Como se
+observa en la Tabla, MobileNetV2 alcanzó un umbral óptimo de 0.4826, mientras que las
+demás redes presentan valores ligeramente superiores o inferiores.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Umbral de decisión óptimo obtenido para cada red preentrenada en clasificación binaria.}
+	\caption{Umbral de decisión óptimo obtenido para cada red preentrenada en clasificación
+	binaria.}
 	\begin{tabular}{lc}
 		\hline
 		Modelo & Umbral Óptimo\\ \hline
@@ -227,12 +263,19 @@ La aplicación de filtrado incrementó levemente el rendimiento de las demás re
 	\end{tabular}
 \end{table}
 
-Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F1-score de 0.9519 para MobileNetV2 con filtrado. El modelo muestra un balance adecuado entre la detección de casos positivos y la reducción de falsos positivos, lo que lo hace apropiado para tareas de tamizaje. Con este umbral, por cada 1.000 pacientes examinados, se esperarían aproximadamente: 476 verdaderos positivos y 451 verdaderos negativos, 50 falsos negativos (casos no detectados de RD) y 24 falsos positivos (pacientes sin RD que serían derivados innecesariamente).
+Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F1-score de
+0.9519 para MobileNetV2 con filtrado. El modelo muestra un balance adecuado entre la
+detección de casos positivos y la reducción de falsos positivos, lo que lo hace apropiado
+para tareas de tamizaje. Con este umbral, por cada 1.000 pacientes examinados, se
+esperarían aproximadamente: 476 verdaderos positivos y 451 verdaderos negativos, 50 falsos
+negativos (casos no detectados de RD) y 24 falsos positivos (pacientes sin RD que serían
+derivados innecesariamente).
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Comparación del rendimiento de las redes preentrenadas en clasificación binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado.}
+	\caption{Comparación del rendimiento de las redes preentrenadas en clasificación binaria
+	utilizando el umbral fijo (0.5) y el umbral óptimo calculado.}
 	\begin{tabularx}{\textwidth}{Y Y Y Y Y Y}
 		\toprule
 		Modelo & Umbral & Exactitud & Precisión & Recall & F1-score \\ 
@@ -256,12 +299,19 @@ Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F
 \vspace{1.0cm}
 
 
-\textbf{BOOTSTRAP:} Con el fin de estimar la variabilidad e incertidumbre de las métricas de desempeño, se aplicó la técnica de remuestreo bootstrap. Este método consiste en generar múltiples subconjuntos del conjunto de prueba mediante muestreo aleatorio con reemplazo, recalculando en cada iteración las métricas de interés (exactitud, precisión, sensibilidad, especificidad, F1-score y AUC-ROC). A partir de la distribución de estos valores se obtuvieron los intervalos de confianza al 95\%, permitiendo evaluar la robustez y estabilidad estadística de los resultados, como se muestra en la Tabla correspondiente.
+\textbf{BOOTSTRAP:} Con el fin de estimar la variabilidad e incertidumbre de las métricas
+de desempeño, se aplicó la técnica de remuestreo bootstrap. Este método consiste en
+generar múltiples subconjuntos del conjunto de prueba mediante muestreo aleatorio con
+reemplazo, recalculando en cada iteración las métricas de interés (exactitud, precisión,
+sensibilidad, especificidad, F1-score y AUC-ROC). A partir de la distribución de estos
+valores se obtuvieron los intervalos de confianza al 95\%, permitiendo evaluar la robustez
+y estabilidad estadística de los resultados, como se muestra en la Tabla correspondiente.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Intervalos de confianza (IC95\%) de las métricas de desempeño para el mejor modelo (MobileNetV2 con filtrado).}
+	\caption{Intervalos de confianza (IC95\%) de las métricas de desempeño para el mejor
+	modelo (MobileNetV2 con filtrado).}
 	\begin{tabular}{lc}
 		\hline
 		Métrica & IC95\% \\ \hline
@@ -275,7 +325,16 @@ Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F
 	\end{tabular}
 \end{table}
 
-\subsection{VALIDACIÓN EXTERNA UTILIZANDO EL MEJOR MODELO:} Para evaluar la generalización del modelo MobileNetV2 con filtrado y umbral óptimo, se realizaron pruebas en conjuntos de datos externos (FOSCAL, IDRiD y MESSIDOR). Como se observa en la Tabla, el modelo mantiene un desempeño sólido, aunque con una leve disminución en comparación con el dataset original, lo que es consistente con la literatura y se atribuye a diferencias en la calidad de las imágenes, adquisición y distribución de clases. En particular, MESSIDOR mostró los mejores resultados, reflejando su alta calidad de imágenes, mientras que IDRiD presentó métricas más bajas debido a su tamaño reducido y mayor heterogeneidad. Estos resultados confirman que el modelo generaliza de manera robusta, aunque el desempeño puede variar según las características específicas de cada dataset externo.
+\subsection{VALIDACIÓN EXTERNA UTILIZANDO EL MEJOR MODELO:} Para evaluar la generalización
+del modelo MobileNetV2 con filtrado y umbral óptimo, se realizaron pruebas en conjuntos de
+datos externos (FOSCAL, IDRiD y MESSIDOR). Como se observa en la Tabla, el modelo mantiene
+un desempeño sólido, aunque con una leve disminución en comparación con el dataset
+original, lo que es consistente con la literatura y se atribuye a diferencias en la
+calidad de las imágenes, adquisición y distribución de clases. En particular, MESSIDOR
+mostró los mejores resultados, reflejando su alta calidad de imágenes, mientras que IDRiD
+presentó métricas más bajas debido a su tamaño reducido y mayor heterogeneidad. Estos
+resultados confirman que el modelo generaliza de manera robusta, aunque el desempeño puede
+variar según las características específicas de cada dataset externo.
 
 \begin{figure}[H] 
 	\centering 
@@ -319,11 +378,13 @@ Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F
 		\caption*{(c) MESSIDOR-2} 
 	\end{minipage}
 	\hfill 
-	\caption{Matrices de confusión del modelo MobileNetV2 con filtrado evaluado en datasets externos}
+	\caption{Matrices de confusión del modelo MobileNetV2 con filtrado evaluado en datasets
+	externos}
 \end{figure}
 
 
-\subsection{COMPARACIÓN CON TRABAJOS PREVIOS:} Aqui falta encontrar trabajos previos que hayan utilizado estas redes preentrenadas para resolver el mismo problema de clasificacion
+\subsection{COMPARACIÓN CON TRABAJOS PREVIOS:} Aqui falta encontrar trabajos previos que
+hayan utilizado estas redes preentrenadas para resolver el mismo problema de clasificacion
 
 \begin{table}[ht!]
 	\centering
@@ -352,12 +413,24 @@ Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F
  
 \section{CLASIFICACIÓN MULTICLASE}
 
-Tras determinar la configuración óptima para la clasificación binaria de retinopatía diabética mediante diversos experimentos, este estudio escala dicho enfoque hacia modelos multiclase. Esta transición se justifica por la relevancia de estos modelos en entornos clínicos y su mayor impacto en la investigación médica. Partiendo del conocimiento previo, se definieron los hiperparámetros y se evaluaron distintas arquitecturas preentrenadas. Asimismo, se amplió el análisis al procesamiento de color, comparando el rendimiento de imágenes RGB completas frente al uso independiente de cada canal, dado que estos proporcionan mapas de características distintos. Debido a que la clasificación multiclase conlleva una mayor complejidad y riesgo de confusión entre categorías, se incrementó la variabilidad de los parámetros explorados. El propósito final fue identificar la combinación ideal de preprocesamiento, arquitectura base y topología densa para maximizar el rendimiento en un entorno multiclase riguroso
+Tras determinar la configuración óptima para la clasificación binaria de retinopatía
+diabética mediante diversos experimentos, este estudio escala dicho enfoque hacia modelos
+multiclase. Esta transición se justifica por la relevancia de estos modelos en entornos
+clínicos y su mayor impacto en la investigación médica. Partiendo del conocimiento previo,
+se definieron los hiperparámetros y se evaluaron distintas arquitecturas preentrenadas.
+Asimismo, se amplió el análisis al procesamiento de color, comparando el rendimiento de
+imágenes RGB completas frente al uso independiente de cada canal, dado que estos
+proporcionan mapas de características distintos. Debido a que la clasificación multiclase
+conlleva una mayor complejidad y riesgo de confusión entre categorías, se incrementó la
+variabilidad de los parámetros explorados. El propósito final fue identificar la
+combinación ideal de preprocesamiento, arquitectura base y topología densa para maximizar
+el rendimiento en un entorno multiclase riguroso
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
-	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el dataset de Kaggle \textbf{RGB}}
+	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
+	dataset de Kaggle \textbf{RGB}}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
 		\toprule
 		& Normal & Leve &  Moderada & Severa & PDR \\
@@ -406,7 +479,8 @@ Tras determinar la configuración óptima para la clasificación binaria de reti
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
-	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el dataset de Kaggle canal \textbf{VERDE}}
+	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
+	dataset de Kaggle canal \textbf{VERDE}}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
 		\toprule
 		& Normal & Leve &  Moderada & Severa & PDR \\
@@ -455,7 +529,8 @@ Tras determinar la configuración óptima para la clasificación binaria de reti
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
-	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el dataset de Kaggle canal \textbf{AZUL}}
+	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
+	dataset de Kaggle canal \textbf{AZUL}}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
 		\toprule
 		& Normal & Leve &  Moderada & Severa & PDR \\
@@ -504,7 +579,8 @@ Tras determinar la configuración óptima para la clasificación binaria de reti
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
-	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el dataset de Kaggle canal \textbf{ROJO}}
+	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
+	dataset de Kaggle canal \textbf{ROJO}}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
 		\toprule
 		& Normal & Leve &  Moderada & Severa & PDR \\
@@ -553,7 +629,8 @@ Tras determinar la configuración óptima para la clasificación binaria de reti
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8} 
-	\caption{Desempeño de redes pre-entrenadas para la clasificación multiclase de Retinopatía Diabética usando todos y cada uno de los canales \textbf{RGB}}
+	\caption{Desempeño de redes pre-entrenadas para la clasificación multiclase de
+	Retinopatía Diabética usando todos y cada uno de los canales \textbf{RGB}}
 	\begin{tabularx}{\textwidth}{l  Y Y Y r}
 		\toprule
 		\multicolumn{5}{c}{RGB} \\
