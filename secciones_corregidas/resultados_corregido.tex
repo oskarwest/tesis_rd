@@ -1,25 +1,48 @@
 \chapter{RESULTADOS EXPERIMENTALES} \label{chap:resultados}
 
-Este capítulo presenta los resultados obtenidos de la implementación y evaluación de los modelos de clasificación de retinopatía diabética desarrollados, abordando los objetivos específicos OE5, OE6, OE7, OE8, OE9 y OE10 planteados en el Capítulo~\ref{chap:objetivos}. La exposición se organiza en dos secciones principales: primero se presentan los resultados de la clasificación binaria (presencia/ausencia de RD), incluyendo la comparación de arquitecturas CNN, el impacto del preprocesamiento mediante filtrado, la optimización del umbral de decisión, el análisis estadístico mediante bootstrap y la validación externa en tres datasets independientes. Posteriormente se exponen los resultados de la clasificación multiclase (gradación en cinco niveles de severidad), con énfasis en el análisis comparativo del desempeño al procesar diferentes canales de color (RGB, rojo, verde, azul).
+Este capítulo presenta los resultados obtenidos de la implementación y evaluación de los 
+modelos de clasificación de retinopatía diabética desarrollados, abordando los objetivos 
+específicos OE5, OE6, OE7, OE8, OE9 y OE10 planteados en el 
+Capítulo~\ref{chap:objetivos}. La exposición se organiza en dos secciones principales: 
+primero se presentan los resultados de la clasificación binaria (presencia/ausencia de 
+RD), incluyendo la comparación de arquitecturas CNN, el impacto del preprocesamiento 
+mediante filtrado, la optimización del umbral de decisión, el análisis estadístico 
+mediante bootstrap y la validación externa en tres datasets independientes. 
+Posteriormente se exponen los resultados de la clasificación multiclase (gradación en 
+cinco niveles de severidad), con énfasis en el análisis comparativo del desempeño al 
+procesar diferentes canales de color (RGB, rojo, verde, azul).
 
 \section{CLASIFICACIÓN BINARIA}
 
 \subsection{Comparación de arquitecturas CNN preentrenadas}
 
-Se implementó una estrategia de aprendizaje por transferencia utilizando diversas redes preentrenadas disponibles en Keras Applications. Debido a que cada red requiere un tamaño de entrada específico, se seleccionaron finalmente VGG19, ResNet50V2, InceptionV3 y MobileNetV2, todas con tamaños de entrada compatibles ($224 \times 224$ píxeles). Estas arquitecturas permiten analizar la estrategia tanto desde el punto de vista de desempeño como de eficiencia computacional, considerando la velocidad de inferencia y la cantidad de parámetros. Además, se eligieron para comparar el comportamiento de redes clásicas, como VGG19, frente a arquitecturas más modernas, como MobileNetV2.
+Se implementó una estrategia de aprendizaje por transferencia utilizando diversas redes 
+preentrenadas disponibles en Keras Applications. Debido a que cada red requiere un tamaño 
+de entrada específico, se seleccionaron finalmente VGG19, ResNet50V2, InceptionV3 y 
+MobileNetV2, todas con tamaños de entrada compatibles ($224 \times 224$ píxeles). Estas 
+arquitecturas permiten analizar la estrategia tanto desde el punto de vista de desempeño 
+como de eficiencia computacional, considerando la velocidad de inferencia y la cantidad 
+de parámetros. Además, se eligieron para comparar el comportamiento de redes clásicas, 
+como VGG19, frente a arquitecturas más modernas, como MobileNetV2.
 
-En la Tabla~\ref{tab:comparacion_redes} se presentan los resultados obtenidos al entrenar el modelo CNN variando entre estas redes preentrenadas, fijando un umbral de decisión de 0.5, con el objetivo de identificar la red base con mejor desempeño en la clasificación binaria (RD / No RD) en términos de precisión, sensibilidad, F1-score y especificidad.
+En la Tabla~\ref{tab:comparacion_redes} se presentan los resultados obtenidos al entrenar 
+el modelo CNN variando entre estas redes preentrenadas, fijando un umbral de decisión de 
+0.5, con el objetivo de identificar la red base con mejor desempeño en la clasificación 
+binaria (RD / No RD) en términos de precisión, sensibilidad, F1-score y especificidad.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Desempeño de redes preentrenadas para clasificación binaria de retinopatía diabética usando el dataset original de Kaggle}
+	\caption{Desempeño de redes preentrenadas para clasificación binaria de 
+retinopatía diabética usando el dataset original de Kaggle}
 	\label{tab:comparacion_redes}
 	\begin{tabularx}{\textwidth}{l l Y Y Y Y}
 		\toprule
-		Red Preentrenada & Clase & Sensibilidad & Especificidad & Precisión & F1-score \\
+		Red Preentrenada & Clase & Sensibilidad & Especificidad & Precisión & 
+F1-score \\
 		\midrule
-		\multirow{2}{*}{MobileNetV2} & RD & \textbf{0.95} & \textbf{0.94} & \textbf{0.95} & \textbf{0.95} \\
+		\multirow{2}{*}{MobileNetV2} & RD & \textbf{0.95} & \textbf{0.94} & 
+\textbf{0.95} & \textbf{0.95} \\
 		& No RD & \textbf{0.93} & \textbf{0.94} & \textbf{0.93} & \textbf{0.93} \\
 		\midrule
 		\multirow{2}{*}{ResNet50V2} & RD & 0.77 & 0.78 & 0.77 & 0.77 \\
@@ -34,16 +57,30 @@ En la Tabla~\ref{tab:comparacion_redes} se presentan los resultados obtenidos al
 	\end{tabularx}
 \end{table}
 
-MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor exactitud (0.95) y F1-score (0.95), combinando además un tiempo de inferencia relativamente bajo en comparación con las demás redes. VGG19 presentó métricas intermedias (F1 $\approx$ 0.86) pero con un tiempo de inferencia mayor, mientras que ResNet50V2 e InceptionV3 mostraron rendimientos inferiores (F1 $\approx$ 0.77 y 0.71, respectivamente), con tiempos de inferencia moderados.
+MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor exactitud 
+(0.95) y F1-score (0.95), combinando además un tiempo de inferencia relativamente bajo en 
+comparación con las demás redes. VGG19 presentó métricas intermedias (F1 $\approx$ 0.86) 
+pero con un tiempo de inferencia mayor, mientras que ResNet50V2 e InceptionV3 mostraron 
+rendimientos inferiores (F1 $\approx$ 0.77 y 0.71, respectivamente), con tiempos de 
+inferencia moderados.
 
-Esta superioridad de MobileNetV2 puede atribuirse a su arquitectura eficiente basada en bloques residuales invertidos y cuellos de botella lineales, que proporciona una regularización implícita beneficiosa cuando el conjunto de datos disponible es limitado. En contraste, VGG19, a pesar de su profundidad, exhibió tendencia al sobreajuste debido a su elevado número de parámetros en capas completamente conectadas y ausencia de conexiones residuales.
+Esta superioridad de MobileNetV2 puede atribuirse a su arquitectura eficiente basada en 
+bloques residuales invertidos y cuellos de botella lineales, que proporciona una 
+regularización implícita beneficiosa cuando el conjunto de datos disponible es limitado. 
+En contraste, VGG19, a pesar de su profundidad, exhibió tendencia al sobreajuste debido a 
+su elevado número de parámetros en capas completamente conectadas y ausencia de 
+conexiones residuales.
 
-En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone} para los experimentos adicionales (OE5), al equilibrar precisión, sensibilidad y eficiencia computacional, lo que la hace más adecuada para un escenario de tamizaje clínico donde la velocidad de procesamiento es relevante.
+En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone} para los experimentos 
+adicionales (OE5), al equilibrar precisión, sensibilidad y eficiencia computacional, lo 
+que la hace más adecuada para un escenario de tamizaje clínico donde la velocidad de 
+procesamiento es relevante.
 
 \begin{figure}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Matrices de confusión para las diferentes redes preentrenadas en clasificación binaria}
+	\caption{Matrices de confusión para las diferentes redes preentrenadas en 
+clasificación binaria}
 	\label{fig:conf-matrix-original}
 
 	% Matriz 1 - VGG19
@@ -104,18 +141,27 @@ En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone} para los exp
 
 \subsection{Impacto del preprocesamiento mediante filtrado}
 
-Con el objetivo de mejorar la calidad visual y resaltar características relevantes, se aplicó un filtrado previo a las imágenes del fondo de ojo utilizando las mismas redes preentrenadas. El algoritmo de preprocesamiento de Ben Graham, descrito en el Capítulo~\ref{chap:metodologia}, consistió en normalización de color mediante sustracción del promedio local con filtro gaussiano y enmascaramiento del 10\% periférico de la imagen.
+Con el objetivo de mejorar la calidad visual y resaltar características relevantes, se 
+aplicó un filtrado previo a las imágenes del fondo de ojo utilizando las mismas redes 
+preentrenadas. El algoritmo de preprocesamiento de Ben Graham, descrito en el 
+Capítulo~\ref{chap:metodologia}, consistió en normalización de color mediante sustracción 
+del promedio local con filtro gaussiano y enmascaramiento del 10\% periférico de la 
+imagen.
 
-Tras evaluar los modelos se observó una mejora en el rendimiento: el tiempo de inferencia se redujo respecto al experimento sin filtrado, y se alcanzaron métricas más altas de desempeño, con F1-score de 0.96 para MobileNetV2, reflejando su superioridad.
+Tras evaluar los modelos se observó una mejora en el rendimiento: el tiempo de inferencia 
+se redujo respecto al experimento sin filtrado, y se alcanzaron métricas más altas de 
+desempeño, con F1-score de 0.96 para MobileNetV2, reflejando su superioridad.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Comparación del rendimiento de las redes preentrenadas sin y con filtrado de imágenes}
+	\caption{Comparación del rendimiento de las redes preentrenadas sin y con 
+filtrado de imágenes}
 	\label{tab:impacto-filtrado}
 	\begin{tabularx}{\textwidth}{Y Y Y Y Y Y}
 		\toprule
-		Red Preentrenada & Sensibilidad & Especificidad & Precisión & F1-score & Dataset \\
+		Red Preentrenada & Sensibilidad & Especificidad & Precisión & F1-score & 
+Dataset \\
 		\midrule
 		\multirow{2}{*}{MobileNetV2} & 0.95 & 0.95 & 0.95 & 0.95 & Original \\
 		& 0.96 & 0.95 & 0.96 & 0.96 & Filtrado \\
@@ -132,14 +178,25 @@ Tras evaluar los modelos se observó una mejora en el rendimiento: el tiempo de 
 	\end{tabularx}
 \end{table}
 
-La aplicación de filtrado incrementó consistentemente el rendimiento de todas las redes, manteniendo la jerarquía de desempeño: VGG19 mostró un F1-score intermedio ($\approx$0.89), mientras que ResNet50V2 e InceptionV3 tuvieron incrementos moderados ($\approx$0.81 y 0.74, respectivamente). El cambio más notable fue la reducción de falsos positivos en MobileNetV2 (aproximadamente 4 vs. 6 sin filtrado), lo que mejora la especificidad clínica y disminuye derivaciones innecesarias. Los falsos negativos aumentaron ligeramente (3 vs. 5), pero permanecieron dentro de márgenes aceptables de confianza.
+La aplicación de filtrado incrementó consistentemente el rendimiento de todas las redes, 
+manteniendo la jerarquía de desempeño: VGG19 mostró un F1-score intermedio 
+($\approx$0.89), mientras que ResNet50V2 e InceptionV3 tuvieron incrementos moderados 
+($\approx$0.81 y 0.74, respectivamente). El cambio más notable fue la reducción de falsos 
+positivos en MobileNetV2 (aproximadamente 4 vs. 6 sin filtrado), lo que mejora la 
+especificidad clínica y disminuye derivaciones innecesarias. Los falsos negativos 
+aumentaron ligeramente (3 vs. 5), pero permanecieron dentro de márgenes aceptables de 
+confianza.
 
-Este resultado confirma la importancia del preprocesamiento robusto para mitigar variaciones de brillo y contraste inherentes a la captura de imágenes en entornos clínicos heterogéneos, donde las condiciones de iluminación y los equipos de adquisición varían considerablemente.
+Este resultado confirma la importancia del preprocesamiento robusto para mitigar 
+variaciones de brillo y contraste inherentes a la captura de imágenes en entornos 
+clínicos heterogéneos, donde las condiciones de iluminación y los equipos de adquisición 
+varían considerablemente.
 
 \begin{figure}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Matrices de confusión para las redes preentrenadas utilizando imágenes con filtrado}
+	\caption{Matrices de confusión para las redes preentrenadas utilizando imágenes 
+con filtrado}
 	\label{fig:conf-matrix-filtrado}
 
 	% Matriz 1 - VGG19
@@ -200,12 +257,16 @@ Este resultado confirma la importancia del preprocesamiento robusto para mitigar
 
 \subsection{Optimización del umbral de decisión}
 
-El umbral de decisión de los modelos fue optimizado mediante la maximización del F1-score en el conjunto de validación. Como se observa en la Tabla~\ref{tab:umbral-optimo}, MobileNetV2 alcanzó un umbral óptimo de 0.4826, mientras que las demás redes presentan valores ligeramente diferentes.
+El umbral de decisión de los modelos fue optimizado mediante la maximización del F1-score 
+en el conjunto de validación. Como se observa en la Tabla~\ref{tab:umbral-optimo}, 
+MobileNetV2 alcanzó un umbral óptimo de 0.4826, mientras que las demás redes presentan 
+valores ligeramente diferentes.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Umbral de decisión óptimo obtenido para cada red preentrenada en clasificación binaria}
+	\caption{Umbral de decisión óptimo obtenido para cada red preentrenada en 
+clasificación binaria}
 	\label{tab:umbral-optimo}
 	\begin{tabular}{lc}
 		\hline
@@ -218,14 +279,24 @@ El umbral de decisión de los modelos fue optimizado mediante la maximización d
 	\end{tabular}
 \end{table}
 
-Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F1-score de 0.9519 para MobileNetV2 con filtrado. El modelo muestra un balance adecuado entre la detección de casos positivos y la reducción de falsos positivos, lo que lo hace apropiado para tareas de tamizaje. Con este umbral, por cada 1,000 pacientes examinados se esperarían aproximadamente: 476 verdaderos positivos y 451 verdaderos negativos, 50 falsos negativos (casos no detectados de RD) y 24 falsos positivos (pacientes sin RD que serían derivados innecesariamente).
+Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F1-score de 
+0.9519 para MobileNetV2 con filtrado. El modelo muestra un balance adecuado entre la 
+detección de casos positivos y la reducción de falsos positivos, lo que lo hace apropiado 
+para tareas de tamizaje. Con este umbral, por cada 1,000 pacientes examinados se 
+esperarían aproximadamente: 476 verdaderos positivos y 451 verdaderos negativos, 50 
+falsos negativos (casos no detectados de RD) y 24 falsos positivos (pacientes sin RD que 
+serían derivados innecesariamente).
 
-La optimización del umbral representa una mejora sutil pero relevante en el contexto clínico, ya que permite ajustar el balance entre sensibilidad y especificidad según las prioridades del programa de tamizaje. Un umbral menor a 0.5 favorece la sensibilidad, lo cual es apropiado para detección temprana donde se prioriza minimizar casos no detectados.
+La optimización del umbral representa una mejora sutil pero relevante en el contexto 
+clínico, ya que permite ajustar el balance entre sensibilidad y especificidad según las 
+prioridades del programa de tamizaje. Un umbral menor a 0.5 favorece la sensibilidad, lo 
+cual es apropiado para detección temprana donde se prioriza minimizar casos no detectados.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Comparación del rendimiento de las redes preentrenadas en clasificación binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado}
+	\caption{Comparación del rendimiento de las redes preentrenadas en clasificación 
+binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado}
 	\label{tab:comparacion-umbral}
 	\begin{tabularx}{\textwidth}{Y Y Y Y Y Y}
 		\toprule
@@ -248,12 +319,19 @@ La optimización del umbral representa una mejora sutil pero relevante en el con
 
 \subsection{Análisis estadístico mediante bootstrap}
 
-Con el fin de estimar la variabilidad e incertidumbre de las métricas de desempeño, se aplicó la técnica de remuestreo bootstrap con 1,000 iteraciones (OE8). Este método consiste en generar múltiples subconjuntos del conjunto de prueba mediante muestreo aleatorio con reemplazo, recalculando en cada iteración las métricas de interés (exactitud, precisión, sensibilidad, especificidad, F1-score y AUC-ROC). A partir de la distribución de estos valores se obtuvieron los intervalos de confianza al 95\%, permitiendo evaluar la robustez y estabilidad estadística de los resultados.
+Con el fin de estimar la variabilidad e incertidumbre de las métricas de desempeño, se 
+aplicó la técnica de remuestreo bootstrap con 1,000 iteraciones (OE8). Este método 
+consiste en generar múltiples subconjuntos del conjunto de prueba mediante muestreo 
+aleatorio con reemplazo, recalculando en cada iteración las métricas de interés 
+(exactitud, precisión, sensibilidad, especificidad, F1-score y AUC-ROC). A partir de la 
+distribución de estos valores se obtuvieron los intervalos de confianza al 95\%, 
+permitiendo evaluar la robustez y estabilidad estadística de los resultados.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Intervalos de confianza (IC95\%) de las métricas de desempeño para el mejor modelo (MobileNetV2 con filtrado y umbral óptimo)}
+	\caption{Intervalos de confianza (IC95\%) de las métricas de desempeño para el 
+mejor modelo (MobileNetV2 con filtrado y umbral óptimo)}
 	\label{tab:bootstrap-ic}
 	\begin{tabular}{lc}
 		\hline
@@ -268,18 +346,37 @@ Con el fin de estimar la variabilidad e incertidumbre de las métricas de desemp
 	\end{tabular}
 \end{table}
 
-Los intervalos de confianza relativamente estrechos, particularmente para sensibilidad [0.9510--1.0000] y AUC-ROC [0.9636--0.9936], confirman la robustez y estabilidad del modelo. El límite inferior de sensibilidad (0.9510) indica que, con 95\% de confianza, el modelo detectará al menos el 95.1\% de los casos positivos, lo cual es altamente competitivo en el contexto de tamizaje de retinopatía diabética. El AUC-ROC superior a 0.96 en el peor escenario del intervalo de confianza confirma la excelente capacidad discriminatoria del modelo.
+Los intervalos de confianza relativamente estrechos, particularmente para sensibilidad 
+[0.9510--1.0000] y AUC-ROC [0.9636--0.9936], confirman la robustez y estabilidad del 
+modelo. El límite inferior de sensibilidad (0.9510) indica que, con 95\% de confianza, el 
+modelo detectará al menos el 95.1\% de los casos positivos, lo cual es altamente 
+competitivo en el contexto de tamizaje de retinopatía diabética. El AUC-ROC superior a 
+0.96 en el peor escenario del intervalo de confianza confirma la excelente capacidad 
+discriminatoria del modelo.
 
 \subsection{Validación externa utilizando el mejor modelo}
 
-Para evaluar la generalización del modelo MobileNetV2 con filtrado y umbral óptimo (OE9), se realizaron pruebas en tres conjuntos de datos externos independientes: FOSCAL, IDRiD y MESSIDOR-2. Como se observa en las matrices de confusión de la Figura~\ref{fig:conf-matrix-external} y en la Tabla~\ref{tab:validacion-externa}, el modelo mantiene un desempeño sólido, aunque con una leve disminución en comparación con el dataset original de Kaggle.
+Para evaluar la generalización del modelo MobileNetV2 con filtrado y umbral óptimo (OE9), 
+se realizaron pruebas en tres conjuntos de datos externos independientes: FOSCAL, IDRiD y 
+MESSIDOR-2. Como se observa en las matrices de confusión de la 
+Figura~\ref{fig:conf-matrix-external} y en la Tabla~\ref{tab:validacion-externa}, el 
+modelo mantiene un desempeño sólido, aunque con una leve disminución en comparación con 
+el dataset original de Kaggle.
 
-Esta disminución es consistente con la literatura y se atribuye a diferencias en la calidad de las imágenes, protocolos de adquisición y distribución de clases. En particular, MESSIDOR-2 mostró los mejores resultados (F1-score de 0.92), reflejando su alta calidad de imágenes y protocolo de adquisición estandarizado. IDRiD presentó métricas intermedias (F1-score de 0.86) debido a su tamaño reducido y mayor heterogeneidad. FOSCAL, como dataset clínico realista proveniente de un centro colombiano, exhibió resultados comparables (F1-score de 0.88) que reflejan condiciones de práctica clínica habitual.
+Esta disminución es consistente con la literatura y se atribuye a diferencias en la 
+calidad de las imágenes, protocolos de adquisición y distribución de clases. En 
+particular, MESSIDOR-2 mostró los mejores resultados (F1-score de 0.92), reflejando su 
+alta calidad de imágenes y protocolo de adquisición estandarizado. IDRiD presentó 
+métricas intermedias (F1-score de 0.86) debido a su tamaño reducido y mayor 
+heterogeneidad. FOSCAL, como dataset clínico realista proveniente de un centro 
+colombiano, exhibió resultados comparables (F1-score de 0.88) que reflejan condiciones de 
+práctica clínica habitual.
 
 \begin{figure}[H]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Matrices de confusión del modelo MobileNetV2 con filtrado evaluado en datasets externos}
+	\caption{Matrices de confusión del modelo MobileNetV2 con filtrado evaluado en 
+datasets externos}
 	\label{fig:conf-matrix-external}
 
 	% Matriz 1 - FOSCAL
@@ -342,56 +439,97 @@ MESSIDOR-2 & 0.92 & 0.89 & 0.92 & 0.92 \\
 \end{tabularx}
 \end{table}
 
-Estos resultados confirman que el modelo generaliza de manera robusta a datos externos con características de adquisición diferentes, demostrando su viabilidad como herramienta de apoyo al diagnóstico en diversos contextos clínicos. El mantenimiento de sensibilidades superiores al 82\% en todos los conjuntos externos indica que las características aprendidas por el modelo poseen suficiente robustez para su aplicación en escenarios clínicos diversos.
+Estos resultados confirman que el modelo generaliza de manera robusta a datos externos 
+con características de adquisición diferentes, demostrando su viabilidad como herramienta 
+de apoyo al diagnóstico en diversos contextos clínicos. El mantenimiento de 
+sensibilidades superiores al 82\% en todos los conjuntos externos indica que las 
+características aprendidas por el modelo poseen suficiente robustez para su aplicación en 
+escenarios clínicos diversos.
 
 \subsection{Comparación con trabajos previos en el estado del arte}
 
-Para contextualizar los resultados obtenidos dentro del estado del arte en detección automatizada de retinopatía diabética (OE10), se realizó una comparación con trabajos previos relevantes que utilizaron arquitecturas CNN similares. La Tabla~\ref{tab:comparacion-literatura} presenta esta comparación.
+Para contextualizar los resultados obtenidos dentro del estado del arte en detección 
+automatizada de retinopatía diabética (OE10), se realizó una comparación con trabajos 
+previos relevantes que utilizaron arquitecturas CNN similares. La 
+Tabla~\ref{tab:comparacion-literatura} presenta esta comparación.
 
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.2}
-\caption{Comparación del modelo propuesto con trabajos previos en clasificación binaria de RD}
+\caption{Comparación del modelo propuesto con trabajos previos en clasificación binaria 
+de RD}
 \label{tab:comparacion-literatura}
-\begin{tabularx}{\textwidth}{l X l Y Y}
+\begin{tabularx}{\textwidth}{X X l Y}
 \toprule
-Referencia & Arquitectura & Dataset & Sensibilidad & AUC-ROC \\ \midrule
-Gulshan et al. (2016) & Inception V3 personalizada & EyePACS + Messidor-2 & 0.97 & 0.99 \\
-Gargeya \& Leng (2017) & ResNet-based & EyePACS & 0.94 & 0.97 \\
-Reguant et al. (2021) & VGG16 + DenseNet & Kaggle DR & 0.91 & 0.95 \\
-Sarki et al. (2022) & MobileNetV2 + SVM & Kaggle DR & 0.89 & 0.93 \\
+\textbf{Referencia} & \textbf{Arquitectura} & \textbf{Dataset} & \textbf{Sensibilidad} \\ \midrule
+Gulshan et al. (2016) & Inception V3 personalizada & EyePACS + Messidor-2 & 0.97 \\
+Gargeya \& Leng (2017) & ResNet-based & EyePACS & 0.94 \\
+Reguant et al. (2021) & VGG16 + DenseNet & Kaggle DR & 0.91 \\
+Sarki et al. (2022) & MobileNetV2 + SVM & Kaggle DR & 0.89 \\
 \midrule
-\textbf{Modelo propuesto} & \textbf{MobileNetV2 + Attention} & \textbf{Kaggle DR} & \textbf{0.965} & \textbf{0.980} \\
+\textbf{Modelo propuesto} & \textbf{MobileNetV2 + Attention} & \textbf{Kaggle DR} & \textbf{0.965} \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-El modelo propuesto alcanza un desempeño competitivo, con sensibilidad de 96.5\% y AUC-ROC de 0.98, situándose entre los mejores reportados en la literatura para este dataset. Si bien Gulshan et al. reportaron métricas ligeramente superiores (97\% sensibilidad), su modelo fue entrenado con un conjunto de datos considerablemente mayor (118,000 imágenes) y con múltiples evaluaciones por clínicos expertos. El modelo propuesto logra resultados comparables con un conjunto de datos más limitado (35,121 imágenes), lo cual sugiere que la estrategia de preprocesamiento y las técnicas de regularización implementadas compensan parcialmente las limitaciones en volumen de datos.
+El modelo propuesto alcanza un desempeño competitivo, con sensibilidad de 96.5\% y 
+AUC-ROC de 0.98, situándose entre los mejores reportados en la literatura para este 
+dataset. Si bien Gulshan et al. reportaron métricas ligeramente superiores (97\% 
+sensibilidad), su modelo fue entrenado con un conjunto de datos considerablemente mayor 
+(118,000 imágenes) y con múltiples evaluaciones por clínicos expertos. El modelo 
+propuesto logra resultados comparables con un conjunto de datos más limitado (35,121 
+imágenes), lo cual sugiere que la estrategia de preprocesamiento y las técnicas de 
+regularización implementadas compensan parcialmente las limitaciones en volumen de datos.
 
 \section{CLASIFICACIÓN MULTICLASE}
 
-Tras determinar la configuración óptima para la clasificación binaria de retinopatía diabética mediante diversos experimentos, este estudio escala dicho enfoque hacia modelos multiclase (OE6). Esta transición se justifica por la relevancia de estos modelos en entornos clínicos y su mayor impacto en la investigación médica, ya que la gradación precisa de la severidad es crucial para la toma de decisiones terapéuticas.
+Tras determinar la configuración óptima para la clasificación binaria de retinopatía 
+diabética mediante diversos experimentos, este estudio escala dicho enfoque hacia modelos 
+multiclase (OE6). Esta transición se justifica por la relevancia de estos modelos en 
+entornos clínicos y su mayor impacto en la investigación médica, ya que la gradación 
+precisa de la severidad es crucial para la toma de decisiones terapéuticas.
 
-Partiendo del conocimiento previo, se definieron los hiperparámetros y se evaluaron distintas arquitecturas preentrenadas. Asimismo, se amplió el análisis al procesamiento de color (OE7), comparando el rendimiento de imágenes RGB completas frente al uso independiente de cada canal, dado que estos proporcionan mapas de características distintos. Debido a que la clasificación multiclase conlleva una mayor complejidad y riesgo de confusión entre categorías adyacentes, se incrementó la variabilidad de los parámetros explorados. El propósito final fue identificar la combinación ideal de preprocesamiento, arquitectura base y canal de color para maximizar el rendimiento en un entorno multiclase riguroso.
+Partiendo del conocimiento previo, se definieron los hiperparámetros y se evaluaron 
+distintas arquitecturas preentrenadas. Asimismo, se amplió el análisis al procesamiento 
+de color (OE7), comparando el rendimiento de imágenes RGB completas frente al uso 
+independiente de cada canal, dado que estos proporcionan mapas de características 
+distintos. Debido a que la clasificación multiclase conlleva una mayor complejidad y 
+riesgo de confusión entre categorías adyacentes, se incrementó la variabilidad de los 
+parámetros explorados. El propósito final fue identificar la combinación ideal de 
+preprocesamiento, arquitectura base y canal de color para maximizar el rendimiento en un 
+entorno multiclase riguroso.
 
 \subsection{Resultados con imágenes RGB}
 
-Las Tablas~\ref{tab:conf-matrix-rgb-mobile}~a~\ref{tab:conf-matrix-rgb-vgg} presentan las matrices de confusión para cada arquitectura procesando imágenes RGB completas. Se observa que MobileNetV2 alcanzó el mejor desempeño global con exactitud de 0.55 y sensibilidad promedio de 0.55 (ver Tabla~\ref{tab:resumen-multiclase}).
+Las Tablas~\ref{tab:conf-matrix-rgb-mobile}~a~\ref{tab:conf-matrix-rgb-vgg} presentan las 
+matrices de confusión para cada arquitectura procesando imágenes RGB completas. Se 
+observa que MobileNetV2 alcanzó el mejor desempeño global con exactitud de 0.55 y 
+sensibilidad promedio de 0.55 (ver Tabla~\ref{tab:resumen-multiclase}).
 
-El análisis de las matrices de confusión revela un patrón consistente de dificultad en la discriminación de clases intermedias, particularmente las clases 2 (moderada) y 3 (severa). Este fenómeno se debe a que estas categorías representan etapas de transición con límites clínicos difusos. La clase 2 (moderada), en particular, mostró la sensibilidad más baja en todas las arquitecturas, siendo frecuentemente confundida con las clases adyacentes (1-leve y 3-severa).
+El análisis de las matrices de confusión revela un patrón consistente de dificultad en la 
+discriminación de clases intermedias, particularmente las clases 2 (moderada) y 3 
+(severa). Este fenómeno se debe a que estas categorías representan etapas de transición 
+con límites clínicos difusos. La clase 2 (moderada), en particular, mostró la 
+sensibilidad más baja en todas las arquitecturas, siendo frecuentemente confundida con 
+las clases adyacentes (1-leve y 3-severa).
 
 \subsection{Análisis comparativo por canal de color}
 
-Uno de los hallazgos más relevantes de este trabajo es el impacto diferencial de los canales de color en el desempeño de clasificación multiclase. La Tabla~\ref{tab:resumen-multiclase} consolida los resultados obtenidos al procesar imágenes mediante diferentes canales.
+Uno de los hallazgos más relevantes de este trabajo es el impacto diferencial de los 
+canales de color en el desempeño de clasificación multiclase. La 
+Tabla~\ref{tab:resumen-multiclase} consolida los resultados obtenidos al procesar 
+imágenes mediante diferentes canales.
 
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{0.9}
-\caption{Desempeño de redes preentrenadas para clasificación multiclase de RD según canal de color procesado}
+\caption{Desempeño de redes preentrenadas para clasificación multiclase de RD según canal 
+de color procesado}
 \label{tab:resumen-multiclase}
 \begin{tabularx}{\textwidth}{l l Y Y Y Y}
 \toprule
-Canal & Red Preentrenada & Sensibilidad (\%) & Especificidad (\%) & Precisión (\%) & F1-score (\%) \\ \midrule
+Canal & Red Preentrenada & Sensibilidad (\%) & Especificidad (\%) & Precisión (\%) & 
+F1-score (\%) \\ \midrule
 \multirow{4}{*}{RGB} & MobileNetV2 & 55 & 50 & 52 & 50 \\
 & ResNet50V2 & 51 & 50 & 51 & 49 \\
 & InceptionV3 & 39 & 42 & 40 & 39 \\
@@ -400,7 +538,8 @@ Canal & Red Preentrenada & Sensibilidad (\%) & Especificidad (\%) & Precisión (
 & ResNet50V2 & 47 & 47 & 46 & 43 \\
 & InceptionV3 & 40 & 40 & 37 & 37 \\
 & VGG19 & 35 & 36 & 21 & 26 \\ \midrule
-\multirow{4}{*}{\textbf{Verde}} & \textbf{MobileNetV2} & \textbf{65} & \textbf{51} & \textbf{53} & \textbf{54} \\
+\multirow{4}{*}{\textbf{Verde}} & \textbf{MobileNetV2} & \textbf{65} & \textbf{51} & 
+\textbf{53} & \textbf{54} \\
 & ResNet50V2 & 58 & 50 & 55 & 54 \\
 & InceptionV3 & 48 & 48 & 50 & 47 \\
 & VGG19 & 38 & 36 & 40 & 34 \\ \midrule
@@ -411,15 +550,27 @@ Canal & Red Preentrenada & Sensibilidad (\%) & Especificidad (\%) & Precisión (
 \end{tabularx}
 \end{table}
 
-El canal verde demostró consistentemente el mejor desempeño en todas las arquitecturas evaluadas, superando tanto a la imagen RGB completa como a los canales rojo y azul de manera individual. MobileNetV2 con canal verde alcanzó una sensibilidad de 65\%, exactitud de 53\% y F1-score de 54\%, representando una mejora de 10 puntos porcentuales en sensibilidad respecto al procesamiento RGB completo.
+El canal verde demostró consistentemente el mejor desempeño en todas las arquitecturas 
+evaluadas, superando tanto a la imagen RGB completa como a los canales rojo y azul de 
+manera individual. MobileNetV2 con canal verde alcanzó una sensibilidad de 65\%, 
+exactitud de 53\% y F1-score de 54\%, representando una mejora de 10 puntos porcentuales 
+en sensibilidad respecto al procesamiento RGB completo.
 
-Este resultado tiene fundamento fisiológico: el canal verde proporciona el mejor contraste para la visualización de estructuras vasculares y lesiones hemorrágicas debido a la absorción diferencial de la hemoglobina en esta longitud de onda (~550 nm). Los microaneurismas, hemorragias y anomalías microvasculares intrarretinianas, signos característicos de la progresión de la retinopatía diabética, presentan mayor visibilidad en este espectro cromático.
+Este resultado tiene fundamento fisiológico: el canal verde proporciona el mejor 
+contraste para la visualización de estructuras vasculares y lesiones hemorrágicas debido 
+a la absorción diferencial de la hemoglobina en esta longitud de onda (~550 nm). Los 
+microaneurismas, hemorragias y anomalías microvasculares intrarretinianas, signos 
+característicos de la progresión de la retinopatía diabética, presentan mayor visibilidad 
+en este espectro cromático.
 
-La Figura~\ref{fig:comparacion-canales} visualiza esta mejora comparativa del canal verde frente a los demás canales para cada arquitectura.
+La Figura~\ref{fig:comparacion-canales} visualiza esta mejora comparativa del canal verde 
+frente a los demás canales para cada arquitectura.
 
 \subsection{Patrones de confusión y dificultades en clasificación multiclase}
 
-El análisis detallado de las matrices de confusión revela patrones de error sistemáticos con implicaciones clínicas diferenciadas. En todas las configuraciones evaluadas, el patrón predominante es la confusión entre clases adyacentes, particularmente entre:
+El análisis detallado de las matrices de confusión revela patrones de error sistemáticos 
+con implicaciones clínicas diferenciadas. En todas las configuraciones evaluadas, el 
+patrón predominante es la confusión entre clases adyacentes, particularmente entre:
 \begin{itemize}
     \item Clase 0 (sin RD) y Clase 1 (leve)
     \item Clase 1 (leve) y Clase 2 (moderada)
@@ -427,24 +578,45 @@ El análisis detallado de las matrices de confusión revela patrones de error si
     \item Clase 3 (severa) y Clase 4 (proliferativa)
 \end{itemize}
 
-Este patrón es consistente con la naturaleza continua del proceso patológico subyacente. La retinopatía diabética progresa de manera gradual, y los criterios de clasificación establecidos imponen límites discretos sobre un espectro continuo de severidad.
+Este patrón es consistente con la naturaleza continua del proceso patológico subyacente. 
+La retinopatía diabética progresa de manera gradual, y los criterios de clasificación 
+establecidos imponen límites discretos sobre un espectro continuo de severidad.
 
-La clase 2 (moderada) mostró consistentemente la sensibilidad más baja (valores entre 0.13 y 0.31 dependiendo de la configuración), siendo frecuentemente clasificada erróneamente como clase 1 (leve) o clase 3 (severa). Desde la perspectiva clínica, esta clase representa una etapa de transición caracterizada por la presencia de más microaneurismas que la etapa leve, pero sin alcanzar los criterios de la regla 4-2-1 que define la etapa severa. Esta naturaleza transicional, con límites difusos entre categorías adyacentes, explica parcialmente la confusión observada.
+La clase 2 (moderada) mostró consistentemente la sensibilidad más baja (valores entre 
+0.13 y 0.31 dependiendo de la configuración), siendo frecuentemente clasificada 
+erróneamente como clase 1 (leve) o clase 3 (severa). Desde la perspectiva clínica, esta 
+clase representa una etapa de transición caracterizada por la presencia de más 
+microaneurismas que la etapa leve, pero sin alcanzar los criterios de la regla 4-2-1 que 
+define la etapa severa. Esta naturaleza transicional, con límites difusos entre 
+categorías adyacentes, explica parcialmente la confusión observada.
 
 \section*{Hallazgos clave del capítulo}
 
 Los principales hallazgos experimentales pueden sintetizarse en los siguientes puntos:
 
 \begin{enumerate}
-    \item \textbf{Clasificación binaria}: MobileNetV2 con filtrado y umbral optimizado (0.4826) alcanzó una sensibilidad de 96.5\%, exactitud de 96\% y AUC-ROC de 0.98, con intervalos de confianza bootstrap robustos.
+    \item \textbf{Clasificación binaria}: MobileNetV2 con filtrado y umbral optimizado 
+(0.4826) alcanzó una sensibilidad de 96.5\%, exactitud de 96\% y AUC-ROC de 0.98, con 
+intervalos de confianza bootstrap robustos.
 
-    \item \textbf{Impacto del preprocesamiento}: El filtrado de Graham incrementó consistentemente el desempeño de todas las arquitecturas, con mejora más notable en MobileNetV2 (F1-score de 0.95 a 0.96).
+    \item \textbf{Impacto del preprocesamiento}: El filtrado de Graham incrementó 
+consistentemente el desempeño de todas las arquitecturas, con mejora más notable en 
+MobileNetV2 (F1-score de 0.95 a 0.96).
 
-    \item \textbf{Validación externa}: El modelo MobileNetV2 generalizó robustamente a tres datasets externos (MESSIDOR-2, IDRiD, FOSCAL), manteniendo sensibilidades entre 82\% y 92\%.
+    \item \textbf{Validación externa}: El modelo MobileNetV2 generalizó robustamente a 
+tres datasets externos (MESSIDOR-2, IDRiD, FOSCAL), manteniendo sensibilidades entre 82\% 
+y 92\%.
 
-    \item \textbf{Canal verde superior}: En clasificación multiclase, el procesamiento mediante canal verde superó consistentemente a RGB completo y otros canales, alcanzando 65\% de sensibilidad con MobileNetV2 (mejora de 10 puntos porcentuales vs RGB).
+    \item \textbf{Canal verde superior}: En clasificación multiclase, el procesamiento 
+mediante canal verde superó consistentemente a RGB completo y otros canales, alcanzando 
+65\% de sensibilidad con MobileNetV2 (mejora de 10 puntos porcentuales vs RGB).
 
-    \item \textbf{Desafíos multiclase}: La clasificación en cinco niveles de severidad mostró mayor dificultad, particularmente en clases intermedias (moderada y severa), con confusión sistemática entre categorías adyacentes.
+    \item \textbf{Desafíos multiclase}: La clasificación en cinco niveles de severidad 
+mostró mayor dificultad, particularmente en clases intermedias (moderada y severa), con 
+confusión sistemática entre categorías adyacentes.
 \end{enumerate}
 
-Estos resultados cumplen satisfactoriamente los objetivos específicos OE5 (clasificador binario), OE6 (clasificador multiclase), OE7 (análisis de canales RGB), OE8 (métricas con IC), OE9 (validación externa) y OE10 (comparación con estado del arte), y serán analizados en profundidad en el Capítulo~\ref{chap:discusion}.
+Estos resultados cumplen satisfactoriamente los objetivos específicos OE5 (clasificador 
+binario), OE6 (clasificador multiclase), OE7 (análisis de canales RGB), OE8 (métricas con 
+IC), OE9 (validación externa) y OE10 (comparación con estado del arte), y serán 
+analizados en profundidad en el Capítulo~\ref{chap:discusion}.

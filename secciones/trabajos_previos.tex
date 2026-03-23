@@ -1,0 +1,165 @@
+\chapter{TRABAJOS PREVIOS} \label{chap:trabajos-previos}
+
+En los últimos años, las técnicas de aprendizaje profundo han demostrado un rendimiento
+excepcional en numerosas tareas que van desde el reconocimiento de objetos hasta el
+procesamiento del lenguaje natural. El uso de técnicas de aprendizaje profundo,
+específicamente redes neuronales convolucionales (CNN), ha demostrado resultados
+prometedores en la detección automática de RD a través del análisis de imágenes del fondo
+de ojo. Dentro de este contexto, se incluyen varios enfoques que han contribuido en este
+campo de investigación.
+
+\section{Enfoques con CNN personalizadas}
+
+Este problema se ha abordado de distintas formas, planteándose distintas soluciones. En
+general, podemos ver en la literatura una preponderancia de la implementación de modelos
+previamente entrenados. Esto toma sentido cuando consideramos el costo de entrenamiento
+que tienen este tipo de modelos que se alimentan de cientos de miles de imágenes; solo
+pocos sectores de la industria tienen los recursos necesarios para llevar a cabo estos
+desarrollos. Muchos de los artículos recopilatorios encargados de comparar soluciones
+frente a la clasificación de la RD se encargan, en última instancia, de comparar la
+efectividad de distintos modelos preentrenados para la clasificación de la RD
+\myfootcite{bala2024comparative}, donde se comparan ocho de los modelos preentrenados más
+utilizados desde 2011 hasta 2022.
+
+En algunas investigaciones se observa un enfoque común: la personalización de un modelo
+de red neuronal convolucional (CNN) para abordar la detección automatizada de retinopatía
+diabética (RD). Esta estrategia implica modificar la arquitectura o los parámetros de un
+modelo CNN tradicional y mejorarlo en la tarea específica de la detección de RD. En este
+contexto, se han explorado diversas estrategias para mejorar la precisión y eficiencia de
+la detección de RD a partir de imágenes del fondo de la retina. Por ejemplo, se han
+aplicado etapas de preprocesamiento como escalado, recorte y ecualización adaptativa del
+histograma con limitación de contraste (CLAHE) para mejorar la calidad de las imágenes
+\myfootcite{tabtaba2024diabetic}.
+
+Además, se han utilizado técnicas de aumento de datos mediante redes generativas
+adversariales (GAN) para enriquecer el conjunto de datos de entrenamiento. Otros trabajos
+han introducido variantes personalizadas de CNN, como la Red Neuronal Convolucional
+Dilatada Multiescala Híbrida en Cascada (HCMD-CNN) \myfootcite{gayathri2020lightweight},
+que integra la Red de Atención Residual (RAN) y MobileNet, optimizando sus parámetros
+para lograr un mejor rendimiento en la detección de RD. Otros enfoques han empleado
+métodos de extracción de características mediante CNN, cuyas salidas se utilizan como
+entrada para diferentes clasificadores de aprendizaje automático
+\myfootcite{li2019computer} \myfootcite{gayathri2021diabetic}, como Support Vector
+Machine, AdaBoost, Naive Bayes, Random Forest y J48.
+
+\section{Enfoques con arquitecturas preentrenadas}
+
+Últimamente se han desarrollado otras aproximaciones que aprovechan arquitecturas
+preentrenadas en el ámbito de la detección y clasificación de retinopatía diabética (RD)
+en imágenes del fondo de ojo. Estos enfoques abarcan una variedad de modelos de
+aprendizaje profundo, tales como VGG16, InceptionResNetv2, Inceptionv3, DenseNet121,
+MobileNetV2, Xception y YOLOv3, los cuales se han utilizado para extraer características
+y llevar a cabo tareas de clasificación y detección.
+
+Por ejemplo, un estudio implementó una red neuronal convolucional (CNN) utilizando VGG16
+para la extracción de características de imágenes de retina y la técnica de sobremuestreo
+de minoría sintética (SMOTE) para manejar el desequilibrio de clases en el conjunto de
+datos \myfootcite{mustafa2024rapid}, logrando una precisión del 93.94\% durante la fase
+de entrenamiento y del 88.19\% durante la validación.
+
+Otro enfoque consistió en dos modelos basados en aprendizaje profundo: CNN512, que
+clasificó imágenes completas en estadios de RD con una precisión del 88.6\%, y un modelo
+YOLOv3 adaptado para detectar y localizar lesiones de DR, alcanzando un mAP de 0.216 en
+la localización de lesiones \myfootcite{alyoubi2021diabetic}. Estos modelos se fusionaron
+para clasificar imágenes de RD y localizar lesiones, obteniendo una precisión del 89\%
+con sensibilidad del 89\% y especificidad del 97.3\%.
+
+Además, se ha explorado el aprendizaje por transferencia utilizando modelos preexistentes
+como InceptionResNetv2 e Inceptionv3, junto con un nuevo modelo DiaCNN, para la
+clasificación de enfermedades oculares en el conjunto de datos ODIR
+\myfootcite{shoaib2024deep}. Estos modelos alcanzaron impresionantes niveles de
+precisión, llegando hasta el 99.7\% en algunas pruebas.
+
+Asimismo, se ha abordado la detección automática de vasos sanguíneos retinianos
+utilizando modelos como ResNet34, InceptionV3 y VGG16, y se han propuesto enfoques
+multinivel \myfootcite{beghriche2023multi} para mejorar la clasificación binaria y
+multiclase de imágenes de RD \myfootcite{vij2024hybrid}, logrando una precisión del
+96.50\% en la clasificación binaria y una kappa ponderada cuadrática del 93.00\% en la
+clasificación por etapas. Estos avances muestran mejoras significativas en precisión y
+generalización, con resultados que superan a los métodos tradicionales y a los trabajos
+previos en la literatura.
+
+\section{Enfoques con modificaciones arquitectónicas innovadoras}
+
+Por otra parte, existen otros trabajos en la literatura que han optado por realizar
+modificaciones sustanciales a las arquitecturas CNN para obtener un mejor desempeño. Se
+han propuesto varias técnicas innovadoras para mejorar el rendimiento y la eficiencia del
+aprendizaje profundo en la detección y clasificación de retinopatía diabética (RD)
+\myfootcite{patil2023study}.
+
+Un estudio aborda el aprendizaje profundo distribuido (DDL) para entrenar modelos de DL
+de manera rápida, utilizando dos GPU y analizando el rendimiento del canal de paralelismo
+en DDL, logrando una puntuación F1 de validación de 0.834 en la clasificación de RD. Otro
+enfoque se centra en la diversidad de los conjuntos de datos de entrenamiento mediante la
+manipulación de datos de entrada, mejorando así el rendimiento de la clasificación
+\myfootcite{patil2022pipeline}.
+
+Además, se propone un enfoque bioinspirado en la metaplasticidad sináptica, que se
+incorpora en redes neuronales convolucionales para fortalecer las ocurrencias menos
+comunes durante el aprendizaje \myfootcite{vives2021diabetic}. Este método mejora tanto
+la tasa de aprendizaje como la precisión, superando a otros métodos de la literatura
+actual incluso con conjuntos de datos más pequeños, con resultados destacados en la
+arquitectura InceptionV3.
+
+\section{Limitaciones y brechas de investigación}
+
+A pesar del avance significativo en el uso de técnicas de aprendizaje profundo para la
+detección de RD a partir de imágenes del fondo de ojo, aún existen algunas limitaciones
+que deben abordarse para garantizar su aplicabilidad en el mundo real y su adopción en la
+práctica clínica.
+
+La mayoría de los modelos actuales se entrenan con conjuntos de datos limitados y
+específicos, lo que limita su capacidad para generalizar a escenarios del mundo real con
+mayor variabilidad en las imágenes del fondo de ojo. En muchos conjuntos de datos, las
+imágenes con RD representan una pequeña proporción en comparación con las imágenes
+normales. Este desequilibrio de clases puede afectar el rendimiento del modelo, sesgando
+la clasificación hacia la clase mayoritaria.
+
+Algunos estudios se enfocan únicamente en la detección de la presencia o ausencia de RD,
+sin considerar la clasificación de su gravedad en estadios tempranos, moderados o
+severos, lo cual es crucial para la toma de decisiones oportunas en el manejo de la
+enfermedad. El ruido, la iluminación inconsistente y el bajo contraste en las imágenes
+del fondo de ojo pueden afectar significativamente la precisión de la clasificación. La
+implementación de técnicas de preprocesamiento de imágenes robustas es fundamental para
+mejorar el rendimiento de los modelos.
+
+Pocos trabajos han explorado sistemáticamente el efecto del procesamiento de canales de
+color individuales (rojo, verde, azul) en el desempeño de clasificación de RD, a pesar de
+que diferentes canales pueden resaltar lesiones específicas. Además, existe una escasez
+de validación externa rigurosa en múltiples datasets con características de adquisición
+diferentes, lo cual es esencial para demostrar la capacidad de generalización de los
+modelos.
+
+\section{Contribución del presente trabajo}
+
+El empleo de algoritmos de aprendizaje profundo en la detección de RD a partir de
+imágenes del fondo de ojo presenta un gran potencial para mejorar la accesibilidad, la
+precisión y la eficiencia del tamizaje de esta enfermedad. Sin embargo, es necesario
+abordar las limitaciones actuales relacionadas con la generalización de los modelos, el
+desequilibrio de clases, la clasificación de la gravedad y el preprocesamiento de
+imágenes para garantizar su aplicabilidad en entornos clínicos reales y su adopción como
+una herramienta confiable para el diagnóstico y seguimiento de la RD.
+
+El presente trabajo contribuye al estado del arte en los siguientes aspectos:
+
+\begin{itemize}
+    \item \textbf{Análisis sistemático de canales de color:} Evaluación comparativa del
+desempeño de modelos procesando imágenes RGB completas versus canales individuales (rojo,
+verde, azul), identificando el canal más efectivo para clasificación multiclase.
+
+    \item \textbf{Comparación controlada de arquitecturas:} Evaluación sistemática de
+cuatro arquitecturas CNN preentrenadas (MobileNetV2, ResNet50V2, InceptionV3, VGG19) bajo
+condiciones experimentales idénticas.
+
+    \item \textbf{Validación externa rigurosa:} Evaluación del mejor modelo en tres
+datasets externos independientes (MESSIDOR-2, IDRiD, FOSCAL) con diferentes
+características de adquisición y distribución de clases.
+
+    \item \textbf{Combinación de técnicas de regularización:} Integración de bloques
+Multi-Head Attention, capas GaussianNoise y técnicas tradicionales (Dropout, L2, early
+stopping) para mejorar generalización.
+
+    \item \textbf{Enfoque dual de clasificación:} Desarrollo y evaluación tanto de
+clasificadores binarios (optimizados para tamizaje) como multiclase (para gradación
+clínica), permitiendo su aplicación en diferentes escenarios clínicos.
+\end{itemize}
