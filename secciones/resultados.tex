@@ -493,7 +493,24 @@ variabilidad de los parámetros explorados. El propósito final fue identificar 
 combinación ideal de preprocesamiento, arquitectura base y topología densa para maximizar
 el rendimiento en un entorno multiclase riguroso
 
-\begin{table}[ht!]
+\subsection{Análisis comparativo por canal de color}
+
+Uno de los hallazgos más relevantes de este trabajo es el impacto diferencial de los canales
+de color en el desempeño de clasificación multiclase. Las imágenes de fondo de ojo contienen 
+información diagnóstica distribuida de manera heterogénea entre los canales RGB: el canal rojo 
+captura principalmente la vasculatura retiniana, el canal verde ofrece el mejor contraste para
+detectar lesiones como microaneurismas y exudados, mientras que el canal azul, aunque más ruidoso, 
+puede revelar cambios sutiles en las capas superficiales de la retina. Para evaluar sistemáticamente
+esta hipótesis, se entrenaron las cuatro arquitecturas seleccionadas (MobileNetV2, ResNet50V2, InceptionV3 y VGG19)
+utilizando cuatro configuraciones de entrada: la imagen RGB completa y cada canal de color por separado (rojo, verde y azul).
+Esta estrategia permite identificar qué información cromática resulta más discriminativa para la detección de retinopatía 
+diabética en sus diferentes niveles de severidad. Los resultados se presentan en dos grupos de tablas. 
+Primero, las matrices de confusión que permiten visualizar el patrón de clasificación de cada modelo, identificando tanto 
+los aciertos en la diagonal principal como las confusiones más frecuentes entre clases adyacentes.
+Posteriormente, las tablas de métricas agregadas que sintetizan el rendimiento global mediante sensibilidad, especificidad,
+precisión y F1-score, facilitando la comparación directa entre arquitecturas y canales de color.
+
+\begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
