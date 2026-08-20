@@ -11,6 +11,8 @@
 *.blg
 *.bbl
 *.run.xml
+*-blx.bib
+indent.log
 
 # PDF compilado (opcional)
 *.pdf
