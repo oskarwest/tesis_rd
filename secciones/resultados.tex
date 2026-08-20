@@ -53,6 +53,7 @@ F1-score \\
 		& No RD & 0.85 & 0.86 & 0.85 & 0.85 \\
 		\bottomrule
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor exactitud 
@@ -174,6 +175,7 @@ Dataset \\
 		& 0.89 & 0.88 & 0.89 & 0.89 & Filtrado \\
 		\bottomrule
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 La aplicación de filtrado incrementó consistentemente el rendimiento de todas las redes, 
@@ -275,6 +277,7 @@ clasificación binaria}
 		MobileNetV2 & 0.4826 \\
 		\hline
 	\end{tabular}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F1-score de 
@@ -313,6 +316,7 @@ binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado}
 		& Óptimo & 0.96 & 0.96 & 0.96 & 0.96 \\
 		\bottomrule
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 \subsection{Análisis estadístico mediante bootstrap}
@@ -342,6 +346,7 @@ mejor modelo (MobileNetV2 con filtrado y umbral óptimo)}
 		AUC-ROC & [0.9636 -- 0.9936] \\
 		\hline
 	\end{tabular}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 Los intervalos de confianza relativamente estrechos, particularmente para sensibilidad 
@@ -435,6 +440,7 @@ MESSIDOR-2 & 0.92 & 0.89 & 0.92 & 0.92 \\
 \textbf{Promedio} & \textbf{0.87} & \textbf{0.87} & \textbf{0.90} & \textbf{0.89} \\
 \bottomrule
 \end{tabularx}
+\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 Estos resultados confirman que el modelo generaliza de manera robusta a datos externos 
@@ -468,6 +474,7 @@ Sarki et al. (2022) & MobileNetV2 + SVM & Kaggle DR & 0.89 \\
 \textbf{Modelo propuesto} & \textbf{MobileNetV2 + Attention} & \textbf{Kaggle DR} & \textbf{0.965} \\
 \bottomrule
 \end{tabularx}
+\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 El modelo propuesto alcanza un desempeño competitivo, con sensibilidad de 96.5\% y 
@@ -491,7 +498,7 @@ proporcionan mapas de características distintos. Debido a que la clasificación
 conlleva una mayor complejidad y riesgo de confusión entre categorías, se incrementó la
 variabilidad de los parámetros explorados. El propósito final fue identificar la
 combinación ideal de preprocesamiento, arquitectura base y topología densa para maximizar
-el rendimiento en un entorno multiclase riguroso
+el rendimiento en un entorno multiclase riguroso.
 
 \subsection{Análisis comparativo por canal de color}
 
@@ -555,11 +562,12 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 		Severa& 94 & 401 & 0 & \textbf{3} & 251\\
 		PDR & 18 & 25 & 33 & 196 & \textbf{478} \\
 		\midrule
-		\multicolumn{6}{c}{(d) VGG19} \\ 
+		\multicolumn{6}{c}{(d) VGG19} \\
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-	
+
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
@@ -608,6 +616,7 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 		\multicolumn{6}{c}{(d) VGG19} \\
 		\bottomrule
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 \begin{table}[H]
@@ -658,6 +667,7 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 		\multicolumn{6}{c}{(d) VGG19} \\
 		\bottomrule
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 \begin{table}[H]
@@ -708,14 +718,15 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 		\multicolumn{6}{c}{(d) VGG19} \\
 		\bottomrule
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 \begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{0.8} 
-	\caption{Desempeño de redes pre-entrenadas para la clasificación multiclase de
-	Retinopatía Diabética usando todos y cada uno de los canales \textbf{RGB}}
-	\begin{tabularx}{\textwidth}{l  Y Y Y r}
+	\renewcommand{\arraystretch}{0.8}
+	\caption{Desempeño de redes preentrenadas para la clasificación multiclase de
+	retinopatía diabética usando todos y cada uno de los canales \textbf{RGB}}
+	\begin{tabularx}{\textwidth}{l Y Y Y r}
 		\toprule
 		\multicolumn{5}{c}{RGB} \\
 		\midrule
@@ -753,6 +764,7 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 		VGG19& 29 & 20 & 19 & 22 \\
 		\bottomrule
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 

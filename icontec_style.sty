@@ -66,6 +66,7 @@
             isbn=false,
             backref=true,
             style=verbose-note,
+            sorting=nty,
             dashed=true,
             maxcitenames=3,
             maxbibnames=3,
@@ -73,6 +74,16 @@
             block=none,
             %block=ragged,
             defernumbers=true]{biblatex}
+% ------------------------------------------------------------------------
+% Formato ICONTEC para nombres de autor: APELLIDO(S), Nombre
+% ------------------------------------------------------------------------
+\DeclareNameFormat{family-given}{%
+  \mkbibnamefamily{\MakeUppercase{\namepartfamily}}\addcomma\addspace
+  \mkbibnamegiven{\namepartgiven}%
+  \ifmorenames{\addcomma\addspace}{}%
+}
+\DeclareNameAlias{default}{family-given}
+\DeclareNameAlias{sortname}{family-given}
 % ------------------------------------------------------------------------
 % Selección de tipo de fuente
 % ------------------------------------------------------------------------
@@ -110,10 +121,10 @@
 
 \titleformat{\section}{\normalfont\normalsize\bfseries}{\thesection. }{0pt}{\MakeUppercase}
 
-\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection. }{0pt}{}
+\titleformat{\subsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsection. }{0pt}{}[.]
 \titlespacing{\subsection}{0pt}{20pt}{6pt}
 
-\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection. }{0pt}{}
+\titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection. }{0pt}{}[.]
 \titlespacing{\subsubsection}{0pt}{20pt}{6pt}
 % ------------------------------------------------------------------------
 % Definición para capítulo sin número en tabla de contenidos
@@ -157,6 +168,7 @@
 }
 % ------------------------------------------------------------------------
 % Elimina indentación o sangría en la tabla de contenidos
+% (excepto 3er y 4to nivel que llevan sangría ICONTEC)
 % ------------------------------------------------------------------------
 \setlength{\cftsecindent}{0cm}
 \setlength{\cftsubsecindent}{0cm}
@@ -166,9 +178,10 @@
 \setlength{\cfttabindent}{0cm}
 \setlength{\cftanexoindent}{0cm}
 % ------------------------------------------------------------------------
-% Elimina rellenado con puntos en la tabla de contenidos
+% Relleno con puntos en la tabla de contenidos (norma ICONTEC)
 % ------------------------------------------------------------------------
-\renewcommand{\cftdot}{ }
+\renewcommand{\cftdot}{.}
+\renewcommand{\cftdotsep}{2}
 % ------------------------------------------------------------------------
 % Agrega la contracción "pag." a la tabla de contenidos
 % ------------------------------------------------------------------------

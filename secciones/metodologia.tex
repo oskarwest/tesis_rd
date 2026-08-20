@@ -9,9 +9,9 @@ la recopilación y caracterización de conjuntos de datos de imágenes de fondo 
 segundo, el preprocesamiento y balanceo de datos para optimizar la calidad del 
 conjunto de entrenamiento; tercero, la selección de tecnologías y herramientas de 
 desarrollo; cuarto, la configuración e implementación de las arquitecturas CNN con 
-técnicas de regularización; y finalmente, la definición de métricas  de evaluación para 
-validar el desempeño de los modelos. La Figura 16 presenta un diagrama que sintetiza el flujo completo 
-del proceso metodológico implementado.
+técnicas de regularización; y finalmente, la definición de métricas de evaluación para 
+validar el desempeño de los modelos. La Figura~\ref{fig:metodologia-general} presenta un diagrama que sintetiza el flujo
+completo del proceso metodológico implementado.
 
 \begin{figure}[H]
 	\centering
@@ -150,6 +150,7 @@ en los distintos datasets}
 		FOSCAL & 302 & 34 & 23 & 40 & 16 & 415 & Validación ext. \\
 		\hline
 	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 \subsection{División de datos para entrenamiento y validación}
@@ -266,6 +267,7 @@ Desplazamiento vertical & Traslación vertical de la imagen & $\pm 5\%$ \\
 Volteo horizontal & Reflexión horizontal (flip) & Probabilidad 0.5 \\
 Modo de relleno & Interpolación para píxeles faltantes & Nearest \\ \hline
 \end{tabularx}
+\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 Estas operaciones fueron aplicadas únicamente a las clases minoritarias (1, 2, 3, 4) con 
@@ -295,6 +297,7 @@ distribución final del dataset optimizado.
 		\textbf{Total} & & \textbf{29,993} & \textbf{100.00} \\
 		\hline
 	\end{tabular}
+	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 \subsection{Filtrado y realce de características}
@@ -422,7 +425,7 @@ La suite TensorFlow Extended incluye módulos para aumento de datos (\texttt{tf.
 preprocesamiento de imágenes médicas (normalización de histogramas, ajuste de contraste), 
 esenciales para abordar variabilidad en las imágenes de fondo de ojo (iluminación, 
 artefactos). Aunque PyTorch ofrece mayor flexibilidad para investigación experimental, 
-requiere más desarrollo manual para estas tareas.TensorFlow/Keras 
+requiere más desarrollo manual para estas tareas. TensorFlow/Keras
 demostró mayores ventajas en este proyecto al equilibrar productividad, eficiencia 
 computacional y facilidad de integración.
 
@@ -434,7 +437,7 @@ los tiempos aproximados de entrenamiento por modelo:
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.3}
-\caption{Especificaciones de hardware y tiempos de entrenamiento}
+\caption{Especificaciones de hardware}
 \label{tab:hardware-tiempos}
 \begin{tabularx}{\textwidth}{l X}
 \hline
@@ -444,10 +447,9 @@ CPU & Intel Xeon (2 cores @ 2.3 GHz) \\
 RAM & 13 GB \\
 Framework & TensorFlow 2.12.0, Keras 2.12.0 \\
 CUDA & 11.8 \\
-cuDNN & 8.6 \\
-Tiempo de entrenamiento (binario) & $\sim$45-60 min/época \\
-Tiempo de entrenamiento (multiclase) & $\sim$60-90 min/época \\ \hline
+cuDNN & 8.6 \\ \hline
 \end{tabularx}
+\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 \section{CONFIGURACIÓN EXPERIMENTAL Y ENTRENAMIENTO}
@@ -504,6 +506,7 @@ Capas densas & Configuración del top model & 512-256 & 256-128 \\
 Activación salida & Función de activación final & Sigmoid & Softmax \\
 Neuronas salida & Número de clases & 1 & 5 \\ \hline
 \end{tabularx}
+\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
 \subsection{Configuración experimental para el clasificador binario}
