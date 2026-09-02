@@ -623,63 +623,45 @@ descritos.
 
 \section{MÉTRICAS DE EVALUACIÓN}
 
-En los estudios de clasificación médica existen diferentes métricas de desempeño 
-ampliamente utilizadas. La exactitud, la sensibilidad, la especificidad y la precisión 
-son algunas de ellas, y estas medidas se emplean para evaluar el rendimiento de un método 
-utilizado. Las ecuaciones utilizadas para calcular estas medidas son las siguientes:
+En los estudios de clasificación médica existen diferentes métricas de desempeño
+ampliamente utilizadas. La exactitud, la sensibilidad, la especificidad, la precisión y
+el F1-score son algunas de ellas, y estas medidas se emplean para evaluar el rendimiento
+de un método utilizado. En las fórmulas de la Tabla~\ref{tab:metricas-evaluacion}, TP
+(True Positives) y FP (False Positives) representan el número de diagnósticos
+verdaderos positivos y falsos positivos, respectivamente; TN (True Negatives) y FN
+(False Negatives) representan el número de diagnósticos verdaderos negativos y falsos
+negativos; y N es el número total de muestras.
 
-\begin{equation}
-	\text{Exactitud (Accuracy)} = \frac{TP + TN}{TP + TN + FP + FN} = \frac{TP + 
-TN}{N}
-\end{equation}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.8}
+\small
+\caption{Métricas de evaluación utilizadas}
+\label{tab:metricas-evaluacion}
+\begin{tabularx}{\textwidth}{@{}l X c@{}}
+\hline
+\textbf{Métrica} & \textbf{Descripción} & \textbf{Fórmula} \\ \hline
+Exactitud (Accuracy) & Proporción de predicciones correctas sobre el total de
+muestras; poco informativa si las clases están desbalanceadas. &
+$\frac{TP + TN}{N}$ \\
+Sensibilidad (Recall) & Proporción de casos positivos (con RD) detectados
+correctamente; crucial para minimizar casos no detectados. &
+$\frac{TP}{TP + FN}$ \\
+Especificidad & Proporción de casos negativos (sin RD) identificados correctamente;
+reduce las derivaciones innecesarias. &
+$\frac{TN}{TN + FP}$ \\
+Precisión (Precision) & Proporción de predicciones positivas que realmente lo son;
+evita el sobrediagnóstico. &
+$\frac{TP}{TP + FP}$ \\
+F1-score & Media armónica entre precisión y sensibilidad; balancea falsos positivos
+y falsos negativos. &
+$2 \cdot \frac{P \cdot S}{P + S}$ \\ \hline
+\end{tabularx}
+\caption*{\textit{Fuente: Elaboración propia}}
+\end{table}
 
-\begin{equation}
-	\text{Sensibilidad (Recall/Sensitivity)} = \frac{TP}{TP + FN}
-\end{equation}
-
-\begin{equation}
-	\text{Especificidad (Specificity)} = \frac{TN}{TN + FP}
-\end{equation}
-
-\begin{equation}
-	\text{Precisión (Precision)} = \frac{TP}{TP + FP}
-\end{equation}
-
-\begin{equation}
-	F_{score} = 2 \cdot \frac{\text{Precisión} \cdot 
-\text{Sensibilidad}}{\text{Precisión} + \text{Sensibilidad}}
-\end{equation}
-
-En las anteriores ecuaciones, TP (True Positives) y FP (False Positives) se utilizan para 
-definir el número de diagnósticos verdaderos positivos y el número de diagnósticos falsos 
-positivos. Por otro lado, TN (True Negatives) y FN (False Negatives) representan el 
-número de diagnósticos verdaderos negativos y el número de diagnósticos falsos negativos. 
-N es el número de muestras totales, lo que significa también la suma de todas las 
-muestras en el proceso de clasificación.
-
-\textbf{Exactitud (Accuracy):} Mide la proporción de predicciones correctas (tanto 
-positivas como negativas) sobre el total de muestras. Es útil cuando las clases están 
-balanceadas, pero puede ser engañosa en presencia de desbalance.
-
-\textbf{Sensibilidad (Recall/Sensitivity):} Define el grado en el que el modelo 
-identifica correctamente los casos positivos. En el contexto médico, representa la 
-capacidad del modelo para detectar casos de retinopatía diabética. Una alta sensibilidad 
-es crucial para minimizar casos no detectados.
-
-\textbf{Especificidad (Specificity):} Mide la capacidad del modelo para identificar 
-correctamente los casos negativos (sin enfermedad). Una alta especificidad reduce los 
-falsos positivos y las derivaciones innecesarias.
-
-\textbf{Precisión (Precision):} Indica qué proporción de los casos predichos como 
-positivos son realmente positivos. Es importante para evitar sobrediagnóstico y 
-derivaciones innecesarias.
-
-\textbf{F1-score:} Es la media armónica de la precisión y la sensibilidad, proporcionando 
-una métrica balanceada que considera tanto los falsos positivos como los falsos 
-negativos. Es especialmente útil en problemas con clases desbalanceadas.
-
-Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), que proporciona una 
-medida robusta del desempeño del clasificador independiente del umbral de decisión. Un 
+Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), que proporciona una
+medida robusta del desempeño del clasificador independiente del umbral de decisión. Un
 valor de AUC cercano a 1.0 indica un excelente desempeño discriminatorio.
 
 Para evaluar la robustez estadística de las métricas obtenidas, se aplicó la técnica de 
