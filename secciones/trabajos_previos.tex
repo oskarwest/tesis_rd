@@ -140,26 +140,32 @@ desequilibrio de clases, la clasificación de la gravedad y el preprocesamiento 
 imágenes para garantizar su aplicabilidad en entornos clínicos reales y su adopción como
 una herramienta confiable para el diagnóstico y seguimiento de la RD.
 
-El presente trabajo contribuye al estado del arte en los siguientes aspectos:
+El presente trabajo contribuye al estado del arte en los aspectos que resume la
+Tabla~\ref{tab:contribuciones}.
 
-\begin{itemize}
-    \item \textbf{Análisis sistemático de canales de color:} Evaluación comparativa del
-desempeño de modelos procesando imágenes RGB completas versus canales individuales (rojo,
-verde, azul), identificando el canal más efectivo para clasificación multiclase.
-
-    \item \textbf{Comparación controlada de arquitecturas:} Evaluación sistemática de
-cuatro arquitecturas CNN preentrenadas (MobileNetV2, ResNet50V2, InceptionV3, VGG19) bajo
-condiciones experimentales idénticas.
-
-    \item \textbf{Validación externa rigurosa:} Evaluación del mejor modelo en tres
-datasets externos independientes (MESSIDOR-2, IDRiD, FOSCAL) con diferentes
-características de adquisición y distribución de clases.
-
-    \item \textbf{Combinación de técnicas de regularización:} Integración de bloques
-Multi-Head Attention, capas GaussianNoise y técnicas tradicionales (Dropout, L2, early
-stopping) para mejorar generalización.
-
-    \item \textbf{Enfoque dual de clasificación:} Desarrollo y evaluación tanto de
-clasificadores binarios (optimizados para tamizaje) como multiclase (para gradación
-clínica), permitiendo su aplicación en diferentes escenarios clínicos.
-\end{itemize}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\caption{Contribuciones del presente trabajo}
+\label{tab:contribuciones}
+\begin{tabularx}{\textwidth}{l X}
+\hline
+\textbf{Contribución} & \textbf{Descripción} \\ \hline
+Análisis sistemático de canales de color & Evaluación comparativa del desempeño de
+modelos procesando imágenes RGB completas versus canales individuales (rojo, verde,
+azul), identificando el canal más efectivo para clasificación multiclase. \\
+Comparación controlada de arquitecturas & Evaluación sistemática de cuatro
+arquitecturas CNN preentrenadas (MobileNetV2, ResNet50V2, InceptionV3, VGG19) bajo
+condiciones experimentales idénticas. \\
+Validación externa rigurosa & Evaluación del mejor modelo en tres datasets externos
+independientes (MESSIDOR-2, IDRiD, FOSCAL) con diferentes características de
+adquisición y distribución de clases. \\
+Combinación de técnicas de regularización & Integración de bloques Multi-Head
+Attention, capas GaussianNoise y técnicas tradicionales (Dropout, L2, early stopping)
+para mejorar la generalización. \\
+Enfoque dual de clasificación & Desarrollo y evaluación tanto de clasificadores
+binarios (optimizados para tamizaje) como multiclase (para gradación clínica),
+permitiendo su aplicación en diferentes escenarios clínicos. \\ \hline
+\end{tabularx}
+\caption*{\textit{Fuente: Elaboración propia}}
+\end{table}
