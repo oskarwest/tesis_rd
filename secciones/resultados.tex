@@ -70,15 +70,19 @@ En contraste, VGG19, a pesar de su profundidad, exhibió tendencia al sobreajust
 su elevado número de parámetros en capas completamente conectadas y ausencia de 
 conexiones residuales.
 
-En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone} para los experimentos 
-adicionales (OE5), al equilibrar precisión, sensibilidad y eficiencia computacional, lo 
-que la hace más adecuada para un escenario de tamizaje clínico donde la velocidad de 
-procesamiento es relevante.
+En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone} para los experimentos
+adicionales (OE5), al equilibrar precisión, sensibilidad y eficiencia computacional, lo
+que la hace más adecuada para un escenario de tamizaje clínico donde la velocidad de
+procesamiento es relevante. La Figura~\ref{fig:conf-matrix-original} presenta las
+matrices de confusión de las cuatro redes, donde se observa que MobileNetV2 concentra la
+mayor proporción de aciertos en la diagonal principal (99 y 100 sobre 105 casos por
+clase) y el menor número de falsos negativos (5), mientras que ResNet50V2 e InceptionV3
+muestran una dispersión de errores considerablemente mayor entre ambas clases.
 
 \begin{figure}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Matrices de confusión para las diferentes redes preentrenadas en 
+	\caption{Matrices de confusión para las diferentes redes preentrenadas en
 clasificación binaria}
 	\label{fig:conf-matrix-original}
 
@@ -187,15 +191,19 @@ especificidad clínica y disminuye derivaciones innecesarias. Los falsos negativ
 aumentaron ligeramente (3 vs. 5), pero permanecieron dentro de márgenes aceptables de 
 confianza.
 
-Este resultado confirma la importancia del preprocesamiento robusto para mitigar 
-variaciones de brillo y contraste inherentes a la captura de imágenes en entornos 
-clínicos heterogéneos, donde las condiciones de iluminación y los equipos de adquisición 
-varían considerablemente.
+Este resultado confirma la importancia del preprocesamiento robusto para mitigar
+variaciones de brillo y contraste inherentes a la captura de imágenes en entornos
+clínicos heterogéneos, donde las condiciones de iluminación y los equipos de adquisición
+varían considerablemente. La Figura~\ref{fig:conf-matrix-filtrado} muestra las matrices
+de confusión resultantes tras aplicar el filtrado: para MobileNetV2 se aprecia la
+reducción de falsos positivos señalada anteriormente (de 6 a 4 casos), mientras que en
+VGG19, ResNet50V2 e InceptionV3 la diagonal principal se refuerza de manera consistente
+respecto a las matrices sin filtrado de la Figura~\ref{fig:conf-matrix-original}.
 
 \begin{figure}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Matrices de confusión para las redes preentrenadas utilizando imágenes 
+	\caption{Matrices de confusión para las redes preentrenadas utilizando imágenes
 con filtrado}
 	\label{fig:conf-matrix-filtrado}
 

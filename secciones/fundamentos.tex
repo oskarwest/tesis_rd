@@ -291,7 +291,10 @@ reconocimiento de patrones.
 
 Una red neuronal convolucional profunda, o CNN profunda, está compuesta por múltiples
 capas organizadas en una estructura jerárquica. Cada capa tiene una función específica
-que contribuye al proceso de extracción de características y toma de decisiones.
+que contribuye al proceso de extracción de características y toma de decisiones. La
+Figura~\ref{fig:cnn-general} ilustra esta estructura general, mostrando cómo la imagen de
+entrada atraviesa sucesivas capas convolucionales y de agrupamiento antes de llegar a las
+capas completamente conectadas que producen la clasificación final.
 
 \begin{figure}[H]
 	\centering
@@ -308,7 +311,10 @@ que se deslizan sobre la imagen de entrada hasta recorrerla toda. En cada despla
 se calcula el producto punto entre los valores del filtro y los de la región correspondiente
 de la imagen. Con estos resultados se construye el mapa de características. Estos mapas revelan
 patrones locales como bordes y esquinas, y se utilizan como entrada para capas posteriores, 
-que aprenden rasgos más complejos \myfootcite{purwono2022understanding}.
+que aprenden rasgos más complejos \myfootcite{purwono2022understanding}. La
+Figura~\ref{fig:convolution} ejemplifica este proceso, mostrando cómo un kernel de
+$3 \times 3$ se desliza sobre la imagen de entrada y genera, mediante productos punto
+sucesivos, el mapa de características correspondiente.
 
 \begin{figure}[H]
 	\centering
@@ -338,6 +344,10 @@ una versión reducida que conserva lo más importante. Las variantes más usadas
     \item \textbf{Average pooling:} calcula la media de los valores en la sección.
     \item \textbf{Min pooling:} selecciona el valor más bajo en cada sección.
 \end{itemize}
+
+La Figura~\ref{fig:maxpooling} ejemplifica la operación de max-pooling, donde para cada
+región de $2 \times 2$ del mapa de características se conserva únicamente el valor
+máximo, reduciendo a la mitad sus dimensiones espaciales.
 
 \begin{figure}[H]
 	\centering
@@ -407,7 +417,11 @@ incluyendo su ruido y sus valores atípicos, lo que se conoce como "aprendizaje 
 memoria". Un aprendizaje de este tipo conduce a un modelo que funciona bien con los datos
 de entrenamiento, pero mal con nuevos datos no vistos. Por el contrario, el subajuste
 (underfitting) ocurre cuando el modelo es demasiado simple para capturar los patrones
-subyacentes en los datos.
+subyacentes en los datos. La Figura~\ref{fig:overfitting} ilustra estos tres escenarios:
+el subajuste, donde el modelo ni siquiera captura la tendencia de los datos de
+entrenamiento; el ajuste adecuado, en el que la curva aprendida generaliza bien a datos
+nuevos; y el sobreajuste, en el que el modelo se ajusta excesivamente al ruido de los
+datos de entrenamiento a costa de su desempeño en datos no vistos.
 
 \begin{figure}[H]
 	\centering
@@ -577,7 +591,10 @@ significa que después de la expansión de las características, la proyección 
 un espacio de menor dimensión se realiza sin activaciones no lineales. Este enfoque ayuda
 a mantener la representación de características más eficiente, lo que se traduce en una
 mayor precisión y velocidad de la red en comparación con las redes tradicionales que usan
-activaciones no lineales después de la reducción de dimensiones.
+activaciones no lineales después de la reducción de dimensiones. La
+Figura~\ref{fig:mobilenetv2} muestra la arquitectura completa, donde pueden identificarse
+los bloques residuales invertidos y la secuencia de expansión, convolución por
+profundidad y proyección descrita a continuación.
 
 \begin{figure}[H]
 	\centering
@@ -614,7 +631,8 @@ Mientras que en ResNetV1 se utiliza una estructura del tipo convolución seguida
 Normalization y Activación ReLU, en ResNetV2 se antecede la normalización y la activación
 antes de la convolución, siguiendo un enfoque de pre-activación. Este cambio en el orden
 de las operaciones mejora el flujo de gradientes y facilita el entrenamiento de redes más
-profundas.
+profundas. La Figura~\ref{fig:resnet50v2} muestra la organización de estos bloques
+residuales con pre-activación a lo largo de las 50 capas de la red.
 
 \begin{figure}[H]
 	\centering
@@ -661,7 +679,10 @@ incrementar significativamente el número de parámetros. Además, para mejorar 
 propagación de la información de las etiquetas en las capas inferiores de la red y
 mitigar el problema del desvanecimiento del gradiente, InceptionV3 utiliza clasificadores
 auxiliares. Estos clasificadores adicionales actúan como regularizadores durante el
-entrenamiento, mejorando la convergencia y la precisión del modelo.
+entrenamiento, mejorando la convergencia y la precisión del modelo. La
+Figura~\ref{fig:inceptionv3} muestra la disposición de los módulos Inception en paralelo,
+donde se aprecia cómo múltiples ramas de convolución y pooling procesan simultáneamente
+la misma entrada.
 
 \begin{figure}[H]
 	\centering
@@ -707,7 +728,9 @@ computadora debido a su rendimiento sobresaliente en tareas de clasificación de
 como se demostró en la competencia ImageNet. La red también ha sido utilizada como modelo
 base en diversos problemas relacionados con el procesamiento de imágenes, adaptándose
 fácilmente a tareas como detección de objetos, segmentación y, en el caso de la
-retinopatía diabética, clasificación de imágenes médicas.
+retinopatía diabética, clasificación de imágenes médicas. La Figura~\ref{fig:vgg19}
+muestra esta organización secuencial de bloques convolucionales de filtros $3 \times 3$,
+seguidos de capas de pooling y de las capas completamente conectadas finales.
 
 \begin{figure}[H]
 	\centering
