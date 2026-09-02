@@ -71,7 +71,7 @@ su elevado número de parámetros en capas completamente conectadas y ausencia d
 conexiones residuales.
 
 En conclusión, MobileNetV2 fue seleccionada como \textbf{backbone} para los experimentos
-adicionales (OE5), al equilibrar precisión, sensibilidad y eficiencia computacional, lo
+adicionales, al equilibrar precisión, sensibilidad y eficiencia computacional, lo
 que la hace más adecuada para un escenario de tamizaje clínico donde la velocidad de
 procesamiento es relevante. La Figura~\ref{fig:conf-matrix-original} presenta las
 matrices de confusión de las cuatro redes, donde se observa que MobileNetV2 concentra la
@@ -330,7 +330,7 @@ binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado}
 \subsection{Análisis estadístico mediante bootstrap}
 
 Con el fin de estimar la variabilidad e incertidumbre de las métricas de desempeño, se 
-aplicó la técnica de remuestreo bootstrap con 1,000 iteraciones (OE8). Este método 
+aplicó la técnica de remuestreo bootstrap con 1,000 iteraciones. Este método
 consiste en generar múltiples subconjuntos del conjunto de prueba mediante muestreo 
 aleatorio con reemplazo, recalculando en cada iteración las métricas de interés 
 (exactitud, precisión, sensibilidad, especificidad, F1-score y AUC-ROC). A partir de la 
@@ -367,8 +367,8 @@ discriminatoria del modelo.
 
 \subsection{Validación externa utilizando el mejor modelo}
 
-Para evaluar la generalización del modelo MobileNetV2 con filtrado y umbral óptimo (OE9), 
-se realizaron pruebas en tres conjuntos de datos externos independientes: FOSCAL, IDRiD y 
+Para evaluar la generalización del modelo MobileNetV2 con filtrado y umbral óptimo,
+se realizaron pruebas en tres conjuntos de datos externos independientes: FOSCAL, IDRiD y
 MESSIDOR-2. Como se observa en las matrices de confusión de la 
 Figura~\ref{fig:conf-matrix-external} y en la Tabla~\ref{tab:validacion-externa}, el 
 modelo mantiene un desempeño sólido, aunque con una leve disminución en comparación con 
@@ -461,7 +461,7 @@ escenarios clínicos diversos.
 \subsection{Comparación con trabajos previos en el estado del arte} \label{subsec:comparacion-literatura}
 
 Para contextualizar los resultados obtenidos dentro del estado del arte en detección 
-automatizada de retinopatía diabética (OE10), se realizó una comparación con trabajos 
+automatizada de retinopatía diabética, se realizó una comparación con trabajos
 previos relevantes que utilizaron arquitecturas CNN similares. La 
 Tabla~\ref{tab:comparacion-literatura} presenta esta comparación.
 
