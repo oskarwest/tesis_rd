@@ -3,13 +3,33 @@
 El desarrollo de sistemas automatizados para la detección y clasificación de retinopatía
 diabética mediante técnicas de aprendizaje profundo requiere una comprensión sólida de
 múltiples dominios del conocimiento. Este capítulo presenta los fundamentos teóricos que
-sustentan el presente trabajo, organizados en tres componentes principales: primero, se
-describe la naturaleza y características de las imágenes de fondo de ojo, el principal
-insumo del sistema propuesto; segundo, se expone la fisiopatología y clasificación
-clínica de la retinopatía diabética; y tercero, se desarrollan los conceptos
-fundamentales de inteligencia artificial, aprendizaje automático y redes neuronales
-convolucionales que constituyen la base metodológica del trabajo.
+sustentan el presente trabajo, siguiendo una progresión desde el problema clínico hacia
+la solución computacional: primero, se expone la fisiopatología de la retinopatía
+diabética; segundo, se describe la naturaleza y características de las imágenes de fondo
+de ojo, la modalidad utilizada para observar dichas manifestaciones, así como la
+clasificación clínica de la RD a partir de estas imágenes; y tercero, se desarrollan los
+conceptos fundamentales de inteligencia artificial, aprendizaje automático y redes
+neuronales convolucionales que constituyen la base metodológica del trabajo.
 
+
+\section{RETINOPATÍA DIABÉTICA}
+
+La retinopatía diabética es una complicación ocular de la diabetes que se produce debido
+al daño en los vasos sanguíneos de la retina, el tejido sensible a la luz en la parte
+posterior del ojo. Este daño es causado principalmente por niveles elevados de glucosa en
+la sangre, que pueden obstruir los pequeños vasos sanguíneos que alimentan la retina.
+Este daño hace que los vasos sanguíneos se vuelvan más permeables y propensos a filtrar
+líquido y sangre en la retina. Además, los vasos sanguíneos pueden hincharse y formar
+microaneurismas, que son pequeñas protuberancias en los vasos sanguíneos que pueden
+romperse y sangrar.
+
+Esta enfermedad puede tener consecuencias graves para la visión. Una de las
+complicaciones más comunes es el sangrado dentro del ojo, que ocurre cuando se forman
+vasos sanguíneos anormales que se rompen y liberan sangre en el interior del ojo. Este
+sangrado puede hacer que la visión se vuelva borrosa o incluso se pierda completamente si
+es muy grande. Otra complicación seria es el desprendimiento de la retina. Los vasos
+sanguíneos anormales pueden generar tejido cicatricial que tira de la retina, lo que
+puede hacer que se separe de la parte posterior del ojo.
 
 \section{IMÁGENES DEL FONDO DE OJO}
 
@@ -69,25 +89,6 @@ para el escenario de acceso limitado a especialistas planteado en el
 Capítulo~\ref{chap:planteamiento-problema}. Con el avance de la inteligencia
 artificial, estas imágenes pueden además ser analizadas automáticamente mediante
 algoritmos de aprendizaje profundo, permitiendo un tamizaje masivo y eficiente.
-
-\section{RETINOPATÍA DIABÉTICA}
-
-La retinopatía diabética es una complicación ocular de la diabetes que se produce debido
-al daño en los vasos sanguíneos de la retina, el tejido sensible a la luz en la parte
-posterior del ojo. Este daño es causado principalmente por niveles elevados de glucosa en
-la sangre, que pueden obstruir los pequeños vasos sanguíneos que alimentan la retina.
-Este daño hace que los vasos sanguíneos se vuelvan más permeables y propensos a filtrar
-líquido y sangre en la retina. Además, los vasos sanguíneos pueden hincharse y formar
-microaneurismas, que son pequeñas protuberancias en los vasos sanguíneos que pueden
-romperse y sangrar.
-
-Esta enfermedad puede tener consecuencias graves para la visión. Una de las
-complicaciones más comunes es el sangrado dentro del ojo, que ocurre cuando se forman
-vasos sanguíneos anormales que se rompen y liberan sangre en el interior del ojo. Este
-sangrado puede hacer que la visión se vuelva borrosa o incluso se pierda completamente si
-es muy grande. Otra complicación seria es el desprendimiento de la retina. Los vasos
-sanguíneos anormales pueden generar tejido cicatricial que tira de la retina, lo que
-puede hacer que se separe de la parte posterior del ojo.
 
 \section{CLASIFICACIÓN DE LA RETINOPATÍA DIABÉTICA EN IMÁGENES DEL FONDO DE OJO}
 
@@ -180,9 +181,10 @@ tradicional de los algoritmos. En la programación convencional, los datos de en
 procesados por un conjunto de reglas predefinidas por el programador, lo que da como
 resultado una salida determinada. En contraste, los sistemas de inteligencia artificial
 operan mediante un enfoque de aprendizaje automático, donde se proporcionan conjuntos de
-datos de entrada y salida, pero el algoritmo debe aprender por sí mismo las reglas y
-patrones subyacentes que relacionan ambos conjuntos. Esto permite que el programa sea
-capaz de inferir correlaciones entre datos y, con el tiempo, adaptar su comportamiento,
+datos de entrada y salida, pero el algoritmo debe aprender por sí mismo las reglas que
+relacionan ambos conjuntos. Esto permite que el programa sea capaz de aprender patrones
+y relaciones subyacentes, incluidas relaciones no lineales, entre las variables o
+características de los datos y, con el tiempo, adaptar su comportamiento,
 mejorando su precisión y eficiencia sin intervención humana directa.
 
 En el ámbito de la medicina, la inteligencia artificial ha mostrado un crecimiento
