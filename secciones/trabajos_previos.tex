@@ -104,31 +104,55 @@ previos en la literatura.
 \section{LIMITACIONES Y BRECHAS DE INVESTIGACIÓN}
 
 A pesar del avance significativo en el uso de técnicas de aprendizaje profundo para la
-detección de RD a partir de imágenes del fondo de ojo, aún existen algunas limitaciones
-que deben abordarse para garantizar su aplicabilidad en el mundo real y su adopción en la
-práctica clínica.
+detección de RD a partir de imágenes del fondo de ojo, la revisión de antecedentes
+evidencia varias brechas que este trabajo aborda de manera directa mediante decisiones
+metodológicas específicas.
 
-La mayoría de los modelos actuales se entrenan con conjuntos de datos limitados y
-específicos, lo que limita su capacidad para generalizar a escenarios del mundo real con
-mayor variabilidad en las imágenes del fondo de ojo. En muchos conjuntos de datos, las
-imágenes con RD representan una pequeña proporción en comparación con las imágenes
-normales. Este desequilibrio de clases puede afectar el rendimiento del modelo, sesgando
-la clasificación hacia la clase mayoritaria.
+\textbf{Desbalance de clases:} en muchos conjuntos de datos, las imágenes con RD
+representan una pequeña proporción frente a las imágenes normales, lo que sesga el
+aprendizaje del modelo hacia la clase mayoritaria. Este trabajo responde a esta brecha
+mediante submuestreo de la clase mayoritaria y aumento de datos artificial de las clases
+minoritarias (Sección~\ref{subsec:balanceo-clases}).
 
-Algunos estudios se enfocan únicamente en la detección de la presencia o ausencia de RD,
-sin considerar la clasificación de su gravedad en estadios tempranos, moderados o
-severos, lo cual es crucial para la toma de decisiones oportunas en el manejo de la
-enfermedad. El ruido, la iluminación inconsistente y el bajo contraste en las imágenes
-del fondo de ojo pueden afectar significativamente la precisión de la clasificación. La
-implementación de técnicas de preprocesamiento de imágenes robustas es fundamental para
-mejorar el rendimiento de los modelos.
+\textbf{Clasificación limitada a presencia o ausencia de RD:} algunos estudios se
+enfocan únicamente en la detección binaria, sin considerar la clasificación de su
+gravedad en estadios tempranos, moderados o severos, lo cual es crucial para la toma de
+decisiones oportunas en el manejo de la enfermedad. Este trabajo responde desarrollando,
+además del clasificador binario, un clasificador multiclase con los cinco niveles de
+severidad de la RD (Sección~\ref{sec:config-experimental}).
 
-Pocos trabajos han explorado sistemáticamente el efecto del procesamiento de canales de
-color individuales (rojo, verde, azul) en el desempeño de clasificación de RD, a pesar de
-que diferentes canales pueden resaltar lesiones específicas. Además, existe una escasez
-de validación externa rigurosa en múltiples datasets con características de adquisición
-diferentes, lo cual es esencial para demostrar la capacidad de generalización de los
-modelos.
+\textbf{Ruido, iluminación inconsistente y bajo contraste:} estos factores en las
+imágenes del fondo de ojo pueden afectar significativamente la precisión de la
+clasificación. Este trabajo responde mediante un proceso de depuración de imágenes
+defectuosas basado en brillo (Sección~\ref{subsec:depuracion-imagenes}) y una etapa de
+filtrado y realce de características (Sección~\ref{subsec:filtrado-realce}).
+
+\textbf{Procesamiento por canales de color:} en oftalmología clínica, el uso de filtros
+de color para mejorar el contraste de la vasculatura y las lesiones retinianas es una
+práctica establecida desde hace décadas: la pigmentación retiniana refleja la luz verde
+con mayor intensidad que la roja o la azul, lo que realza la visibilidad de hemorragias,
+exudados y microaneurismas al aislar este canal \myfootcite{pao2020bichannel}. Siguiendo
+este principio, algunos trabajos han extraído el canal verde de forma aislada para
+mejorar tareas específicas de segmentación y detección de lesiones
+\myfootcite{pao2020bichannel}, y al menos un estudio comparó el desempeño de una única
+CNN entrenada por separado con cada canal individual, encontrando diferencias de
+precisión entre ellos \myfootcite{singh2024finetuned}. Sin embargo, estas comparaciones
+se han limitado a una sola arquitectura y, en su mayoría, a la clasificación binaria; no
+se ha explorado de manera sistemática qué canal individual resulta más discriminativo
+entre múltiples arquitecturas preentrenadas, ni en el contexto de la clasificación
+multiclase por niveles de severidad, donde distinguir lesiones sutiles entre etapas
+adyacentes es más exigente. Esta es una de las brechas centrales que este trabajo busca
+cerrar, mediante un análisis comparativo sistemático de cuatro arquitecturas
+preentrenadas (MobileNetV2, ResNet50V2, InceptionV3 y VGG19) evaluadas con la imagen RGB
+completa y cada canal de color por separado, en el escenario de clasificación multiclase
+(Sección~\ref{subsec:analisis-canales}).
+
+\textbf{Escasez de validación externa rigurosa:} la mayoría de los modelos se entrenan y
+evalúan en un único conjunto de datos, lo que limita la evidencia disponible sobre su
+capacidad de generalizar a poblaciones y condiciones de adquisición distintas. Este
+trabajo responde evaluando el mejor modelo en tres conjuntos de datos externos
+independientes —MESSIDOR-2, IDRiD y FOSCAL—, con diferentes características de
+adquisición (Sección~\ref{subsec:validacion-externa}).
 
 \section{CONTRIBUCIÓN DEL PRESENTE TRABAJO}
 

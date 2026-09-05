@@ -178,7 +178,7 @@ estrategias específicas de limpieza, filtrado y balanceo, orientadas a mejorar 
 de los datos sin eliminar muestras valiosas ni conservar imágenes que pudieran perjudicar 
 el entrenamiento.
 
-\subsection{Depuración de imágenes defectuosas}
+\subsection{Depuración de imágenes defectuosas} \label{subsec:depuracion-imagenes}
 
 Durante el proceso de exploración y limpieza del conjunto de datos, se identificó un 
 número considerable de imágenes que presentaban problemas severos de iluminación: algunas 
@@ -201,7 +201,7 @@ movidas a una carpeta de exclusión. Este proceso se implementó utilizando Open
 en Python, y permitió filtrar de manera eficiente las imágenes que no aportan información 
 significativa.
 
-\subsection{Balanceo de clases}
+\subsection{Balanceo de clases} \label{subsec:balanceo-clases}
 
 El conjunto de datos original presenta un marcado desbalance entre las clases, lo cual 
 representa un desafío importante para la construcción de clasificadores. En particular, y 
@@ -294,7 +294,7 @@ distribución final del dataset optimizado.
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-\subsection{Filtrado y realce de características}
+\subsection{Filtrado y realce de características} \label{subsec:filtrado-realce}
 
 Para reducir la variabilidad entre las imágenes de fondo de ojo asociada a diferencias en 
 iluminación, resolución de las cámaras y condiciones de captura, se implementó una 
