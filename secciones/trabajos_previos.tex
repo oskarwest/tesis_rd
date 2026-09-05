@@ -8,28 +8,50 @@ prometedores en la detección automática de RD a través del análisis de imág
 de ojo. Dentro de este contexto, se incluyen varios enfoques que han contribuido en este
 campo de investigación.
 
-\section{ENFOQUES CON CNN PERSONALIZADAS}
+\section{ENFOQUES CON CNN PERSONALIZADAS Y MODIFICACIONES ARQUITECTÓNICAS}
 
 En algunas investigaciones se observa un enfoque común: la personalización de un modelo
 de red neuronal convolucional (CNN) para abordar la detección automatizada de retinopatía
-diabética (RD). Esta estrategia implica modificar la arquitectura o los parámetros de un
-modelo CNN tradicional y mejorarlo en la tarea específica de la detección de RD. En este
-contexto, se han explorado diversas estrategias para mejorar la precisión y eficiencia de
-la detección de RD a partir de imágenes del fondo de la retina. Por ejemplo, se han
-aplicado etapas de preprocesamiento como escalado, recorte y ecualización adaptativa del
+diabética (RD), ya sea modificando la arquitectura o los parámetros de un modelo CNN
+tradicional, introduciendo mecanismos estructurales novedosos, o adoptando estrategias de
+entrenamiento especializadas para mejorar su desempeño en esta tarea específica.
+
+Por ejemplo, se ha propuesto una red neuronal convolucional profunda híbrida en cascada y
+de múltiples escalas, optimizada mediante una estrategia heurística híbrida, que además
+incorpora etapas de preprocesamiento como escalado, recorte y ecualización adaptativa del
 histograma con limitación de contraste (CLAHE) para mejorar la calidad de las imágenes
 \myfootcite{tabtaba2024diabetic}.
 
 Además, se han utilizado técnicas de aumento de datos mediante redes generativas
-adversariales (GAN) para enriquecer el conjunto de datos de entrenamiento. Otros trabajos
-han introducido variantes personalizadas de CNN, como la Red Neuronal Convolucional
-Dilatada Multiescala Híbrida en Cascada (HCMD-CNN) \myfootcite{gayathri2020lightweight},
-que integra la Red de Atención Residual (RAN) y MobileNet, optimizando sus parámetros
-para lograr un mejor rendimiento en la detección de RD. Otros enfoques han empleado
-métodos de extracción de características mediante CNN, cuyas salidas se utilizan como
-entrada para diferentes clasificadores de aprendizaje automático
-\myfootcite{li2019computer} \myfootcite{gayathri2021diabetic}, como Support Vector
-Machine, AdaBoost, Naive Bayes, Random Forest y J48.
+adversariales (GAN) para sintetizar imágenes de fondo de ojo y enriquecer el conjunto de
+datos de entrenamiento, mitigando el desbalance de clases característico de este tipo de
+conjuntos de datos \myfootcite{chen2021rfgans}. Otros trabajos han introducido variantes
+personalizadas de CNN, como la Red Neuronal Convolucional Dilatada Multiescala Híbrida en
+Cascada (HCMD-CNN) \myfootcite{gayathri2020lightweight}, que integra la Red de Atención
+Residual (RAN) y MobileNet, optimizando sus parámetros para lograr un mejor rendimiento en
+la detección de RD. Otros enfoques han empleado métodos de extracción de características
+mediante CNN —incluyendo arquitecturas multipath—, cuyas salidas se utilizan como entrada
+para diferentes clasificadores de aprendizaje automático \myfootcite{li2019computer}
+\myfootcite{gayathri2021diabetic}, como Support Vector Machine, AdaBoost, Naive Bayes,
+Random Forest y J48.
+
+En cuanto a mecanismos de aprendizaje novedosos, se ha propuesto un enfoque bioinspirado
+en la metaplasticidad sináptica, incorporado en redes neuronales convolucionales para
+fortalecer las ocurrencias menos comunes durante el aprendizaje
+\myfootcite{vives2021diabetic}. Este método mejora tanto la tasa de aprendizaje como la
+precisión, superando a otros métodos de la literatura actual incluso con conjuntos de
+datos más pequeños, con resultados destacados en la arquitectura InceptionV3.
+
+Complementariamente, otros trabajos han abordado la eficiencia del entrenamiento más que
+la arquitectura en sí misma, mediante estrategias de aprendizaje profundo distribuido. Un
+estudio analiza el paralelismo de datos y de modelo en el entrenamiento distribuido de CNN
+para la clasificación de RD \myfootcite{patil2023study}, mientras que otro implementa
+paralelismo de canalización (\textit{pipeline}) utilizando dos GPU, logrando una
+puntuación F1 de validación de 0.834, además de explorar la diversidad de los conjuntos de
+datos de entrenamiento mediante la manipulación de datos de entrada para mejorar el
+rendimiento de la clasificación \myfootcite{patil2022pipeline}. Aunque estas estrategias
+no modifican la arquitectura de la red, constituyen innovaciones relevantes en el proceso
+de entrenamiento que complementan los enfoques arquitectónicos descritos anteriormente.
 
 \section{ENFOQUES CON ARQUITECTURAS PREENTRENADAS}
 
@@ -78,28 +100,6 @@ multiclase de imágenes de RD \myfootcite{vij2024hybrid}, logrando una precisió
 clasificación por etapas. Estos avances muestran mejoras significativas en precisión y
 generalización, con resultados que superan a los métodos tradicionales y a los trabajos
 previos en la literatura.
-
-\section{ENFOQUES CON MODIFICACIONES ARQUITECTÓNICAS INNOVADORAS}
-
-Por otra parte, existen otros trabajos en la literatura que han optado por realizar
-modificaciones sustanciales a las arquitecturas CNN para obtener un mejor desempeño. Se
-han propuesto varias técnicas innovadoras para mejorar el rendimiento y la eficiencia del
-aprendizaje profundo en la detección y clasificación de retinopatía diabética (RD)
-\myfootcite{patil2023study}.
-
-Un estudio aborda el aprendizaje profundo distribuido (DDL) para entrenar modelos de DL
-de manera rápida, utilizando dos GPU y analizando el rendimiento del canal de paralelismo
-en DDL, logrando una puntuación F1 de validación de 0.834 en la clasificación de RD. Otro
-enfoque se centra en la diversidad de los conjuntos de datos de entrenamiento mediante la
-manipulación de datos de entrada, mejorando así el rendimiento de la clasificación
-\myfootcite{patil2022pipeline}.
-
-Además, se propone un enfoque bioinspirado en la metaplasticidad sináptica, que se
-incorpora en redes neuronales convolucionales para fortalecer las ocurrencias menos
-comunes durante el aprendizaje \myfootcite{vives2021diabetic}. Este método mejora tanto
-la tasa de aprendizaje como la precisión, superando a otros métodos de la literatura
-actual incluso con conjuntos de datos más pequeños, con resultados destacados en la
-arquitectura InceptionV3.
 
 \section{LIMITACIONES Y BRECHAS DE INVESTIGACIÓN}
 
