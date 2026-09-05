@@ -229,41 +229,26 @@ datos que no haya visto previamente. Finalmente, el rendimiento del modelo se ev
 utilizando un conjunto de datos de prueba, lo que permite verificar que el modelo sea
 capaz de generalizar bien y no esté simplemente memorizando los datos de entrenamiento.
 
-Dentro del campo del aprendizaje automático, existen diferentes tipos o enfoques según la
-estructura de los datos y el tipo de tarea que se desea realizar. Los principales son: el
-aprendizaje supervisado, el no supervisado, el semisupervisado y el aprendizaje por
-refuerzo. En el aprendizaje supervisado se realiza el entrenamiento utilizando un
-conjunto de datos etiquetado, es decir, datos para los cuales ya se conoce la salida
-correcta. El objetivo es que el modelo pueda mapear nuevas entradas a sus respectivas
-salidas correctas (etiquetas). Los modelos de clasificación y regresión son ejemplos
-típicos de aprendizaje supervisado. En clasificación, el objetivo es asignar una etiqueta
-a un conjunto de datos (por ejemplo, determinar si una imagen contiene un perro o un
-gato), mientras que en regresión el objetivo es predecir un valor continuo (como el
-precio de una casa en función de características como su tamaño y ubicación)
+Dentro del campo del aprendizaje automático, existen diferentes enfoques según la
+estructura de los datos disponibles y el tipo de tarea a resolver: el aprendizaje
+supervisado, que utiliza datos etiquetados para aprender a mapear entradas a salidas
+conocidas; el no supervisado, que busca patrones ocultos en datos sin etiquetar, como
+agrupamientos (clustering) o reducción de dimensionalidad; el semisupervisado, que
+combina datos etiquetados y no etiquetados cuando etiquetar grandes volúmenes de datos es
+costoso o impráctico; y el aprendizaje por refuerzo, en el que un agente aprende a tomar
+decisiones secuenciales a partir de recompensas y penalizaciones recibidas de un entorno
 \myfootcite{jordan2015machine}.
 
-Por otro lado, en el aprendizaje no supervisado el modelo trabaja con un conjunto de
-datos que no tiene etiquetas, y el objetivo es identificar patrones ocultos dentro de los
-datos. Por ejemplo, el modelo puede buscar agrupaciones de datos similares (clustering) o
-intentar reducir la cantidad de características necesarias para representar los datos
-(reducción de dimensionalidad). Este tipo de aprendizaje se utiliza ampliamente en
-análisis exploratorio de datos y en tareas como la segmentación de clientes o la
-detección de anomalías.
-
-En el enfoque del aprendizaje semisupervisado se combinan elementos del aprendizaje
-supervisado y no supervisado. En este caso, el conjunto de datos contiene tanto ejemplos
-etiquetados como no etiquetados. Este enfoque es útil cuando etiquetar grandes cantidades
-de datos es costoso o impráctico, pero se dispone de un pequeño conjunto de datos
-etiquetados para guiar el proceso de aprendizaje. Los algoritmos semisupervisados
-intentan aprovechar los datos no etiquetados para mejorar el rendimiento general del
-modelo.
-
-Por último, el aprendizaje por refuerzo se basa en el concepto de recompensa y
-penalización. En este paradigma, un agente toma decisiones en un entorno y recibe
-recompensas o penalizaciones en función de las acciones que realiza. El objetivo es que
-el agente aprenda a tomar decisiones que maximicen la recompensa acumulada a largo plazo.
-Este enfoque se utiliza en tareas complejas donde las decisiones deben tomarse en
-secuencia, como en la robótica, el juego de ajedrez o la conducción autónoma.
+Este trabajo se enmarca en el aprendizaje supervisado, ya que se dispone de un conjunto
+de imágenes de fondo de ojo etiquetadas tanto por la presencia o ausencia de retinopatía
+diabética (clasificación binaria) como por su nivel de severidad, en una escala de 0 a 4
+(clasificación multiclase). En el aprendizaje supervisado, el modelo se entrena
+utilizando un conjunto de datos para el cual ya se conoce la salida correcta (la
+etiqueta), con el objetivo de aprender una función que mapee nuevas entradas —en este
+caso, nuevas imágenes— a su categoría correspondiente. Los modelos de clasificación,
+como los desarrollados en este proyecto, son un caso típico de este enfoque: a partir de
+las características aprendidas durante el entrenamiento, el modelo asigna a cada imagen
+la categoría que mejor corresponde a su contenido.
 
 \subsection{Redes neuronales convolucionales}
 
