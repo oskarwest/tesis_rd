@@ -241,14 +241,41 @@ decisiones secuenciales a partir de recompensas y penalizaciones recibidas de un
 
 Este trabajo se enmarca en el aprendizaje supervisado, ya que se dispone de un conjunto
 de imágenes de fondo de ojo etiquetadas tanto por la presencia o ausencia de retinopatía
-diabética (clasificación binaria) como por su nivel de severidad, en una escala de 0 a 4
-(clasificación multiclase). En el aprendizaje supervisado, el modelo se entrena
+diabética como por su nivel de severidad, en una escala de 0 a 4. En el aprendizaje supervisado, el modelo se entrena
 utilizando un conjunto de datos para el cual ya se conoce la salida correcta (la
-etiqueta), con el objetivo de aprender una función que mapee nuevas entradas —en este
-caso, nuevas imágenes— a su categoría correspondiente. Los modelos de clasificación,
+etiqueta), con el objetivo de aprender una función que mapee nuevas entradas, en este
+caso nuevas imágenes a su categoría correspondiente. Los modelos de clasificación,
 como los desarrollados en este proyecto, son un caso típico de este enfoque: a partir de
 las características aprendidas durante el entrenamiento, el modelo asigna a cada imagen
 la categoría que mejor corresponde a su contenido.
+
+\subsection{Redes neuronales artificiales}
+
+Las redes neuronales artificiales (RNA) son modelos computacionales inspirados, de
+manera simplificada, en el funcionamiento del cerebro humano. Su unidad básica es la
+neurona artificial, la cual recibe uno o varios valores de entrada, cada uno multiplicado
+por un peso que representa la importancia relativa de esa entrada, y suma un término
+adicional llamado sesgo (bias). El resultado de esta combinación lineal se transforma
+mediante una función de activación, que introduce no linealidad en el modelo y determina
+el valor de salida de la neurona \myfootcite{lecun2015deep}.
+
+Una red neuronal se construye organizando estas neuronas en capas: una capa de entrada,
+que recibe los datos originales; una o varias capas ocultas, en las que se realizan
+transformaciones sucesivas de la información; y una capa de salida, que produce el
+resultado final (por ejemplo, la clase predicha). Cuantas más capas ocultas tenga la red,
+mayor es su capacidad para representar relaciones complejas entre las variables de
+entrada, lo que da origen al término aprendizaje profundo.
+
+El entrenamiento de una red neuronal consiste en ajustar iterativamente los pesos de
+todas sus conexiones para que las predicciones del modelo se acerquen lo más posible a
+las salidas reales. Para ello se define una función de pérdida (o función de costo), que
+cuantifica la diferencia entre la predicción de la red y la etiqueta verdadera; entre
+menor sea esta diferencia, mejor es el desempeño del modelo. El proceso de entrenamiento
+busca minimizar dicha función mediante algoritmos de optimización basados en el
+gradiente, ajustando los pesos en la dirección que reduce el error
+\myfootcite{lecun2015deep}. Las redes neuronales convolucionales, presentadas a
+continuación, son una especialización de las redes neuronales artificiales diseñada
+específicamente para aprovechar la estructura espacial presente en las imágenes.
 
 \subsection{Redes neuronales convolucionales}
 
