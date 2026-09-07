@@ -38,9 +38,11 @@ En el desarrollo de este proyecto se utilizaron distintos conjuntos de datos par
 garantizar la robustez y generalización del modelo. Inicialmente se exploraron datasets 
 disponibles en repositorios públicos, junto con un conjunto de datos de propiedad 
 privada. La fase experimental inicial se llevó a cabo con el dataset de Kaggle debido a 
-su gran volumen de imágenes. Posteriormente se utilizaron los datasets públicos 
-MESSIDOR-2, IDRiD y uno privado denominado FOSCAL para evaluar la capacidad de 
-generalización del modelo final mediante validación externa.
+su gran volumen de imágenes. Posteriormente se utilizaron los datasets públicos
+MESSIDOR-2, IDRiD y uno privado denominado FOSCAL para evaluar la capacidad de
+generalización del modelo final mediante validación externa: el modelo, entrenado
+exclusivamente con el dataset de Kaggle, fue evaluado directamente sobre estos tres
+conjuntos sin reentrenamiento ni ajuste de pesos.
 
 \subsection{Dataset de Kaggle (Entrenamiento)}
 
