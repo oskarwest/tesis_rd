@@ -157,8 +157,17 @@ en los distintos datasets}
 
 \subsection{División de datos para entrenamiento y validación}
 
-El dataset de Kaggle se dividió en tres subconjuntos siguiendo una estrategia de 
-partición estratificada para mantener la proporción de clases en cada subconjunto:
+El dataset de Kaggle se dividió en tres subconjuntos siguiendo una estrategia de
+partición estratificada. Esta elección responde directamente al marcado desbalance de
+clases del conjunto original, descrito en la Sección~\ref{subsec:balanceo-clases}, donde
+la clase 0 (sin RD) representa aproximadamente el 73\% de las imágenes frente a apenas un
+2\% de la clase 4 (RD proliferativa): una partición completamente aleatoria podría, por
+azar, generar subconjuntos con proporciones de clase distintas entre sí —por ejemplo, un
+conjunto de prueba con una proporción de casos severos notablemente distinta a la del
+conjunto de entrenamiento—, lo que dificultaría comparar las métricas obtenidas entre
+subconjuntos y podría sesgar la evaluación del modelo. La partición estratificada busca
+mantener aproximadamente las mismas proporciones de clase en los tres subconjuntos,
+haciendo la evaluación más comparable y confiable:
 
 \begin{itemize}
     \item \textbf{Conjunto de entrenamiento (70\%):} 24,585 imágenes utilizadas para el 
