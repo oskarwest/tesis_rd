@@ -367,9 +367,11 @@ discriminatoria del modelo.
 
 \subsection{Validación externa utilizando el mejor modelo} \label{subsec:validacion-externa}
 
-Para evaluar la generalización del modelo MobileNetV2 con filtrado y umbral óptimo,
-se realizaron pruebas en tres conjuntos de datos externos independientes: FOSCAL, IDRiD y
-MESSIDOR-2. Como se observa en las matrices de confusión de la 
+Para evaluar la generalización del modelo, el mejor modelo obtenido (MobileNetV2 con
+filtrado y umbral óptimo), entrenado exclusivamente con el conjunto de Kaggle, fue
+evaluado directamente sobre tres conjuntos de datos externos independientes —FOSCAL,
+IDRiD y MESSIDOR-2—, sin reentrenamiento ni ajuste de pesos con estos conjuntos
+externos. Como se observa en las matrices de confusión de la
 Figura~\ref{fig:conf-matrix-external} y en la Tabla~\ref{tab:validacion-externa}, el 
 modelo mantiene un desempeño sólido, aunque con una leve disminución en comparación con 
 el dataset original de Kaggle.
