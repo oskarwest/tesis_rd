@@ -46,11 +46,14 @@ conjuntos sin reentrenamiento ni ajuste de pesos.
 
 \subsection{Dataset de Kaggle (Entrenamiento)}
 
-Es el dataset principal que se utilizó para entrenar y validar los modelos 
-experimentales. Cuenta con un amplio conjunto de datos compuesto por imágenes de retina 
-en alta resolución, obtenidas a partir del repositorio \textit{Diabetic Retinopathy 
-Detection 2015}, disponible en la plataforma Kaggle. Las imágenes fueron capturadas bajo 
-diversas condiciones y con distintos tipos de cámaras, lo que introduce variabilidad en 
+Es el dataset principal que se utilizó para entrenar y validar los modelos
+experimentales. Cuenta con un amplio conjunto de datos compuesto por imágenes de retina
+en alta resolución, obtenidas a partir del repositorio \textit{Diabetic Retinopathy
+Detection 2015}, disponible en la plataforma Kaggle. Las imágenes provienen de EyePACS,
+una red de telemedicina para tamizaje de retinopatía diabética que opera principalmente
+en centros de atención primaria de California, Estados Unidos
+\myfootcite{cuadros2009eyepacs}. Las imágenes fueron capturadas bajo
+diversas condiciones y con distintos tipos de cámaras, lo que introduce variabilidad en
 aspectos como la resolución, la iluminación y la orientación.
 
 Cada registro corresponde a un paciente, identificándose ambos ojos mediante un nombre de 
@@ -78,11 +81,14 @@ escenarios reales de aplicación.
 
 \subsection{MESSIDOR-2 (Validación externa)}
 
-Es una base de datos de imágenes de fondo de ojo diseñada para evaluar algoritmos de 
-detección de retinopatía diabética, particularmente para la clasificación de casos 
-referibles. Contiene un total de 1,748 imágenes correspondientes a 874 exámenes de 
-pacientes, capturadas con cámaras no midriáticas Topcon TRC NW6, NW7 y Nidek AFC-210, con 
-un campo de visión de 45°. Las imágenes presentan resoluciones variables, típicamente 
+Es una base de datos de imágenes de fondo de ojo diseñada para evaluar algoritmos de
+detección de retinopatía diabética, particularmente para la clasificación de casos
+referibles. Contiene un total de 1,748 imágenes correspondientes a 874 exámenes de
+pacientes, provenientes de tres departamentos de oftalmología en Francia: el Hospital
+Universitario de Brest, el Hospital Universitario de Saint-Étienne y el Hôpital
+Lariboisière de París \myfootcite{decenciere2014messidor}. Las imágenes fueron
+capturadas con cámaras no midriáticas Topcon TRC NW6, NW7 y Nidek AFC-210, con
+un campo de visión de 45°. Las imágenes presentan resoluciones variables, típicamente
 entre $1440 \times 960$ y $2304 \times 1536$ píxeles, y están centradas en la mácula.
 
 Este conjunto cuenta con: etiquetas de gradación de retinopatía diabética (RD) en una 
