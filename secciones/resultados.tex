@@ -371,7 +371,13 @@ Para evaluar la generalización del modelo, el mejor modelo obtenido (MobileNetV
 filtrado y umbral óptimo), entrenado exclusivamente con el conjunto de Kaggle, fue
 evaluado directamente sobre tres conjuntos de datos externos independientes —FOSCAL,
 IDRiD y MESSIDOR-2—, sin reentrenamiento ni ajuste de pesos con estos conjuntos
-externos. Como se observa en las matrices de confusión de la
+externos. El procedimiento consistió en: aplicar a las imágenes de cada conjunto externo
+el mismo preprocesamiento de filtrado y realce utilizado durante el entrenamiento
+(Sección~\ref{subsec:filtrado-realce}); generar las predicciones del modelo mediante
+inferencia directa; y clasificar cada imagen aplicando el mismo umbral de decisión ya
+optimizado sobre el conjunto de Kaggle (0.4826, Tabla~\ref{tab:umbral-optimo}), sin
+recalcularlo ni ajustarlo para cada dataset externo. Como se observa en las matrices de
+confusión de la
 Figura~\ref{fig:conf-matrix-external} y en la Tabla~\ref{tab:validacion-externa}, el 
 modelo mantiene un desempeño sólido, aunque con una leve disminución en comparación con 
 el dataset original de Kaggle.
