@@ -459,12 +459,20 @@ MESSIDOR-2 & 0.92 & 0.89 & 0.92 & 0.92 \\
 \caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-Estos resultados confirman que el modelo generaliza de manera robusta a datos externos 
-con características de adquisición diferentes, demostrando su viabilidad como herramienta 
-de apoyo al diagnóstico en diversos contextos clínicos. El mantenimiento de 
-sensibilidades superiores al 82\% en todos los conjuntos externos indica que las 
-características aprendidas por el modelo poseen suficiente robustez para su aplicación en 
-escenarios clínicos diversos.
+Estos resultados sugieren que el modelo mantiene un desempeño razonable en datos
+externos con características de adquisición diferentes, lo que resulta prometedor para
+su potencial aplicación como herramienta de apoyo al diagnóstico. Sin embargo, la
+generalización observada no es uniforme entre los tres conjuntos, y las diferencias en
+las métricas pueden explicarse, al menos en parte, por factores propios de cada fuente
+de datos: el modelo de cámara utilizado (por ejemplo, Kowa VX-10$\alpha$ en IDRiD
+frente a Topcon TRC NW6 en MESSIDOR-2), la resolución de las imágenes, la población de
+origen (india, francesa y colombiana, respectivamente) y el protocolo de captura y
+etiquetado de cada centro. Dado que estas variables no fueron controladas ni
+desagregadas en el análisis, las cifras de la Tabla~\ref{tab:validacion-externa} deben
+interpretarse como una primera aproximación a la capacidad de generalización del modelo,
+y no como evidencia definitiva de una generalización robusta o universal; una
+conclusión de ese tipo requeriría un análisis específico del efecto de cada una de estas
+variables, que queda fuera del alcance de este trabajo.
 
 \subsection{Comparación con trabajos previos en el estado del arte} \label{subsec:comparacion-literatura}
 
