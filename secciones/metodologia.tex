@@ -231,9 +231,13 @@ clases menos representadas. Este efecto del desbalance en el rendimiento de
 clasificadores ha sido ampliamente documentado en la literatura sobre aprendizaje con 
 datos desbalanceados \myfootcite{johnson2019survey} \myfootcite{mustapha2024class}.
 
-En general, para mitigar los problemas derivados del desbalance, se aplicaron dos 
-estrategias principales: una reducción de la clase 0 y un aumento artificial de las 
-clases minoritarias. En el escenario multiclase, un muestreo aleatorio directo sobre la 
+En general, para mitigar los problemas derivados del desbalance, se aplicaron dos
+estrategias principales: una reducción de la clase 0 mediante submuestreo (eliminando
+aleatoriamente parte de sus imágenes hasta acercarla a las demás clases) y un aumento
+artificial de las clases minoritarias mediante técnicas de aumento de datos (data
+augmentation), es decir, la generación de nuevas muestras a partir de transformaciones
+de las imágenes existentes, cuyos detalles se describen en la
+Subsección~\ref{subsec:aumento-datos}. En el escenario multiclase, un muestreo aleatorio directo sobre la
 clase 0 no resultó óptimo, ya que esta contenía un número considerable de imágenes con 
 ruido o baja calidad. Para evitar descartar ejemplos útiles y conservar otros 
 potencialmente perjudiciales, se realizó primero una limpieza manual, con lo que se 
@@ -247,7 +251,7 @@ lo que se aplicó un submuestreo aleatorio hasta lograr una proporción cercana 
 entre ambas clases. Esta estrategia garantizó un entrenamiento más equilibrado y redujo 
 el riesgo de sesgo hacia la clase mayoritaria.
 
-\subsection{Aumento de datos}
+\subsection{Aumento de datos} \label{subsec:aumento-datos}
 
 El aumento de datos, aunque es una técnica común y poderosa dentro del aprendizaje 
 profundo, debe ser aplicado con cautela, especialmente cuando se trabaja con modelos 
