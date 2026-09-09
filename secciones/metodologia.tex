@@ -495,7 +495,29 @@ rendimiento computacional y la calidad de la información contenida en las imág
 último, para ambos clasificadores se crearon modelos utilizando las mismas redes 
 preentrenadas: ResNet50V2, InceptionV3, VGG19 y MobileNetV2.
 
-La Tabla~\ref{tab:hiperparametros} resume los hiperparámetros específicos utilizados en 
+La configuración de hiperparámetros no fue arbitraria: cada valor responde a alguno de
+los siguientes criterios. El \textbf{learning rate} y la \textbf{tasa de Dropout} se
+determinaron mediante una búsqueda sistemática (grid search) sobre nueve combinaciones
+($1 \times 10^{-3}$, $1 \times 10^{-4}$ y $1 \times 10^{-5}$ para el learning rate;
+$0.2$, $0.3$ y $0.5$ para el Dropout), entrenando y evaluando cada combinación sobre el
+conjunto de validación; la combinación con mejor F1-score
+($1 \times 10^{-4}$ y $0.2$, respectivamente) fue la seleccionada. La
+\textbf{regularización L2} se probó experimentalmente sobre la mejor combinación
+encontrada: su efecto sobre el F1-score y el AUC-ROC resultó marginal, pero se mantuvo
+como regularizador adicional junto con Dropout y GaussianNoise. El \textbf{tamaño de
+lote} (batch size) de 16 responde a una restricción computacional práctica, dado el uso
+de GPUs Tesla P100/T4 provistas por Kaggle (Sección~\ref{sec:preprocesamiento}) en
+conjunto con la arquitectura MobileNetV2 y el bloque de atención, que incrementan el
+consumo de memoria por lote. La \textbf{paciencia de early stopping} (5 épocas) y la
+\textbf{desviación estándar de GaussianNoise} (0.2) corresponden a valores de uso común
+en la literatura de regularización de redes neuronales profundas, dentro de los rangos
+habitualmente reportados para evitar tanto un entrenamiento prematuramente interrumpido
+como una perturbación excesiva de las activaciones. El \textbf{número de cabezas de
+atención} (4) sigue la práctica común en bloques de atención de tamaño moderado
+acoplados a arquitecturas CNN, donde se busca capturar múltiples subespacios de
+representación sin incrementar excesivamente el número de parámetros del modelo.
+
+La Tabla~\ref{tab:hiperparametros} resume los hiperparámetros específicos utilizados en
 cada tipo de clasificador:
 
 \begin{table}[H]
@@ -510,13 +532,14 @@ cada tipo de clasificador:
 Tamaño de entrada & Dimensiones de imagen & $224 \times 224$ & $224 \times 224$ \\
 Optimizador & Algoritmo de optimización & Adam & Adam \\
 Learning rate & Tasa de aprendizaje & $1 \times 10^{-4}$ & $1 \times 10^{-4}$ \\
-Batch size & Tamaño de lote & 32 & 32 \\
+Batch size & Tamaño de lote & 16 & 16 \\
 Épocas máximas & Número máximo de épocas & 50 & 50 \\
-Dropout rate & Tasa de abandono & 0.3 & 0.3 \\
+Dropout rate & Tasa de abandono & 0.2 & 0.2 \\
 L2 regularization & Factor de regularización & 0.01 & 0.01 \\
-GaussianNoise std & Desviación estándar del ruido & 0.1 & 0.1 \\
+GaussianNoise std & Desviación estándar del ruido & 0.2 & 0.2 \\
 Early stopping patience & Paciencia para parada temprana & 5 épocas & 5 épocas \\
 Función de pérdida & Función objetivo & Binary crossentropy & Sparse categorical crossentropy \\
+Cabezas de atención & Número de cabezas en Multi-Head Attention & 4 & 4 \\
 Capas densas & Configuración del top model & 512-256 & 256-128 \\
 Activación salida & Función de activación final & Sigmoid & Softmax \\
 Neuronas salida & Número de clases & 1 & 5 \\ \hline
