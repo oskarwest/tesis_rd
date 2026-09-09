@@ -265,7 +265,8 @@ preservan la integridad visual de las retinografías al tiempo que enriquecen la
 diversidad del conjunto de entrenamiento \myfootcite{shorten2019survey}. Se implementó un 
 conjunto de transformaciones geométricas moderadas utilizando la clase 
 \texttt{ImageDataGenerator} de Keras, que permitió generar nuevas muestras a partir de 
-imágenes existentes de forma controlada.
+imágenes existentes de forma controlada. La Tabla~\ref{tab:data-augmentation} detalla las
+seis transformaciones aplicadas y el rango o parámetro utilizado en cada una.
 
 \begin{table}[H]
 \centering
@@ -610,11 +611,11 @@ regularización}
 \node[draw, rectangle, below=of input] (base) {Base CNN preentrenada (congelada)};
 \node[draw, rectangle, below=of base] (attention) {Multi-Head Attention (4 heads)};
 \node[draw, rectangle, below=of attention] (gap) {Global Average Pooling};
-\node[draw, rectangle, below=of gap] (noise1) {GaussianNoise ($\sigma=0.1$)};
-\node[draw, rectangle, below=of noise1] (dense1) {Dense (512/256) + ReLU + Dropout (0.3) 
+\node[draw, rectangle, below=of gap] (noise1) {GaussianNoise ($\sigma=0.2$)};
+\node[draw, rectangle, below=of noise1] (dense1) {Dense (512/256) + ReLU + Dropout (0.2)
 + L2};
-\node[draw, rectangle, below=of dense1] (noise2) {GaussianNoise ($\sigma=0.1$)};
-\node[draw, rectangle, below=of noise2] (dense2) {Dense (256/128) + ReLU + Dropout (0.3) 
+\node[draw, rectangle, below=of dense1] (noise2) {GaussianNoise ($\sigma=0.2$)};
+\node[draw, rectangle, below=of noise2] (dense2) {Dense (256/128) + ReLU + Dropout (0.2)
 + L2};
 \node[draw, rectangle, below=of dense2] (output) {Dense (1/5) + Sigmoid/Softmax};
 
@@ -631,6 +632,12 @@ regularización}
 \end{center}
 \caption*{\textit{Fuente: Elaboración propia}}
 \end{figure}
+
+En la Figura~\ref{fig:arquitectura-modelo} puede observarse que el flujo de información
+pasa primero por la base CNN preentrenada (congelada) y el bloque de atención, seguido de
+dos capas densas intercaladas con GaussianNoise y regularización (Dropout y L2), hasta
+llegar a la capa de salida, cuyo número de neuronas y función de activación (Sigmoid o
+Softmax) dependen de si se trata del clasificador binario o multiclase, respectivamente.
 
 \subsection{Reproducibilidad y disponibilidad de código}
 

@@ -163,9 +163,12 @@ Capítulo~\ref{chap:metodologia}, consistió en normalización de color mediante
 del promedio local con filtro gaussiano y enmascaramiento del 10\% periférico de la 
 imagen.
 
-Tras evaluar los modelos se observó una mejora en el rendimiento: el tiempo de inferencia 
-se redujo respecto al experimento sin filtrado, y se alcanzaron métricas más altas de 
-desempeño, con F1-score de 0.96 para MobileNetV2, reflejando su superioridad.
+Tras evaluar los modelos se observó una mejora en el rendimiento: el tiempo de inferencia
+se redujo respecto al experimento sin filtrado, y se alcanzaron métricas más altas de
+desempeño, con F1-score de 0.96 para MobileNetV2, reflejando su superioridad. La
+Tabla~\ref{tab:impacto-filtrado} compara sensibilidad, especificidad, precisión y
+F1-score de las cuatro arquitecturas antes y después de aplicar el filtrado, mostrando
+una mejora consistente en las cuatro métricas para todas las redes.
 
 \begin{table}[ht!]
 	\centering
@@ -315,15 +318,21 @@ esperarían aproximadamente: 476 verdaderos positivos y 451 verdaderos negativos
 falsos negativos (casos no detectados de RD) y 24 falsos positivos (pacientes sin RD que 
 serían derivados innecesariamente).
 
-La optimización del umbral representa una mejora sutil pero relevante en el contexto 
-clínico, ya que permite ajustar el balance entre sensibilidad y especificidad según las 
-prioridades del programa de tamizaje. Un umbral menor a 0.5 favorece la sensibilidad, lo 
+La optimización del umbral representa una mejora sutil pero relevante en el contexto
+clínico, ya que permite ajustar el balance entre sensibilidad y especificidad según las
+prioridades del programa de tamizaje. Un umbral menor a 0.5 favorece la sensibilidad, lo
 cual es apropiado para detección temprana donde se prioriza minimizar casos no detectados.
+La Tabla~\ref{tab:comparacion-umbral} contrasta, para cada arquitectura, las métricas
+obtenidas con el umbral fijo de 0.5 frente a las obtenidas con su umbral óptimo
+respectivo: MobileNetV2 y VGG19 muestran una mejora en el F1-score, mientras que en
+ResNet50V2 e InceptionV3 el F1-score se mantiene igual; en las cuatro arquitecturas el
+recall aumenta respecto al umbral fijo, en la mayoría de los casos a costa de una
+precisión ligeramente menor.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Comparación del rendimiento de las redes preentrenadas en clasificación 
+	\caption{Comparación del rendimiento de las redes preentrenadas en clasificación
 binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado}
 	\label{tab:comparacion-umbral}
 	\begin{tabularx}{\textwidth}{Y Y Y Y Y Y}
@@ -373,10 +382,10 @@ variabilidad de las métricas asociada a qué muestras específicas del conjunto
 se evalúan, pero \textbf{no} captura la variabilidad que podría producirse al cambiar la
 partición de entrenamiento/validación/prueba, ni la que resultaría de reiniciar y
 reentrenar el modelo con una inicialización de pesos distinta. Esta es, por tanto, una
-limitación reconocida del análisis: los intervalos de confianza siguientes deben
-interpretarse como una cota de la incertidumbre asociada al conjunto de prueba
-específico utilizado, y no como una medida completa de la estabilidad del proceso de
-entrenamiento.
+limitación reconocida del análisis: los intervalos de confianza de la
+Tabla~\ref{tab:bootstrap-ic} deben interpretarse como una cota de la incertidumbre
+asociada al conjunto de prueba específico utilizado, y no como una medida completa de la
+estabilidad del proceso de entrenamiento.
 
 \begin{table}[ht!]
 	\centering
@@ -585,12 +594,17 @@ Primero, las matrices de confusión que permiten visualizar el patrón de clasif
 los aciertos en la diagonal principal como las confusiones más frecuentes entre clases adyacentes.
 Posteriormente, las tablas de métricas agregadas que sintetizan el rendimiento global mediante sensibilidad, especificidad,
 precisión y F1-score, facilitando la comparación directa entre arquitecturas y canales de color.
+La Tabla~\ref{tab:confusion-multiclase-rgb} presenta las matrices de confusión de las
+cuatro arquitecturas utilizando la imagen RGB completa, donde el lector puede observar la
+concentración de aciertos en la diagonal principal y su dispersión hacia las clases
+adyacentes.
 
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle \textbf{RGB}}
+	\label{tab:confusion-multiclase-rgb}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
 		\toprule
 		& Normal & Leve & Moderada & Severa & PDR \\
@@ -636,12 +650,17 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
+La Tabla~\ref{tab:confusion-multiclase-verde} repite este ejercicio utilizando
+únicamente el canal verde como entrada; el lector puede comparar directamente esta
+matriz contra la de la Tabla~\ref{tab:confusion-multiclase-rgb} para observar el efecto
+del canal sobre la distribución de aciertos y errores de cada arquitectura.
 
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{VERDE}}
+	\label{tab:confusion-multiclase-verde}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
 		\toprule
 		& Normal & Leve & Moderada & Severa & PDR \\
@@ -688,11 +707,17 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
+La Tabla~\ref{tab:confusion-multiclase-azul} presenta el mismo ejercicio para el canal
+azul, uno de los dos canales individuales (junto con el rojo) que obtuvo un desempeño
+agregado considerablemente inferior al del canal verde (Sección~
+\ref{subsec:analisis-canales}).
+
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{AZUL}}
+	\label{tab:confusion-multiclase-azul}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
 		\toprule
 		& Normal & Leve & Moderada & Severa & PDR \\
@@ -739,11 +764,16 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
+Finalmente, la Tabla~\ref{tab:confusion-multiclase-rojo} presenta las matrices de
+confusión para el canal rojo, con el cual se completa la comparación de las cuatro
+configuraciones de entrada evaluadas.
+
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{ROJO}}
+	\label{tab:confusion-multiclase-rojo}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
 		\toprule
 		& Normal & Leve & Moderada & Severa & PDR \\
@@ -790,11 +820,19 @@ precisión y F1-score, facilitando la comparación directa entre arquitecturas y
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
+Para sintetizar estas 16 matrices de confusión en cifras comparables, la
+Tabla~\ref{tab:metricas-multiclase-canales} agrega sensibilidad, especificidad,
+precisión y F1-score de cada arquitectura para las cuatro configuraciones de entrada; en
+ella se observa que MobileNetV2 y ResNet50V2 con el canal verde obtienen el mejor
+F1-score (0.54) de toda la comparación, con MobileNetV2 destacándose además por la mayor
+sensibilidad (0.65).
+
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{0.8}
 	\caption{Desempeño de redes preentrenadas para la clasificación multiclase de
 	retinopatía diabética usando todos y cada uno de los canales \textbf{RGB}}
+	\label{tab:metricas-multiclase-canales}
 	\begin{tabularx}{\textwidth}{l Y Y Y r}
 		\toprule
 		\multicolumn{5}{c}{RGB} \\
