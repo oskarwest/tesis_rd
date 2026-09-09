@@ -155,6 +155,15 @@ en los distintos datasets}
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
+Como puede observarse en la Tabla~\ref{tab:distribucion_clases}, el desbalance hacia la
+clase No RD no es exclusivo del dataset de Kaggle (73.5\%): FOSCAL presenta una
+proporción similar (72.8\%), mientras que IDRiD resulta considerablemente más balanceado
+(41.3\% de la clase mayoritaria). MESSIDOR, por su parte, no incluye casos etiquetados
+como retinopatía proliferativa, lo que ilustra la heterogeneidad en los criterios de
+recolección y etiquetado entre los datasets externos utilizados para la validación, un
+factor que se retoma en la discusión de la capacidad de generalización del modelo
+(Capítulo~\ref{chap:discusion}).
+
 \subsection{División de datos para entrenamiento y validación}
 
 El dataset de Kaggle se dividió en tres subconjuntos siguiendo una estrategia de
@@ -316,6 +325,10 @@ distribución final del dataset optimizado.
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
+Como se observa en la Tabla~\ref{tab:clases_aumentadas}, las cinco clases quedan entre
+16.65\% y 23.33\% del total, una distribución considerablemente más equilibrada que el
+73\% de la clase mayoritaria en el dataset original (Sección~\ref{subsec:balanceo-clases}).
+
 \subsection{Filtrado y realce de características} \label{subsec:filtrado-realce}
 
 Para reducir la variabilidad entre las imágenes de fondo de ojo asociada a diferencias en 
@@ -445,10 +458,10 @@ requiere más desarrollo manual para estas tareas. TensorFlow/Keras
 demostró mayores ventajas en este proyecto al equilibrar productividad, eficiencia 
 computacional y facilidad de integración.
 
-\subsection{Especificaciones de hardware y tiempos de entrenamiento}
+\subsection{Especificaciones de hardware}
 
-La Tabla~\ref{tab:hardware-tiempos} resume las especificaciones de hardware utilizadas y 
-los tiempos aproximados de entrenamiento por modelo:
+La Tabla~\ref{tab:hardware-tiempos} resume las especificaciones de hardware utilizadas
+para el entrenamiento de los modelos, provistas por el entorno de Kaggle:
 
 \begin{table}[H]
 \centering
@@ -467,6 +480,10 @@ cuDNN & 8.6 \\ \hline
 \end{tabularx}
 \caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
+
+Los 16 GB de memoria de video (VRAM) de la Tabla~\ref{tab:hardware-tiempos} constituyen
+la principal restricción práctica considerada al definir el tamaño de lote (batch size)
+utilizado durante el entrenamiento, discutido más adelante en este capítulo.
 
 \section{CONFIGURACIÓN EXPERIMENTAL Y ENTRENAMIENTO} \label{sec:config-experimental}
 
