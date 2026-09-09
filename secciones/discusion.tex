@@ -1,36 +1,35 @@
 \chapter{DISCUSIÓN} \label{chap:discusion}
 
-Los resultados experimentales obtenidos en este trabajo demuestran que los modelos basados
+Los resultados experimentales obtenidos en este trabajo muestran que los modelos basados
 en redes neuronales convolucionales con aprendizaje por transferencia constituyen una
-alternativa viable para la detección automatizada de retinopatía diabética en imágenes del
-fondo del ojo. A continuación, se presenta un análisis crítico de los hallazgos,
-contextualizándolos dentro del marco teórico establecido y comparándolos con
-investigaciones previas en el área.
+alternativa viable para la detección automatizada de retinopatía diabética en imágenes
+del fondo de ojo. A continuación se interpretan los hallazgos más relevantes,
+contrastándolos con el marco teórico y con investigaciones previas en el área.
 
-\subsection*{Desempeño del clasificador binario y comparación con la literatura}
+\section{Desempeño del clasificador binario y comparación con la literatura}
 
-El modelo MobileNetV2 con filtrado y umbral óptimo alcanzó una sensibilidad de 96.5\% y un
-F1-score de 0.96 en el conjunto de validación interna, métricas que lo posicionan
-favorablemente frente a trabajos previos reportados en la literatura. Gulshan et al.\
-(2016) reportaron una sensibilidad del 97.5\% utilizando arquitecturas más profundas
-entrenadas con conjuntos de datos considerablemente mayores, lo cual sugiere que la
-estrategia de preprocesamiento implementada en este estudio logró compensar parcialmente
+El modelo MobileNetV2 con filtrado y umbral óptimo alcanzó una sensibilidad de 96.5\% y
+un F1-score de 0.96 en el conjunto de prueba interno, métricas que lo posicionan
+favorablemente frente a trabajos previos. Gulshan et al. reportaron una sensibilidad del
+97.5\% utilizando arquitecturas más profundas entrenadas con conjuntos de datos
+considerablemente mayores \myfootcite{gulshan2016development}, lo cual sugiere que la
+estrategia de preprocesamiento implementada en este trabajo logró compensar parcialmente
 las limitaciones en volumen de datos mediante la mejora de la calidad de las
 características visuales extraídas.
 
-Es importante precisar el alcance de las siguientes explicaciones: este estudio compara
+Es importante precisar el alcance de las siguientes explicaciones: este trabajo compara
 arquitecturas completas entre sí y no realiza experimentos de ablación que aíslen la
 contribución individual de cada componente arquitectónico al desempeño observado. Por
 ello, las relaciones entre características de diseño y desempeño que se plantean a
-continuación deben entenderse como \textbf{interpretaciones posibles, sustentadas en
-literatura previa}, y no como causas demostradas experimentalmente por este trabajo.
+continuación deben entenderse como interpretaciones posibles, sustentadas en literatura
+previa, y no como causas demostradas experimentalmente por este trabajo.
 
 Una interpretación posible de la superioridad de MobileNetV2 sobre las demás
-arquitecturas evaluadas ---VGG19, ResNet50V2 e InceptionV3--- se relaciona con
+arquitecturas evaluadas (VGG19, ResNet50V2 e InceptionV3) se relaciona con
 características propias de su diseño. Los bloques residuales invertidos de MobileNetV2,
 que emplean convoluciones separables en profundidad junto con cuellos de botella
-lineales, se han asociado en la literatura con una forma de regularización implícita que
-podría resultar beneficiosa cuando el conjunto de datos disponible es limitado
+lineales, se han asociado con una forma de regularización implícita que podría resultar
+beneficiosa cuando el conjunto de datos disponible es limitado
 \myfootcite{sandler2018mobilenetv2}, lo que ofrece una posible explicación de por qué
 este modelo mostró menor propensión al sobreajuste que arquitecturas más grandes en este
 experimento. De manera similar, se ha planteado que la ausencia de activaciones no
@@ -39,207 +38,217 @@ dimensionalidad \myfootcite{sandler2018mobilenetv2}, lo cual podría ser relevan
 capturar características sutiles como las lesiones microvasculares en etapas tempranas de
 la RD, aunque este trabajo no verificó dicho mecanismo de forma directa.
 
-Los resultados contrastan notablemente con el desempeño de VGG19, que a pesar de su
-profundidad y capacidad de extracción de características, mostró métricas inferiores
-(F1-score de 0.86 sin filtrado). Una posible explicación es que esta arquitectura,
-caracterizada por un elevado número de parámetros en sus capas completamente conectadas y
-la ausencia de conexiones residuales, sea más propensa al sobreajuste en este escenario
-de datos limitados; sin embargo, este trabajo no midió directamente el grado de
-sobreajuste de cada modelo (por ejemplo, mediante la brecha entre error de entrenamiento y
-validación), por lo que esta explicación permanece como hipótesis. Es consistente, en
-todo caso, con lo reportado por Kandel y Castelli (2020), quienes identificaron que
-arquitecturas más compactas tienden a generalizar mejor en dominios médicos con datos
-limitados.
+Los resultados contrastan con el desempeño de VGG19, que a pesar de su profundidad y
+capacidad de extracción de características, mostró métricas inferiores (F1-score de 0.86
+sin filtrado). Una posible explicación es que esta arquitectura, caracterizada por un
+elevado número de parámetros en sus capas completamente conectadas y la ausencia de
+conexiones residuales, sea más propensa al sobreajuste en este escenario de datos
+limitados; sin embargo, este trabajo no midió directamente el grado de sobreajuste de
+cada modelo (por ejemplo, mediante la brecha entre error de entrenamiento y validación),
+por lo que esta explicación permanece como hipótesis. Es consistente, en todo caso, con
+lo reportado por Kandel y Castelli, quienes identificaron que arquitecturas más compactas
+tienden a generalizar mejor en dominios médicos con datos limitados
+\myfootcite{kandel2020transfer}.
 
-\subsection*{Impacto del preprocesamiento en el rendimiento del modelo}
+\section{Impacto del preprocesamiento en el rendimiento del modelo}
 
 La implementación del algoritmo de filtrado, que incluyó normalización del color mediante
-sustracción del promedio local con filtro gaussiano y enmascaramiento del 10\% periférico
-de la imagen, produjo mejoras consistentes en todas las arquitecturas evaluadas. El
-incremento del F1-score de 0.95 a 0.96 en MobileNetV2, aunque aparentemente modesto,
-representa una reducción significativa de aproximadamente el 33\% en falsos positivos (de
-6 a 4 casos), lo cual tiene implicaciones clínicas relevantes al disminuir las
-derivaciones innecesarias en programas de tamizaje.
+sustracción del promedio local con filtro gaussiano y recorte del fondo oscuro de la
+imagen, produjo mejoras consistentes en todas las arquitecturas evaluadas. El incremento
+del F1-score de 0.95 a 0.96 en MobileNetV2, aunque aparentemente modesto, se acompañó de
+una reducción de falsos positivos (de 6 a 4 casos) y de falsos negativos (de 5 a 3 casos),
+con implicaciones clínicas relevantes al disminuir tanto las derivaciones innecesarias
+como los casos de RD no detectados en un escenario de tamizaje.
 
-Este resultado confirma la importancia del preprocesamiento robusto destacada en la
-revisión de literatura, particularmente los trabajos de Tabtaba y Ata (2024), quienes
-reportaron mejoras similares al aplicar técnicas de ecualización adaptativa del
-histograma. La normalización del color implementada en este estudio mitiga las variaciones
-de brillo y contraste inherentes a la captura de imágenes en entornos clínicos
-heterogéneos, donde las condiciones de iluminación y los equipos de adquisición varían
-considerablemente. El enmascaramiento periférico, por su parte, elimina artefactos y
+Este resultado es consistente con la importancia del preprocesamiento destacada en la
+revisión de literatura: Tabtaba y Ata reportaron mejoras similares al aplicar técnicas de
+ecualización adaptativa del histograma sobre imágenes de fondo de ojo
+\myfootcite{tabtaba2024diabetic}. La normalización de color implementada en este trabajo
+busca mitigar las variaciones de brillo y contraste inherentes a la captura de imágenes
+en entornos clínicos heterogéneos, donde las condiciones de iluminación y los equipos de
+adquisición varían considerablemente; el recorte del fondo oscuro, por su parte, elimina
 regiones no informativas que podrían introducir ruido en el proceso de extracción de
 características.
 
-\subsection*{Validación externa y capacidad de generalización}
+\section{Validación externa y capacidad de generalización}
 
 La evaluación del modelo en conjuntos de datos externos (FOSCAL, IDRiD y MESSIDOR-2)
 mostró un desempeño variable según el conjunto, con una disminución en las métricas
 respecto al conjunto de prueba interno de Kaggle (Sección~\ref{subsec:validacion-externa}).
-Este hallazgo —una caída de desempeño al evaluar fuera del dominio de entrenamiento— no es
-particular de este trabajo: es un fenómeno ampliamente documentado en la literatura
-reciente sobre generalización cruzada de modelos de clasificación de RD. Hashmi (2026),
-por ejemplo, reporta una caída de sensibilidad para RD referible de 0.879 (en el dominio
-de entrenamiento, APTOS) a 0.620 al evaluar sobre MESSIDOR-2 sin reentrenamiento,
-calificando el resultado en dominio como una sobreestimación del desempeño real desplegable
-\myfootcite{hashmi2026crossdomain}. Este patrón resulta relevante para interpretar por qué
-el desempeño de este trabajo también varía entre datasets externos.
+Este hallazgo —una caída de desempeño al evaluar fuera del dominio de entrenamiento— no
+es particular de este trabajo: es un fenómeno documentado en la literatura reciente sobre
+generalización cruzada de modelos de clasificación de RD. Hashmi reporta, por ejemplo,
+una caída de sensibilidad para RD referible de 0.879 en el dominio de entrenamiento
+(APTOS) a 0.620 al evaluar sobre MESSIDOR-2 sin reentrenamiento, señalando que las
+métricas en dominio tienden a sobreestimar el desempeño real desplegable
+\myfootcite{hashmi2026crossdomain}. Este patrón resulta relevante para interpretar por
+qué el desempeño de este trabajo también varía entre datasets externos.
 
-¿Por qué ocurre esta variación? Las diferencias entre FOSCAL, IDRiD y MESSIDOR-2 no se
-limitan a la calidad visual de las imágenes: involucran distinto modelo de cámara,
-resolución, protocolo de captura (campo de visión, dilatación pupilar) y población de
-origen —india, francesa y colombiana, respectivamente (Sección~\ref{sec:conjuntos-datos})—,
-factores que la literatura sobre cambio de dominio (\textit{domain shift}) identifica como
-determinantes de la transferibilidad de un modelo entrenado en un dominio distinto
-\myfootcite{hashmi2026crossdomain}. Dado que estas variables no fueron controladas ni
-desagregadas en el análisis, no es posible atribuir con precisión qué proporción de la
-variación observada corresponde a cada factor; esto se reconoce como limitación más
-adelante en este capítulo.
+Las diferencias entre FOSCAL, IDRiD y MESSIDOR-2 no se limitan a la calidad visual de las
+imágenes: involucran distinto modelo de cámara, resolución, protocolo de captura y
+población de origen (india, francesa y colombiana, respectivamente; véase la
+Sección~\ref{sec:conjuntos-datos}), factores que la literatura sobre cambio de dominio
+identifica como determinantes de la transferibilidad de un modelo entrenado en un dominio
+distinto \myfootcite{hashmi2026crossdomain}. Dado que estas variables no fueron
+controladas ni desagregadas en el análisis, no es posible atribuir con precisión qué
+proporción de la variación observada corresponde a cada factor; esto se reconoce como
+limitación en la Sección~\ref{sec:limitaciones-discusion}.
 
-En conjunto, estos resultados sugieren que el modelo mantiene un desempeño razonable fuera
-del dominio de entrenamiento, comparable en magnitud a la caída reportada en trabajos
-similares, pero no permiten afirmar una capacidad de generalización robusta o universal:
-como en el caso documentado por Hashmi (2026), las métricas del conjunto de entrenamiento
-tienden a sobreestimar el desempeño esperable en un despliegue real, y una conclusión más
-definitiva requeriría aislar el efecto de cada fuente de variación entre datasets.
+En conjunto, estos resultados sugieren que el modelo mantiene un desempeño razonable
+fuera del dominio de entrenamiento, comparable en magnitud a la caída reportada en
+trabajos similares, pero no permiten afirmar una capacidad de generalización robusta o
+universal: como en el caso documentado por Hashmi, las métricas del conjunto de
+entrenamiento tienden a sobreestimar el desempeño esperable en un despliegue real, y una
+conclusión más definitiva requeriría aislar el efecto de cada fuente de variación entre
+datasets \myfootcite{hashmi2026crossdomain}.
 
-\subsection*{Análisis del clasificador multiclase y el efecto del canal de color}
+\section{Análisis del clasificador multiclase y el efecto del canal de color}
 
-Los experimentos de clasificación multiclase revelaron hallazgos particularmente
-relevantes respecto al procesamiento del color en imágenes de fondo de ojo. El canal verde
-demostró consistentemente el mejor desempeño (exactitud de 0.55, sensibilidad promedio de
-0.56), superando tanto a la imagen RGB completa como a los canales rojo y azul de manera
-individual. Este resultado tiene fundamento fisiológico: el canal verde proporciona el
-mejor contraste para la visualización de estructuras vasculares y lesiones hemorrágicas
-debido a la absorción diferencial de la hemoglobina en esta longitud de onda —el mismo
-principio que sustenta el uso clínico histórico de filtros verdes en oftalmoscopia para
-realzar hemorragias y exudados \myfootcite{pao2020bichannel}. Los
-microaneurismas, hemorragias y anomalías microvasculares intrarretinianas ---signos
-característicos de la progresión de la retinopatía diabética--- presentan mayor
-visibilidad en este espectro cromático.
+Los experimentos de clasificación multiclase revelaron hallazgos relevantes respecto al
+procesamiento del color en imágenes de fondo de ojo. El canal verde demostró
+consistentemente el mejor desempeño (exactitud de 0.55, sensibilidad promedio de 0.56),
+superando tanto a la imagen RGB completa como a los canales rojo y azul de manera
+individual. Este resultado tiene fundamento fisiológico: el canal verde proporciona mejor
+contraste para la visualización de estructuras vasculares y lesiones hemorrágicas debido
+a la absorción diferencial de la hemoglobina en esta longitud de onda, el mismo principio
+que sustenta el uso clínico histórico de filtros verdes en oftalmoscopia para realzar
+hemorragias y exudados \myfootcite{pao2020bichannel}. Los microaneurismas, hemorragias y
+anomalías microvasculares intrarretinianas, signos característicos de la progresión de la
+retinopatía diabética, presentan mayor visibilidad en este espectro cromático.
 
 Este hallazgo es consistente con la literatura disponible sobre análisis de canales
-individuales en RD, aunque dicha literatura resulta comparativamente escasa (Sección~
-\ref{chap:trabajos-previos}). Pao et al.\ (2020) reportaron mejoras en la detección de RD
-al extraer específicamente el canal verde para el cálculo de características de entropía,
-superando el desempeño obtenido con la imagen en escala de grises
-\myfootcite{pao2020bichannel}. Singh et al.\ (2024), en un estudio que comparó canales
+individuales en RD, aunque dicha literatura resulta comparativamente escasa
+(Sección~\ref{chap:trabajos-previos}). Pao et al. reportaron mejoras en la detección de
+RD al extraer específicamente el canal verde para el cálculo de características de
+entropía, superando el desempeño obtenido con la imagen en escala de grises
+\myfootcite{pao2020bichannel}. Singh, Gupta y Dung, en un estudio que comparó canales
 individuales de forma más directa, también encontraron diferencias de desempeño entre
 canales, aunque limitado a una sola arquitectura y sin un análisis sistemático a través de
 múltiples redes preentrenadas \myfootcite{singh2024finetuned}. El presente trabajo amplía
 esta evidencia al comparar los cuatro canales (RGB, rojo, verde y azul) de forma
-sistemática sobre cuatro arquitecturas distintas en un escenario multiclase, confirmando
-la ventaja del canal verde de manera más generalizable que lo reportado previamente.
+sistemática sobre cuatro arquitecturas distintas en un escenario multiclase, lo que
+sustenta de manera más generalizable la ventaja del canal verde reportada previamente.
 
 La dificultad persistente en la clasificación de las clases RD2 (moderada) y RD3 (severa)
-observada en todos los experimentos constituye un hallazgo relevante que merece análisis
-detallado. La sensibilidad para RD2 fue consistentemente la más baja (valores entre 0.01 y
-0.31 dependiendo de la configuración), lo cual sugiere que las características distintivas
-de esta categoría no quedan suficientemente representadas en las arquitecturas empleadas.
-Desde la perspectiva clínica, la retinopatía diabética moderada representa una etapa de
-transición caracterizada por la presencia de más microaneurismas que la etapa leve, pero
-sin alcanzar los criterios de la regla 4-2-1 que define la etapa severa. Esta naturaleza
-transicional, con límites difusos entre categorías adyacentes, explica parcialmente la
-confusión observada en las matrices de confusión.
+observada en todos los experimentos constituye un hallazgo relevante. La sensibilidad
+para RD2 fue consistentemente la más baja (valores entre 0.01 y 0.31 dependiendo de la
+configuración), lo cual sugiere que las características distintivas de esta categoría no
+quedan suficientemente representadas en las arquitecturas empleadas. Desde la perspectiva
+clínica, la retinopatía diabética moderada representa una etapa de transición
+caracterizada por la presencia de más microaneurismas que la etapa leve, pero sin
+alcanzar los criterios que definen la etapa severa. Esta naturaleza transicional, con
+límites difusos entre categorías adyacentes, explica en parte la confusión observada en
+las matrices de confusión.
 
 Este fenómeno de confusión entre clases intermedias ha sido documentado en trabajos
-previos. Gayathri et al.\ (2021) reportaron dificultades similares en la discriminación de
-etapas moderadas, proponiendo el uso de clasificadores en cascada o características
-multiescala como estrategias de mitigación. Los resultados obtenidos sugieren que futuras
-investigaciones deberían explorar técnicas específicas para abordar este desafío,
-incluyendo la implementación de funciones de pérdida focal que penalicen más severamente
-los errores en clases difíciles, el aumento de datos específico para clases intermedias, o
-la incorporación de mecanismos de atención que enfoquen el análisis en regiones anatómicas
-específicas donde las lesiones discriminantes tienden a manifestarse.
+previos: Gayathri et al. reportaron dificultades similares en la discriminación de etapas
+moderadas, proponiendo el uso de clasificadores en cascada o características multiescala
+como estrategias de mitigación \myfootcite{gayathri2021diabetic}. Los resultados
+obtenidos sugieren que futuras investigaciones podrían explorar técnicas específicas para
+abordar este desafío, incluyendo funciones de pérdida focal que penalicen más severamente
+los errores en clases difíciles, aumento de datos específico para clases intermedias, o
+mecanismos de atención que enfoquen el análisis en regiones anatómicas específicas donde
+las lesiones discriminantes tienden a manifestarse.
 
-\subsection*{Justificación de las decisiones arquitectónicas}
+\section{Justificación de las decisiones arquitectónicas}
 
 La configuración del clasificador, que incorpora bloques Multi-Head Attention posteriores
 al extractor de características y capas GaussianNoise entre las capas densas, responde a
-consideraciones específicas del dominio de aplicación. Los mecanismos de atención permiten
-al modelo ponderar diferencialmente las regiones del mapa de características, lo cual
-resulta particularmente relevante en imágenes de fondo de ojo donde las lesiones ocupan
-fracciones pequeñas del área total de la imagen. Esta capacidad de enfoque selectivo,
-demostrada en trabajos como los de Dosovitskiy et al.\ (2020), complementa la extracción
-de características locales realizada por las capas convolucionales con información de
-contexto global.
+consideraciones específicas del dominio de aplicación. Los mecanismos de atención
+permiten al modelo ponderar diferencialmente las regiones del mapa de características, lo
+cual resulta particularmente relevante en imágenes de fondo de ojo donde las lesiones
+ocupan fracciones pequeñas del área total de la imagen; esta capacidad de enfoque
+selectivo, documentada en trabajos como el de Dosovitskiy et al.
+\myfootcite{dosovitskiy2020image}, complementa la extracción de características locales
+realizada por las capas convolucionales con información de contexto global.
 
 La inyección de ruido gaussiano durante el entrenamiento actúa como regularizador
 estocástico que expone al modelo a versiones perturbadas de las activaciones internas.
-Esta estrategia, respaldada por los estudios de Zur et al.\ (2009), simula la variabilidad
-inherente a la adquisición de imágenes médicas ---diferencias en iluminación, ruido del
-sensor, artefactos de preprocesamiento--- forzando al clasificador a aprender
-representaciones robustas que no dependan de valores exactos de activación.
+Esta estrategia, respaldada por los estudios de Zur et al., simula la variabilidad
+inherente a la adquisición de imágenes médicas (diferencias en iluminación, ruido del
+sensor, artefactos de preprocesamiento), forzando al clasificador a aprender
+representaciones robustas que no dependan de valores exactos de activación
+\myfootcite{zur2009noise}.
 
 La selección de la función de activación ReLU para capas intermedias y Softmax para la
-capa de salida sigue las prácticas establecidas en la literatura. El trabajo de Asadi y
-Jiang (2020) demostró que esta combinación posee propiedades de aproximación universal,
-proporcionando fundamento teórico a su amplia adopción empírica. Además, la función
-Softmax garantiza que las salidas del clasificador multiclase constituyan una distribución
-de probabilidad válida, facilitando la interpretación clínica de las predicciones y
-permitiendo la implementación de umbrales de confianza para casos que requieran revisión
-por especialistas.
+capa de salida sigue prácticas establecidas en la literatura. Asadi y Jiang demostraron
+que esta combinación posee propiedades de aproximación universal, proporcionando
+fundamento teórico a su amplia adopción empírica \myfootcite{asadi2020approximation}.
+Además, la función Softmax garantiza que las salidas del clasificador multiclase
+constituyan una distribución de probabilidad válida, facilitando la interpretación
+clínica de las predicciones y la implementación de umbrales de confianza para casos que
+requieran revisión por especialistas.
 
-\subsection*{Análisis de errores e implicaciones clínicas}
+\section{Análisis de errores e implicaciones clínicas}
 
-El análisis detallado de las matrices de confusión revela patrones de error con
-implicaciones clínicas diferenciadas. En el clasificador binario, la proporción de falsos
-negativos (casos de retinopatía diabética no detectados) se mantuvo en niveles aceptables
-(aproximadamente 3--5\% del total de casos positivos), lo cual es crítico en un contexto
-de tamizaje donde la prioridad es maximizar la detección de casos que requieren atención
+El análisis de las matrices de confusión revela patrones de error con implicaciones
+clínicas diferenciadas. En el clasificador binario, la proporción de falsos negativos
+(casos de RD no detectados) se mantuvo baja en las configuraciones con mejor desempeño
+(3 a 5 casos sobre aproximadamente 105 por clase), lo cual es relevante en un contexto de
+tamizaje donde la prioridad es maximizar la detección de casos que requieren atención
 especializada. Los falsos positivos, aunque implican derivaciones innecesarias con su
-correspondiente costo para el sistema de salud, no conllevan el riesgo de progresión de la
-enfermedad asociado a los casos no detectados.
+correspondiente costo para el sistema de salud, no conllevan el riesgo de progresión de
+la enfermedad asociado a los casos no detectados; esta asimetría de costos clínicos es la
+que sustenta la priorización de la sensibilidad discutida en la
+Sección~\ref{sec:metricas-evaluacion}.
 
-En el clasificador multiclase, el patrón predominante de confusión entre clases adyacentes
----particularmente entre RD0--RD1, RD1--RD2 y RD3--RD4--- es consistente con la naturaleza
-continua del proceso patológico subyacente. La retinopatía diabética progresa de manera
-gradual, y los criterios de clasificación establecidos imponen límites discretos sobre un
-espectro continuo de severidad. Esta característica inherente al problema de clasificación
-sugiere que métricas como el coeficiente kappa ponderado, que considera la proximidad
-entre clases predichas y reales, podrían proporcionar una evaluación más apropiada del
-desempeño clínico del modelo.
+En el clasificador multiclase, el patrón predominante de confusión entre clases
+adyacentes es consistente con la naturaleza continua del proceso patológico subyacente.
+La retinopatía diabética progresa de manera gradual, y los criterios de clasificación
+establecidos imponen límites discretos sobre un espectro continuo de severidad. Esta
+característica inherente al problema sugiere que métricas como el coeficiente kappa
+ponderado, que consideran la proximidad entre clases predichas y reales, podrían
+proporcionar una evaluación más apropiada del desempeño clínico del modelo que las
+métricas de clasificación exacta utilizadas en este trabajo.
 
-\subsection*{Limitaciones del estudio y consideraciones metodológicas}
+\section{Limitaciones del estudio y consideraciones metodológicas} \label{sec:limitaciones-discusion}
 
-Es necesario reconocer ciertas limitaciones que contextualizan los resultados obtenidos.
+Es necesario reconocer varias limitaciones que contextualizan los resultados obtenidos.
 El desbalance de clases presente en el conjunto de datos de Kaggle, donde la clase 0 (sin
 retinopatía) representa aproximadamente el 73\% del total, constituye un factor que puede
 sesgar el aprendizaje hacia la clase mayoritaria. Aunque se implementaron estrategias de
 balanceo mediante submuestreo y aumento de datos, la distribución original refleja la
 prevalencia real de la enfermedad en poblaciones de tamizaje, donde la mayoría de los
-examinados no presentan la condición. Futuros trabajos deberían explorar técnicas
-adicionales como el sobremuestreo sintético mediante redes generativas adversariales
-(GAN), el uso de funciones de pérdida ponderadas por clase, o estrategias de aprendizaje
-con costos asimétricos.
+examinados no presenta la condición. Futuros trabajos podrían explorar técnicas
+adicionales como el sobremuestreo sintético mediante redes generativas adversariales, el
+uso de funciones de pérdida ponderadas por clase, o estrategias de aprendizaje con costos
+asimétricos.
 
 La variabilidad en la calidad de las imágenes del conjunto de datos, documentada en la
-descripción original del repositorio de Kaggle, introduce ruido tanto en las imágenes como
-en las etiquetas. La subjetividad inherente a la evaluación clínica, donde diferentes
-especialistas pueden asignar grados distintos a la misma imagen, constituye una fuente de
-incertidumbre que limita el techo de desempeño alcanzable por cualquier modelo
-automatizado. Los intervalos de confianza obtenidos mediante bootstrap (sensibilidad:
-0.9510--1.0000; especificidad: 0.8511--0.9600) proporcionan una estimación de la
-variabilidad estadística del modelo, pero no capturan completamente la incertidumbre
-asociada al etiquetado de referencia.
+descripción original del repositorio de Kaggle, introduce ruido tanto en las imágenes
+como en las etiquetas. La subjetividad inherente a la evaluación clínica, donde
+diferentes especialistas pueden asignar grados distintos a la misma imagen, constituye
+una fuente de incertidumbre que limita el techo de desempeño alcanzable por cualquier
+modelo automatizado. Los intervalos de confianza obtenidos mediante bootstrap
+(sensibilidad: 0.9510--1.0000; especificidad: 0.8511--0.9600) proporcionan una estimación
+de la variabilidad de las métricas frente al conjunto de prueba utilizado, pero, como se
+señaló en la Sección~\ref{subsec:umbral-decision}, no capturan la variabilidad asociada a
+un reentrenamiento del modelo, a un cambio en la partición de los datos, ni la
+incertidumbre asociada al etiquetado de referencia.
 
-\subsection*{Implicaciones para la práctica clínica}
+Adicionalmente, como se discutió en la sección de validación externa, las diferencias
+entre FOSCAL, IDRiD y MESSIDOR-2 (cámara, resolución, protocolo de captura y población)
+no fueron controladas ni analizadas de forma independiente, por lo que no es posible
+determinar con precisión el peso relativo de cada factor sobre la disminución de
+desempeño observada fuera del dominio de entrenamiento.
+
+\section{Implicaciones para la práctica clínica}
 
 Los resultados obtenidos sugieren que el modelo propuesto podría integrarse en programas
 de tamizaje de retinopatía diabética como herramienta de apoyo al diagnóstico,
 particularmente en contextos con acceso limitado a especialistas en oftalmología.
 Considerando la situación epidemiológica en Colombia, donde se estima una proporción de
-1.56 oftalmólogos por cada 100{,}000 habitantes con distribución geográfica desigual, la
-implementación de sistemas de detección automatizada podría contribuir a ampliar la
-cobertura del tamizaje y facilitar la detección temprana de casos que requieren
-intervención.
+1.56 oftalmólogos por cada 100{,}000 habitantes con distribución geográfica desigual
+\myfootcite{minsalud2018}, la implementación de sistemas de detección automatizada podría
+contribuir a ampliar la cobertura del tamizaje y facilitar la detección temprana de casos
+que requieren intervención.
 
 No obstante, es fundamental enfatizar que estos sistemas deben concebirse como
 herramientas de apoyo y no como sustitutos del criterio clínico especializado. El modelo
 propuesto identifica casos sospechosos que requieren evaluación por un profesional de la
 salud visual, pero la decisión diagnóstica final y la definición del plan terapéutico
-deben permanecer bajo responsabilidad del especialista. La integración exitosa de estas
-tecnologías en el flujo de trabajo clínico requiere además consideraciones adicionales
+deben permanecer bajo responsabilidad del especialista. La integración de estas
+tecnologías en el flujo de trabajo clínico requiere, además, consideraciones adicionales
 relacionadas con la explicabilidad de las predicciones, la gestión de la incertidumbre, y
 la definición de protocolos claros para el manejo de casos discordantes entre el sistema
 automatizado y la evaluación humana.
