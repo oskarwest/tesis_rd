@@ -329,13 +329,35 @@ binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado}
 
 \subsection{Análisis estadístico mediante bootstrap}
 
-Con el fin de estimar la variabilidad e incertidumbre de las métricas de desempeño, se 
-aplicó la técnica de remuestreo bootstrap con 1,000 iteraciones. Este método
-consiste en generar múltiples subconjuntos del conjunto de prueba mediante muestreo 
-aleatorio con reemplazo, recalculando en cada iteración las métricas de interés 
-(exactitud, precisión, sensibilidad, especificidad, F1-score y AUC-ROC). A partir de la 
-distribución de estos valores se obtuvieron los intervalos de confianza al 95\%, 
-permitiendo evaluar la robustez y estabilidad estadística de los resultados.
+Es importante precisar que todos los resultados reportados en este capítulo —incluyendo
+los de la Tabla~\ref{tab:comparacion_redes} y las secciones posteriores— corresponden a
+un único entrenamiento sobre una única partición de los datos (con semilla aleatoria
+fija), y no al promedio de varias ejecuciones ni a un esquema de validación cruzada
+($k$-fold). Esta decisión responde a las restricciones computacionales del proyecto,
+descritas en la Sección~\ref{sec:config-experimental}: entrenar y evaluar cuatro
+arquitecturas preentrenadas, en dos escenarios de clasificación (binario y multiclase),
+bajo múltiples configuraciones de preprocesamiento y canales de color, ya representa un
+número considerable de entrenamientos; repetir cada uno de ellos varias veces o mediante
+validación cruzada habría multiplicado el costo computacional y el tiempo de
+entrenamiento de forma proporcional al número de repeticiones o particiones utilizadas,
+lo cual no resultaba viable con los recursos disponibles (GPUs Tesla P100/T4 de Kaggle).
+
+Con el fin de aportar al menos una estimación de la incertidumbre de las métricas para el
+mejor modelo, se aplicó la técnica de remuestreo bootstrap con 1,000 iteraciones. Este
+método consiste en generar múltiples subconjuntos del conjunto de prueba mediante
+muestreo aleatorio con reemplazo, recalculando en cada iteración las métricas de interés
+(exactitud, precisión, sensibilidad, especificidad, F1-score y AUC-ROC). A partir de la
+distribución de estos valores se obtuvieron los intervalos de confianza al 95\%. Es
+importante aclarar el alcance de esta técnica: el bootstrap remuestrea el
+\textbf{conjunto de prueba} para un modelo ya entrenado, por lo que estima la
+variabilidad de las métricas asociada a qué muestras específicas del conjunto de prueba
+se evalúan, pero \textbf{no} captura la variabilidad que podría producirse al cambiar la
+partición de entrenamiento/validación/prueba, ni la que resultaría de reiniciar y
+reentrenar el modelo con una inicialización de pesos distinta. Esta es, por tanto, una
+limitación reconocida del análisis: los intervalos de confianza siguientes deben
+interpretarse como una cota de la incertidumbre asociada al conjunto de prueba
+específico utilizado, y no como una medida completa de la estabilidad del proceso de
+entrenamiento.
 
 \begin{table}[ht!]
 	\centering
@@ -357,12 +379,15 @@ mejor modelo (MobileNetV2 con filtrado y umbral óptimo)}
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-Los intervalos de confianza relativamente estrechos, particularmente para sensibilidad 
-[0.9510--1.0000] y AUC-ROC [0.9636--0.9936], confirman la robustez y estabilidad del 
-modelo. El límite inferior de sensibilidad (0.9510) indica que, con 95\% de confianza, el 
-modelo detectará al menos el 95.1\% de los casos positivos, lo cual es altamente 
-competitivo en el contexto de tamizaje de retinopatía diabética. El AUC-ROC superior a 
-0.96 en el peor escenario del intervalo de confianza confirma la excelente capacidad 
+Los intervalos de confianza relativamente estrechos, particularmente para sensibilidad
+[0.9510--1.0000] y AUC-ROC [0.9636--0.9936], indican una baja variabilidad de las
+métricas frente al conjunto de prueba utilizado, aunque, como se señaló, esto no implica
+necesariamente estabilidad frente a un reentrenamiento o una partición distinta de los
+datos. El límite inferior de sensibilidad (0.9510) indica que, con 95\% de confianza, el
+modelo detectará al menos el 95.1\% de los casos positivos de este conjunto de prueba, lo
+cual es altamente competitivo en el contexto de tamizaje de retinopatía diabética. El
+AUC-ROC superior a 0.96 en el peor escenario del intervalo de confianza confirma la
+excelente capacidad 
 discriminatoria del modelo.
 
 \subsection{Validación externa utilizando el mejor modelo} \label{subsec:validacion-externa}
