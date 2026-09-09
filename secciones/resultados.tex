@@ -23,34 +23,29 @@ como de eficiencia computacional, considerando la velocidad de inferencia y la c
 de parámetros. Además, se eligieron para comparar el comportamiento de redes clásicas, 
 como VGG19, frente a arquitecturas más modernas, como MobileNetV2.
 
-En la Tabla~\ref{tab:comparacion_redes} se presentan los resultados obtenidos al entrenar 
-el modelo CNN variando entre estas redes preentrenadas, fijando un umbral de decisión de 
-0.5, con el objetivo de identificar la red base con mejor desempeño en la clasificación 
-binaria (RD / No RD) en términos de precisión, sensibilidad, F1-score y especificidad.
+En la Tabla~\ref{tab:comparacion_redes} se presentan los resultados obtenidos al entrenar
+el modelo CNN variando entre estas redes preentrenadas, fijando un umbral de decisión de
+0.5, con el objetivo de identificar la red base con mejor desempeño en la clasificación
+binaria en términos de precisión, sensibilidad, F1-score y especificidad. Dado que RD se
+define como la clase positiva y No RD como la clase negativa, la sensibilidad (recall de
+RD) y la especificidad (recall de No RD) ya tienen una interpretación única respecto a
+esa definición; por ello, a diferencia de un reporte de métricas por clase, se presenta
+una sola fila por arquitectura en lugar de repetir ambas métricas para cada clase.
 
 \begin{table}[ht!]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Desempeño de redes preentrenadas para clasificación binaria de 
-retinopatía diabética usando el dataset original de Kaggle}
+	\caption{Desempeño de redes preentrenadas para clasificación binaria de
+retinopatía diabética usando el dataset original de Kaggle (RD como clase positiva)}
 	\label{tab:comparacion_redes}
-	\begin{tabularx}{\textwidth}{l l Y Y Y Y}
+	\begin{tabularx}{\textwidth}{l Y Y Y Y}
 		\toprule
-		Red Preentrenada & Clase & Sensibilidad & Especificidad & Precisión & 
-F1-score \\
+		Red Preentrenada & Sensibilidad & Especificidad & Precisión & F1-score \\
 		\midrule
-		\multirow{2}{*}{MobileNetV2} & RD & \textbf{0.95} & \textbf{0.94} & 
-\textbf{0.95} & \textbf{0.95} \\
-		& No RD & \textbf{0.93} & \textbf{0.94} & \textbf{0.93} & \textbf{0.93} \\
-		\midrule
-		\multirow{2}{*}{ResNet50V2} & RD & 0.77 & 0.78 & 0.77 & 0.77 \\
-		& No RD & 0.79 & 0.78 & 0.79 & 0.79 \\
-		\midrule
-		\multirow{2}{*}{InceptionV3} & RD & 0.71 & 0.72 & 0.71 & 0.71 \\
-		& No RD & 0.72 & 0.71 & 0.72 & 0.72 \\
-		\midrule
-		\multirow{2}{*}{VGG19} & RD & 0.86 & 0.85 & 0.86 & 0.86 \\
-		& No RD & 0.85 & 0.86 & 0.85 & 0.85 \\
+		MobileNetV2 & \textbf{0.95} & \textbf{0.94} & \textbf{0.95} & \textbf{0.95} \\
+		ResNet50V2 & 0.77 & 0.78 & 0.77 & 0.77 \\
+		InceptionV3 & 0.71 & 0.72 & 0.71 & 0.71 \\
+		VGG19 & 0.86 & 0.85 & 0.86 & 0.86 \\
 		\bottomrule
 	\end{tabularx}
 	\caption*{\textit{Fuente: Elaboración propia}}
