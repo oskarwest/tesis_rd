@@ -51,8 +51,9 @@ retinopatía diabética usando el dataset original de Kaggle (RD como clase posi
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-MobileNetV2 fue la arquitectura con mejor desempeño global: alcanzó la mayor exactitud 
-(0.95) y F1-score (0.95), combinando además un tiempo de inferencia relativamente bajo en 
+Según la Tabla~\ref{tab:comparacion_redes}, MobileNetV2 fue la arquitectura con mejor
+desempeño global: alcanzó la mayor exactitud
+(0.95) y F1-score (0.95), combinando además un tiempo de inferencia relativamente bajo en
 comparación con las demás redes. VGG19 presentó métricas intermedias (F1 $\approx$ 0.86) 
 pero con un tiempo de inferencia mayor, mientras que ResNet50V2 e InceptionV3 mostraron 
 rendimientos inferiores (F1 $\approx$ 0.77 y 0.71, respectivamente), con tiempos de 
@@ -197,8 +198,9 @@ Dataset \\
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-La aplicación de filtrado incrementó consistentemente el rendimiento de todas las redes, 
-manteniendo la jerarquía de desempeño: VGG19 mostró un F1-score intermedio 
+Como muestra la Tabla~\ref{tab:impacto-filtrado}, la aplicación de filtrado incrementó
+consistentemente el rendimiento de todas las redes, manteniendo la jerarquía de
+desempeño: VGG19 mostró un F1-score intermedio
 ($\approx$0.89), mientras que ResNet50V2 e InceptionV3 tuvieron incrementos moderados 
 ($\approx$0.81 y 0.74, respectivamente). El cambio más notable fue la reducción de falsos 
 positivos en MobileNetV2 (aproximadamente 4 vs. 6 sin filtrado), lo que mejora la 
@@ -310,8 +312,9 @@ clasificación binaria}
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-Este procedimiento identificó un umbral óptimo de 0.4826, que resultó en un F1-score de 
-0.9519 para MobileNetV2 con filtrado. El modelo muestra un balance adecuado entre la 
+Este procedimiento identificó, para MobileNetV2 (Tabla~\ref{tab:umbral-optimo}), un
+umbral óptimo de 0.4826, que resultó en un F1-score de
+0.9519 con filtrado. El modelo muestra un balance adecuado entre la
 detección de casos positivos y la reducción de falsos positivos, lo que lo hace apropiado 
 para tareas de tamizaje. Con este umbral, por cada 1,000 pacientes examinados se 
 esperarían aproximadamente: 476 verdaderos positivos y 451 verdaderos negativos, 50 
@@ -435,9 +438,9 @@ Figura~\ref{fig:conf-matrix-external} y en la Tabla~\ref{tab:validacion-externa}
 modelo mantiene un desempeño sólido, aunque con una leve disminución en comparación con 
 el dataset original de Kaggle.
 
-Esta disminución es consistente con la literatura y se atribuye a diferencias en la 
-calidad de las imágenes, protocolos de adquisición y distribución de clases. En 
-particular, MESSIDOR-2 mostró los mejores resultados (F1-score de 0.92), reflejando su 
+Esta disminución es consistente con la literatura y se atribuye a diferencias en la
+calidad de las imágenes, protocolos de adquisición y distribución de clases. Según la
+Tabla~\ref{tab:validacion-externa}, MESSIDOR-2 mostró los mejores resultados (F1-score de 0.92), reflejando su
 alta calidad de imágenes y protocolo de adquisición estandarizado. IDRiD presentó 
 métricas intermedias (F1-score de 0.86) debido a su tamaño reducido y mayor 
 heterogeneidad. FOSCAL, como dataset clínico realista proveniente de un centro 
@@ -554,9 +557,10 @@ Sarki et al. (2022) & MobileNetV2 + SVM & Kaggle DR & 0.89 \\
 \caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-El modelo propuesto alcanza un desempeño competitivo, con sensibilidad de 96.5\% y 
-AUC-ROC de 0.98, situándose entre los mejores reportados en la literatura para este 
-dataset. Si bien Gulshan et al. reportaron métricas ligeramente superiores (97\% 
+Como se observa en la Tabla~\ref{tab:comparacion-literatura}, el modelo propuesto
+alcanza un desempeño competitivo, con sensibilidad de 96.5\% y
+AUC-ROC de 0.98, situándose entre los mejores reportados en la literatura para este
+dataset. Si bien Gulshan et al. reportaron métricas ligeramente superiores (97\%
 sensibilidad), su modelo fue entrenado con un conjunto de datos considerablemente mayor 
 (118,000 imágenes) y con múltiples evaluaciones por clínicos expertos. El modelo 
 propuesto logra resultados comparables con un conjunto de datos más limitado (35,121 
