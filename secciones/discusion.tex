@@ -62,21 +62,34 @@ características.
 \subsection*{Validación externa y capacidad de generalización}
 
 La evaluación del modelo en conjuntos de datos externos (FOSCAL, IDRiD y MESSIDOR-2)
-reveló una capacidad de generalización robusta, aunque con variaciones esperadas según las
-características específicas de cada dataset. MESSIDOR-2 presentó el mejor desempeño,
-atribuible a su alta calidad de imágenes y protocolo de adquisición estandarizado. En
-contraste, IDRiD mostró métricas más bajas debido a su heterogeneidad y menor número de
-muestras, mientras que FOSCAL, como dataset clínico realista, exhibió resultados
-intermedios que reflejan las condiciones de práctica clínica habitual.
+mostró un desempeño variable según el conjunto, con una disminución en las métricas
+respecto al conjunto de prueba interno de Kaggle (Sección~\ref{subsec:validacion-externa}).
+Este hallazgo —una caída de desempeño al evaluar fuera del dominio de entrenamiento— no es
+particular de este trabajo: es un fenómeno ampliamente documentado en la literatura
+reciente sobre generalización cruzada de modelos de clasificación de RD. Hashmi (2026),
+por ejemplo, reporta una caída de sensibilidad para RD referible de 0.879 (en el dominio
+de entrenamiento, APTOS) a 0.620 al evaluar sobre MESSIDOR-2 sin reentrenamiento,
+calificando el resultado en dominio como una sobreestimación del desempeño real desplegable
+\myfootcite{hashmi2026crossdomain}. Este patrón resulta relevante para interpretar por qué
+el desempeño de este trabajo también varía entre datasets externos.
 
-La disminución observada en las métricas externas (F1-score entre 0.82 y 0.90) es
-consistente con lo reportado en la literatura sobre validación de modelos de aprendizaje
-profundo en dominios médicos. Las diferencias en resolución, campo de visión, centrado de
-la imagen y distribución de clases entre datasets constituyen factores conocidos que
-afectan la transferibilidad de los modelos. No obstante, el mantenimiento de
-sensibilidades superiores al 85\% en todos los conjuntos externos indica que las
-características aprendidas por el modelo poseen suficiente robustez para su aplicación en
-escenarios clínicos diversos.
+¿Por qué ocurre esta variación? Las diferencias entre FOSCAL, IDRiD y MESSIDOR-2 no se
+limitan a la calidad visual de las imágenes: involucran distinto modelo de cámara,
+resolución, protocolo de captura (campo de visión, dilatación pupilar) y población de
+origen —india, francesa y colombiana, respectivamente (Sección~\ref{sec:conjuntos-datos})—,
+factores que la literatura sobre cambio de dominio (\textit{domain shift}) identifica como
+determinantes de la transferibilidad de un modelo entrenado en un dominio distinto
+\myfootcite{hashmi2026crossdomain}. Dado que estas variables no fueron controladas ni
+desagregadas en el análisis, no es posible atribuir con precisión qué proporción de la
+variación observada corresponde a cada factor; esto se reconoce como limitación más
+adelante en este capítulo.
+
+En conjunto, estos resultados sugieren que el modelo mantiene un desempeño razonable fuera
+del dominio de entrenamiento, comparable en magnitud a la caída reportada en trabajos
+similares, pero no permiten afirmar una capacidad de generalización robusta o universal:
+como en el caso documentado por Hashmi (2026), las métricas del conjunto de entrenamiento
+tienden a sobreestimar el desempeño esperable en un despliegue real, y una conclusión más
+definitiva requeriría aislar el efecto de cada fuente de variación entre datasets.
 
 \subsection*{Análisis del clasificador multiclase y el efecto del canal de color}
 
@@ -86,10 +99,25 @@ demostró consistentemente el mejor desempeño (exactitud de 0.55, sensibilidad 
 0.56), superando tanto a la imagen RGB completa como a los canales rojo y azul de manera
 individual. Este resultado tiene fundamento fisiológico: el canal verde proporciona el
 mejor contraste para la visualización de estructuras vasculares y lesiones hemorrágicas
-debido a la absorción diferencial de la hemoglobina en esta longitud de onda. Los
+debido a la absorción diferencial de la hemoglobina en esta longitud de onda —el mismo
+principio que sustenta el uso clínico histórico de filtros verdes en oftalmoscopia para
+realzar hemorragias y exudados \myfootcite{pao2020bichannel}. Los
 microaneurismas, hemorragias y anomalías microvasculares intrarretinianas ---signos
 característicos de la progresión de la retinopatía diabética--- presentan mayor
 visibilidad en este espectro cromático.
+
+Este hallazgo es consistente con la literatura disponible sobre análisis de canales
+individuales en RD, aunque dicha literatura resulta comparativamente escasa (Sección~
+\ref{chap:trabajos-previos}). Pao et al.\ (2020) reportaron mejoras en la detección de RD
+al extraer específicamente el canal verde para el cálculo de características de entropía,
+superando el desempeño obtenido con la imagen en escala de grises
+\myfootcite{pao2020bichannel}. Singh et al.\ (2024), en un estudio que comparó canales
+individuales de forma más directa, también encontraron diferencias de desempeño entre
+canales, aunque limitado a una sola arquitectura y sin un análisis sistemático a través de
+múltiples redes preentrenadas \myfootcite{singh2024finetuned}. El presente trabajo amplía
+esta evidencia al comparar los cuatro canales (RGB, rojo, verde y azul) de forma
+sistemática sobre cuatro arquitecturas distintas en un escenario multiclase, confirmando
+la ventaja del canal verde de manera más generalizable que lo reportado previamente.
 
 La dificultad persistente en la clasificación de las clases RD2 (moderada) y RD3 (severa)
 observada en todos los experimentos constituye un hallazgo relevante que merece análisis
