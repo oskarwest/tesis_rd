@@ -18,26 +18,38 @@ estrategia de preprocesamiento implementada en este estudio logró compensar par
 las limitaciones en volumen de datos mediante la mejora de la calidad de las
 características visuales extraídas.
 
-La superioridad de MobileNetV2 sobre las demás arquitecturas evaluadas ---VGG19,
-ResNet50V2 e InceptionV3--- puede atribuirse a varios factores arquitectónicos. Los
-bloques residuales invertidos característicos de MobileNetV2, que emplean convoluciones
-separables en profundidad junto con cuellos de botella lineales, proporcionan una
-regularización implícita que resulta particularmente beneficiosa cuando el conjunto de
-datos disponible es limitado. Esta característica arquitectónica reduce la propensión al
-sobreajuste, un problema recurrente en la clasificación de imágenes médicas donde la
-variabilidad interclase puede ser sutil. Además, la ausencia de activaciones no lineales
-en las capas de proyección preserva la información de baja dimensionalidad, lo cual
-resulta crítico para capturar las características sutiles de lesiones microvasculares en
-etapas tempranas de la enfermedad.
+Es importante precisar el alcance de las siguientes explicaciones: este estudio compara
+arquitecturas completas entre sí y no realiza experimentos de ablación que aíslen la
+contribución individual de cada componente arquitectónico al desempeño observado. Por
+ello, las relaciones entre características de diseño y desempeño que se plantean a
+continuación deben entenderse como \textbf{interpretaciones posibles, sustentadas en
+literatura previa}, y no como causas demostradas experimentalmente por este trabajo.
+
+Una interpretación posible de la superioridad de MobileNetV2 sobre las demás
+arquitecturas evaluadas ---VGG19, ResNet50V2 e InceptionV3--- se relaciona con
+características propias de su diseño. Los bloques residuales invertidos de MobileNetV2,
+que emplean convoluciones separables en profundidad junto con cuellos de botella
+lineales, se han asociado en la literatura con una forma de regularización implícita que
+podría resultar beneficiosa cuando el conjunto de datos disponible es limitado
+\myfootcite{sandler2018mobilenetv2}, lo que ofrece una posible explicación de por qué
+este modelo mostró menor propensión al sobreajuste que arquitecturas más grandes en este
+experimento. De manera similar, se ha planteado que la ausencia de activaciones no
+lineales en las capas de proyección ayuda a preservar información de baja
+dimensionalidad \myfootcite{sandler2018mobilenetv2}, lo cual podría ser relevante para
+capturar características sutiles como las lesiones microvasculares en etapas tempranas de
+la RD, aunque este trabajo no verificó dicho mecanismo de forma directa.
 
 Los resultados contrastan notablemente con el desempeño de VGG19, que a pesar de su
 profundidad y capacidad de extracción de características, mostró métricas inferiores
-(F1-score de 0.86 sin filtrado). Esta arquitectura, caracterizada por un elevado número de
-parámetros en sus capas completamente conectadas y la ausencia de conexiones residuales,
-exhibió una tendencia al sobreajuste que limitó su capacidad de generalización. Estos
-hallazgos son consistentes con lo reportado por Kandel y Castelli (2020), quienes
-identificaron que arquitecturas más compactas tienden a generalizar mejor en dominios
-médicos con datos limitados.
+(F1-score de 0.86 sin filtrado). Una posible explicación es que esta arquitectura,
+caracterizada por un elevado número de parámetros en sus capas completamente conectadas y
+la ausencia de conexiones residuales, sea más propensa al sobreajuste en este escenario
+de datos limitados; sin embargo, este trabajo no midió directamente el grado de
+sobreajuste de cada modelo (por ejemplo, mediante la brecha entre error de entrenamiento y
+validación), por lo que esta explicación permanece como hipótesis. Es consistente, en
+todo caso, con lo reportado por Kandel y Castelli (2020), quienes identificaron que
+arquitecturas más compactas tienden a generalizar mejor en dominios médicos con datos
+limitados.
 
 \subsection*{Impacto del preprocesamiento en el rendimiento del modelo}
 
