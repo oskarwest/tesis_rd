@@ -701,12 +701,28 @@ Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), que proporcion
 medida robusta del desempeño del clasificador independiente del umbral de decisión. Un
 valor de AUC cercano a 1.0 indica un excelente desempeño discriminatorio.
 
-Para evaluar la robustez estadística de las métricas obtenidas, se aplicó la técnica de 
-bootstrap con 1,000 iteraciones de remuestreo, calculando intervalos de confianza del 
-95\% para cada métrica. Esto permite estimar la variabilidad de las medidas de desempeño 
+Aunque todas las métricas anteriores aportan información complementaria, no todas tienen
+la misma relevancia para el problema clínico abordado en este trabajo. Dado que el
+sistema se plantea principalmente como una herramienta de \textbf{tamizaje} —es decir,
+un primer filtro que decide qué pacientes requieren remisión a evaluación oftalmológica
+especializada—, la \textbf{sensibilidad se considera la métrica prioritaria}. Un falso
+negativo en este contexto implica que un paciente con retinopatía diabética no sea
+remitido para evaluación especializada, retrasando un diagnóstico y tratamiento
+oportunos; en cambio, un falso positivo implica, en el peor de los casos, una remisión
+innecesaria a un especialista, un costo considerablemente menor en términos clínicos.
+Esta priorización de la sensibilidad es, además, el criterio que sustenta la elección del
+umbral de decisión: en la Sección~\ref{subsec:umbral-decision} el umbral se optimiza
+maximizando el F1-score (que pondera sensibilidad y precisión por igual) en lugar de
+utilizar el valor por defecto de 0.5, precisamente para evitar que el modelo favorezca la
+precisión a costa de dejar pasar casos reales de RD.
+
+Para evaluar la robustez estadística de las métricas obtenidas, se aplicó la técnica de
+bootstrap con 1,000 iteraciones de remuestreo, calculando intervalos de confianza del
+95\% para cada métrica. Esto permite estimar la variabilidad de las medidas de desempeño
 y proporciona una evaluación más rigurosa de la confiabilidad del modelo.
 
-En este estudio, todos los parámetros de evaluación mencionados se utilizaron para probar 
-el rendimiento del enfoque de solución a través de diferentes perspectivas, 
-proporcionando una visión comprehensiva del desempeño del sistema propuesto tanto en 
-clasificación binaria como multiclase.
+En este estudio, todos los parámetros de evaluación mencionados se utilizaron para
+caracterizar el desempeño del sistema propuesto desde distintas perspectivas
+complementarias, aunque, como se indicó, la sensibilidad se prioriza como criterio
+principal de decisión dado el enfoque de tamizaje del sistema, tanto en clasificación
+binaria como multiclase.
