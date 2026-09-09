@@ -142,6 +142,23 @@ clasificación binaria}
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{figure}
 
+En el contexto clínico de este trabajo, los dos tipos de error de la Figura~\ref{fig:conf-matrix-original}
+no son equivalentes: un \textbf{falso negativo} (un paciente con RD clasificado como
+sano) implica que dicho paciente no sea remitido a evaluación oftalmológica
+especializada, retrasando su diagnóstico y tratamiento; un \textbf{falso positivo} (un
+paciente sano clasificado como RD) implica, en cambio, una remisión innecesaria, un costo
+clínico considerablemente menor. Analizando las cuatro redes bajo este criterio,
+MobileNetV2 presenta el mejor balance (5 falsos negativos y 6 falsos positivos sobre 105
+casos por clase), mientras que VGG19 muestra un número similar de ambos tipos de error
+(15 y 15). ResNet50V2 e InceptionV3, en cambio, no solo presentan más errores en total,
+sino que estos se concentran de forma más pronunciada en falsos negativos que en falsos
+positivos (28 frente a 23 en ResNet50V2, y 30 frente a 25 en InceptionV3):
+proporcionalmente, estas dos redes dejan sin detectar más casos reales de RD de los que
+remiten innecesariamente, lo que constituye el patrón de error clínicamente menos
+deseable para una herramienta de tamizaje y refuerza, junto con las métricas agregadas de
+la Tabla~\ref{tab:comparacion_redes}, la decisión de descartar ambas arquitecturas para
+los experimentos posteriores.
+
 \subsection{Impacto del preprocesamiento mediante filtrado}
 
 Con el objetivo de mejorar la calidad visual y resaltar características relevantes, se 
@@ -187,9 +204,10 @@ manteniendo la jerarquía de desempeño: VGG19 mostró un F1-score intermedio
 ($\approx$0.89), mientras que ResNet50V2 e InceptionV3 tuvieron incrementos moderados 
 ($\approx$0.81 y 0.74, respectivamente). El cambio más notable fue la reducción de falsos 
 positivos en MobileNetV2 (aproximadamente 4 vs. 6 sin filtrado), lo que mejora la 
-especificidad clínica y disminuye derivaciones innecesarias. Los falsos negativos 
-aumentaron ligeramente (3 vs. 5), pero permanecieron dentro de márgenes aceptables de 
-confianza.
+especificidad clínica y disminuye derivaciones innecesarias. Los falsos negativos
+también se redujeron ligeramente (3 vs. 5), lo cual es clínicamente relevante: implica
+menos casos reales de RD sin detectar, el tipo de error más costoso en un escenario de
+tamizaje.
 
 Este resultado confirma la importancia del preprocesamiento robusto para mitigar
 variaciones de brillo y contraste inherentes a la captura de imágenes en entornos
@@ -198,7 +216,13 @@ varían considerablemente. La Figura~\ref{fig:conf-matrix-filtrado} muestra las 
 de confusión resultantes tras aplicar el filtrado: para MobileNetV2 se aprecia la
 reducción de falsos positivos señalada anteriormente (de 6 a 4 casos), mientras que en
 VGG19, ResNet50V2 e InceptionV3 la diagonal principal se refuerza de manera consistente
-respecto a las matrices sin filtrado de la Figura~\ref{fig:conf-matrix-original}.
+respecto a las matrices sin filtrado de la Figura~\ref{fig:conf-matrix-original}. El
+filtrado también mejora, aunque de forma más modesta, el desbalance entre falsos
+negativos y falsos positivos observado antes en ResNet50V2 e InceptionV3: los falsos
+negativos de ResNet50V2 bajan de 28 a 22 (por debajo de sus 23 falsos positivos), y los
+de InceptionV3 bajan de 30 a 26, acercándose a sus 25 falsos positivos. Es decir, además
+de mejorar el desempeño agregado, el preprocesamiento reduce específicamente el tipo de
+error más costoso desde la perspectiva del tamizaje clínico.
 
 \begin{figure}[ht!]
 	\centering
