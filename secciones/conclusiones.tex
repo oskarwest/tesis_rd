@@ -22,8 +22,9 @@ MobileNetV2, ResNet50V2, InceptionV3 y VGG19. La arquitectura propuesta incorpor
 Multi-Head Attention y capas GaussianNoise como estrategias de regularización, logrando un
 equilibrio efectivo entre capacidad de generalización y eficiencia computacional.
 
-Se validó la efectividad del sistema mediante evaluación comparativa con trabajos previos
-y validación en conjuntos de datos externos. El modelo MobileNetV2 con filtrado alcanzó
+Se evaluó el desempeño del sistema mediante comparación con trabajos previos del estado
+del arte y mediante validación externa, sin reentrenamiento ni ajuste de pesos, en tres
+conjuntos de datos independientes al de entrenamiento. El modelo MobileNetV2 con filtrado alcanzó
 una sensibilidad del 96.5\% y un F1-score de 0.96 en clasificación binaria, con intervalos
 de confianza del 95\% que confirman la robustez estadística de estos resultados (AUC-ROC:
 0.9636--0.9936). En clasificación multiclase, se determinó que el canal verde proporciona
@@ -41,5 +42,13 @@ retinopatía diabética en el país.
 Se concluye que los algoritmos de aprendizaje profundo, particularmente cuando se combinan
 con técnicas de aprendizaje por transferencia y preprocesamiento especializado, ofrecen un
 enfoque prometedor para la detección temprana de retinopatía diabética, con métricas de
-desempeño comparables a las reportadas en la literatura internacional y capacidad de
-generalización validada en múltiples conjuntos de datos clínicos.
+desempeño comparables a las reportadas en la literatura internacional. La evaluación en
+conjuntos de datos externos, realizada sin reentrenamiento ni ajuste de pesos, mostró
+resultados alentadores pero heterogéneos entre las distintas fuentes evaluadas, lo que
+indica una capacidad de generalización todavía parcial y sensible a las diferencias de
+adquisición, población y protocolo de cada institución. En ausencia de una evaluación
+prospectiva y de una validación clínica formal, estos hallazgos deben interpretarse como
+evidencia preliminar del potencial del sistema como herramienta de apoyo al tamizaje, y no
+como una demostración de aplicabilidad clínica ya establecida; su eventual implementación
+en un entorno real requeriría estudios adicionales de validación prospectiva y evaluación
+conjunta con especialistas en oftalmología.
