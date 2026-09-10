@@ -878,4 +878,68 @@ sensibilidad (0.65).
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
+Más allá de identificar cuál configuración obtiene el mayor F1-score puntual, es posible
+cuantificar la magnitud de la ventaja del canal verde promediando su efecto en las cuatro
+arquitecturas. La Tabla~\ref{tab:mejora-canal-verde} muestra que, en promedio, el canal
+verde mejora el F1-score en +0.05 puntos (+11.8\%) respecto a la imagen RGB completa, en
++0.095 puntos (+25.2\%) respecto al canal rojo y en +0.0975 puntos (+26.0\%) respecto al
+canal azul. La ventaja es consistente en las cuatro arquitecturas evaluadas: incluso en el
+caso menos favorable (MobileNetV2 frente a RGB) el canal verde aporta una mejora de
++8.0\%, mientras que en el caso más favorable (VGG19 frente al canal azul) la mejora
+relativa alcanza +54.5\%, aunque este último valor debe interpretarse con cautela porque
+la configuración VGG19-azul corresponde a un modelo colapsado que nunca predice las clases
+Moderada ni Severa (Tabla~\ref{tab:confusion-multiclase-azul}, subtabla d). En términos de
+sensibilidad el patrón se repite: el canal verde promedia 0.52 frente a 0.46 de RGB
+(+14.2\%), 0.43 de rojo (+22.9\%) y 0.41 de azul (+26.7\%).
+
+\begin{table}[H]
+	\centering
+	\caption{Mejora del canal verde frente a las demás configuraciones de entrada en
+	F1-score (clasificación multiclase)}
+	\label{tab:mejora-canal-verde}
+	\begin{tabularx}{\textwidth}{l Y Y Y}
+		\toprule
+		Red Pre-entrenada & $\Delta$F1 vs. RGB & $\Delta$F1 vs. Rojo & $\Delta$F1 vs. Azul \\
+		\midrule
+		MobileNetV2 & +0.04 (+8.0\%) & +0.09 (+20.0\%) & +0.10 (+22.7\%) \\
+		ResNet50V2  & +0.05 (+10.2\%) & +0.11 (+25.6\%) & +0.08 (+17.4\%) \\
+		InceptionV3 & +0.08 (+20.5\%) & +0.10 (+27.0\%) & +0.09 (+23.7\%) \\
+		VGG19       & +0.03 (+9.7\%) & +0.08 (+30.8\%) & +0.12 (+54.5\%) \\
+		\midrule
+		\textbf{Promedio} & \textbf{+0.05 (+11.8\%)} & \textbf{+0.095 (+25.2\%)} & \textbf{+0.0975 (+26.0\%)} \\
+		\bottomrule
+	\end{tabularx}
+	\caption*{\textit{Fuente: Elaboración propia. El promedio se calcula como la diferencia
+	entre las medias de F1-score de las cuatro arquitecturas para cada configuración.}}
+\end{table}
+
+Esta ventaja no se distribuye de manera uniforme entre las cinco clases, sino que se
+concentra en las categorías definidas clínicamente por una mayor densidad de lesiones
+hemorrágicas y microvasculares. Según los criterios de severidad de la escala ICDR, la
+retinopatía severa (RD3) se distingue de la moderada por un incremento sustancial en el
+conteo de hemorragias intrarretinianas, anomalías microvasculares intrarretinianas (IRMA)
+y arrosariamiento venoso, lesiones que, de acuerdo con el principio de absorción
+diferencial de la hemoglobina citado anteriormente \myfootcite{pao2020bichannel}, son
+precisamente las que el canal verde realza. Calculando la sensibilidad por clase a partir
+de las matrices de confusión ya presentadas (Tablas~\ref{tab:confusion-multiclase-rgb} a
+\ref{tab:confusion-multiclase-rojo}), se observa que para la clase Severa el canal verde
+eleva la sensibilidad de MobileNetV2 de 0.51 (RGB) a 0.57, frente a apenas 0.30 con el
+canal rojo (+90\% relativo) y 0.38 con el canal azul (+50\% relativo); en ResNet50V2 el
+efecto es aún más marcado, con una sensibilidad de 0.62 para el canal verde frente a 0.57
+(RGB), 0.26 (rojo, +139\% relativo) y 0.33 (azul, +88\% relativo). Este patrón respalda la
+hipótesis de que la ventaja del canal verde no es un artefacto estadístico, sino que
+responde a una mejor representación de las lesiones que definen clínicamente la severidad
+de la enfermedad.
+
+Cabe señalar que esta ventaja no se extiende de forma uniforme a la clase PDR (RD4): en
+ambas arquitecturas el canal rojo iguala o supera al verde en la sensibilidad de esta
+categoría (0.73 frente a 0.67 en MobileNetV2 y 0.74 frente a 0.61 en ResNet50V2), lo cual
+sugiere
+que en la etapa proliferativa la vasculatura de neoformación, capturada con mayor
+contraste por el canal rojo, aporta información complementaria que el canal verde no
+logra representar igual de bien. En conjunto, estos resultados matizan la ventaja del
+canal verde: es consistente y cuantificable en el desempeño agregado y particularmente
+pronunciada en la clase Severa, pero no representa una superioridad absoluta en todas las
+categorías clínicas.
+
 

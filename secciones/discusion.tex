@@ -107,14 +107,23 @@ datasets \myfootcite{hashmi2026crossdomain}.
 Los experimentos de clasificación multiclase revelaron hallazgos relevantes respecto al
 procesamiento del color en imágenes de fondo de ojo. El canal verde demostró
 consistentemente el mejor desempeño (exactitud de 0.55, sensibilidad promedio de 0.56),
-superando tanto a la imagen RGB completa como a los canales rojo y azul de manera
-individual. Este resultado tiene fundamento fisiológico: el canal verde proporciona mejor
-contraste para la visualización de estructuras vasculares y lesiones hemorrágicas debido
-a la absorción diferencial de la hemoglobina en esta longitud de onda, el mismo principio
-que sustenta el uso clínico histórico de filtros verdes en oftalmoscopia para realzar
-hemorragias y exudados \myfootcite{pao2020bichannel}. Los microaneurismas, hemorragias y
-anomalías microvasculares intrarretinianas, signos característicos de la progresión de la
-retinopatía diabética, presentan mayor visibilidad en este espectro cromático.
+superando tanto a la imagen RGB completa (+11.8\% en F1-score promedio de las cuatro
+arquitecturas evaluadas) como a los canales rojo (+25.2\%) y azul (+26.0\%) de manera
+individual (Tabla~\ref{tab:mejora-canal-verde}). Esta ventaja se concentra
+particularmente en la clase Severa (RD3), donde la sensibilidad obtenida con el canal
+verde supera en más de 85\% a la del canal rojo y en más de 50\% a la del canal azul en las dos
+arquitecturas de mejor desempeño (Sección~\ref{subsec:analisis-canales}). Este resultado
+tiene fundamento fisiológico: el canal verde proporciona mejor contraste para la
+visualización de estructuras vasculares y lesiones hemorrágicas debido a la absorción
+diferencial de la hemoglobina en esta longitud de onda, el mismo principio que sustenta
+el uso clínico histórico de filtros verdes en oftalmoscopia para realzar hemorragias y
+exudados \myfootcite{pao2020bichannel}. Los microaneurismas, hemorragias y anomalías
+microvasculares intrarretinianas, signos que definen clínicamente la etapa severa de la
+retinopatía diabética, presentan mayor visibilidad en este espectro cromático, lo que es
+consistente con la ganancia de sensibilidad observada precisamente en esa clase. La ventaja no
+es, sin embargo, absoluta: en la clase PDR (RD4), asociada a la neoformación vascular, el
+canal rojo iguala o supera al verde, lo que sugiere que ningún canal individual captura
+por sí solo toda la información relevante en las etapas más avanzadas de la enfermedad.
 
 Este hallazgo es consistente con la literatura disponible sobre análisis de canales
 individuales en RD, aunque dicha literatura resulta comparativamente escasa
