@@ -77,64 +77,10 @@ muestran una dispersión de errores considerablemente mayor entre ambas clases.
 
 \begin{figure}[ht!]
 	\centering
-	\renewcommand{\arraystretch}{1.2}
 	\caption{Matrices de confusión para las diferentes redes preentrenadas en
 clasificación binaria}
 	\label{fig:conf-matrix-original}
-
-	% Matriz 1 - VGG19
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 90 & 15 \\
-			\multicolumn{1}{r}{RD} & 15 & 90 \\
-		\end{tabular}
-		\caption*{(a) VGG19}
-	\end{minipage}
-	\hfill
-	% Matriz 2 - MobileNetV2
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 99 & 6 \\
-			\multicolumn{1}{r}{RD} & 5 & 100 \\
-		\end{tabular}
-		\caption*{(b) MobileNetV2}
-	\end{minipage}
-
-	\vspace{0.5cm}
-
-	% Matriz 3 - ResNet50V2
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 82 & 23 \\
-			\multicolumn{1}{r}{RD} & 28 & 77 \\
-		\end{tabular}
-		\caption*{(c) ResNet50V2}
-	\end{minipage}
-	\hfill
-	% Matriz 4 - InceptionV3
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 80 & 25 \\
-			\multicolumn{1}{r}{RD} & 30 & 75 \\
-		\end{tabular}
-		\caption*{(d) InceptionV3}
-	\end{minipage}
+	\includegraphics[width=0.85\textwidth]{imágenes/resultados/confusion_binaria_original.png}
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{figure}
 
@@ -226,66 +172,13 @@ error más costoso desde la perspectiva del tamizaje clínico.
 
 \begin{figure}[ht!]
 	\centering
-	\renewcommand{\arraystretch}{1.2}
 	\caption{Matrices de confusión para las redes preentrenadas utilizando imágenes
 con filtrado}
 	\label{fig:conf-matrix-filtrado}
-
-	% Matriz 1 - VGG19
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 88 & 12 \\
-			\multicolumn{1}{r}{RD} & 10 & 89 \\
-		\end{tabular}
-		\caption*{(a) VGG19 con filtrado}
-	\end{minipage}
-	\hfill
-	% Matriz 2 - MobileNetV2
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 96 & 4 \\
-			\multicolumn{1}{r}{RD} & 3 & 96 \\
-		\end{tabular}
-		\caption*{(b) MobileNetV2 con filtrado}
-	\end{minipage}
-
-	\vspace{0.5cm}
-
-	% Matriz 3 - ResNet50V2
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 82 & 23 \\
-			\multicolumn{1}{r}{RD} & 22 & 81 \\
-		\end{tabular}
-		\caption*{(c) ResNet50V2 con filtrado}
-	\end{minipage}
-	\hfill
-	% Matriz 4 - InceptionV3
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 75 & 25 \\
-			\multicolumn{1}{r}{RD} & 26 & 74 \\
-		\end{tabular}
-		\caption*{(d) InceptionV3 con filtrado}
-	\end{minipage}
+	\includegraphics[width=0.85\textwidth]{imágenes/resultados/confusion_binaria_filtrado.png}
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{figure}
+
 
 \subsection{Optimización del umbral de decisión} \label{subsec:umbral-decision}
 
@@ -449,51 +342,10 @@ práctica clínica habitual.
 
 \begin{figure}[H]
 	\centering
-	\renewcommand{\arraystretch}{1.2}
-	\caption{Matrices de confusión del modelo MobileNetV2 con filtrado evaluado en 
+	\caption{Matrices de confusión del modelo MobileNetV2 con filtrado evaluado en
 datasets externos}
 	\label{fig:conf-matrix-external}
-
-	% Matriz 1 - FOSCAL
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 95 & 18 \\
-			\multicolumn{1}{r}{RD} & 36 & 266 \\
-		\end{tabular}
-		\caption*{(a) FOSCAL (n=415)}
-	\end{minipage}
-	\hfill
-	% Matriz 2 - IDRiD
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 270 & 33 \\
-			\multicolumn{1}{r}{RD} & 38 & 175 \\
-		\end{tabular}
-		\caption*{(b) IDRiD (n=516)}
-	\end{minipage}
-
-	\vspace{0.5cm}
-
-	% Matriz 3 - MESSIDOR-2
-	\begin{minipage}{0.45\textwidth}
-		\centering
-		\begin{tabular}{c c c}
-			& \multicolumn{2}{c}{\textbf{Predicción}} \\
-			& \textbf{No RD} & \textbf{RD} \\ \hline
-			\multirow{2}{*}{\textbf{Real}}
-			No RD & 650 & 81 \\
-			\multicolumn{1}{r}{RD} & 80 & 937 \\
-		\end{tabular}
-		\caption*{(c) MESSIDOR-2 (n=1,748)}
-	\end{minipage}
+	\includegraphics[width=0.85\textwidth]{imágenes/resultados/confusion_binaria_externa.png}
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{figure}
 
