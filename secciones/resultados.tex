@@ -543,13 +543,16 @@ Tabla~\ref{tab:comparacion-literatura} presenta esta comparación.
 \caption{Comparación del modelo propuesto con trabajos previos en clasificación binaria 
 de RD}
 \label{tab:comparacion-literatura}
-\begin{tabularx}{\textwidth}{X X l Y}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}p{3.4cm} X Y}
 \toprule
 \textbf{Referencia} & \textbf{Arquitectura} & \textbf{Dataset} & \textbf{Sensibilidad} \\ \midrule
 Gulshan et al. (2016) & Inception V3 personalizada & EyePACS + Messidor-2 & 0.97 \\
 Gargeya \& Leng (2017) & ResNet-based & EyePACS & 0.94 \\
 Reguant et al. (2021) & VGG16 + DenseNet & Kaggle DR & 0.91 \\
 Sarki et al. (2022) & MobileNetV2 + SVM & Kaggle DR & 0.89 \\
+Saproo et al. (2024) & ResNet101 (transfer learning) & EyePACS + IDRiD + APTOS-2019 & 0.97 \\
+Yang et al. (2024) & Vision Transformer + Masked Autoencoder & APTOS + EyePACS + Messidor-2 + OIA-DDR & 0.966 \\
+Akhtar et al. (2025) & RSG-Net (CNN) & Messidor-1 & 1.00 \\
 \midrule
 \textbf{Modelo propuesto} & \textbf{MobileNetV2 + Attention} & \textbf{Kaggle DR} & \textbf{0.965} \\
 \bottomrule
@@ -561,11 +564,34 @@ Como se observa en la Tabla~\ref{tab:comparacion-literatura}, el modelo propuest
 alcanza un desempeño competitivo, con sensibilidad de 96.5\% y
 AUC-ROC de 0.98, situándose entre los mejores reportados en la literatura para este
 dataset. Si bien Gulshan et al. reportaron métricas ligeramente superiores (97\%
-sensibilidad), su modelo fue entrenado con un conjunto de datos considerablemente mayor 
-(118,000 imágenes) y con múltiples evaluaciones por clínicos expertos. El modelo 
-propuesto logra resultados comparables con un conjunto de datos más limitado (35,121 
-imágenes), lo cual sugiere que la estrategia de preprocesamiento y las técnicas de 
+sensibilidad), su modelo fue entrenado con un conjunto de datos considerablemente mayor
+(118,000 imágenes) y con múltiples evaluaciones por clínicos expertos. El modelo
+propuesto logra resultados comparables con un conjunto de datos más limitado (35,121
+imágenes), lo cual sugiere que la estrategia de preprocesamiento y las técnicas de
 regularización implementadas compensan parcialmente las limitaciones en volumen de datos.
+
+La comparación se amplió además con trabajos más recientes (2024-2025) que abordan la
+misma tarea de clasificación binaria con arquitecturas y datasets comparables,
+con el fin de contrastar el modelo propuesto frente al estado actual de la técnica y no
+solo frente a trabajos ya consolidados en la literatura. Saproo et al. (2024)
+\myfootcite{saproo2024binary} reportan una
+sensibilidad de 0.97 combinando EyePACS, IDRiD y APTOS-2019 mediante transfer learning con
+ResNet101, un resultado muy cercano al del modelo propuesto pero apoyado en una
+combinación de tres fuentes de datos en lugar de una sola. Yang et al. (2024)
+\myfootcite{yang2024vmlri}, con una
+arquitectura basada en Vision Transformer y autoencoders enmascarados evaluada sobre
+cuatro datasets (APTOS, EyePACS, Messidor-2 y OIA-DDR), obtienen una sensibilidad de 0.966,
+prácticamente equivalente a la alcanzada en este trabajo, lo que sugiere que arquitecturas
+mucho más complejas y costosas computacionalmente no necesariamente superan a un modelo
+ligero como MobileNetV2 en esta tarea. Por su parte, Akhtar et al. (2025)
+\myfootcite{akhtar2025rsgnet} reportan una
+sensibilidad de 1.00 con su arquitectura RSG-Net, aunque evaluada únicamente sobre
+Messidor-1 (1,200 imágenes), un conjunto considerablemente menor y de una sola procedencia
+institucional, lo que limita la comparabilidad directa de esta cifra con resultados
+obtenidos sobre conjuntos más grandes y heterogéneos como el usado en este trabajo. En
+conjunto, estos antecedentes recientes confirman que el desempeño del modelo propuesto se
+mantiene competitivo frente al estado actual de la técnica, y no únicamente frente a
+trabajos publicados antes de 2023.
 \section{CLASIFICACIÓN MULTICLASE}
 
 Tras determinar la configuración óptima para la clasificación binaria de retinopatía
