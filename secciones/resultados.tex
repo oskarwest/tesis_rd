@@ -618,237 +618,66 @@ que el canal azul, aunque más ruidoso, puede revelar cambios sutiles en las cap
 superficiales de la retina. Para evaluar sistemáticamente
 esta hipótesis, se entrenaron las cuatro arquitecturas seleccionadas (MobileNetV2, ResNet50V2, InceptionV3 y VGG19)
 utilizando cuatro configuraciones de entrada: la imagen RGB completa y cada canal de color por separado (rojo, verde y azul).
-Esta estrategia permite identificar qué información cromática resulta más discriminativa para la detección de retinopatía 
-diabética en sus diferentes niveles de severidad. Los resultados se presentan en dos grupos de tablas. 
-Primero, las matrices de confusión que permiten visualizar el patrón de clasificación de cada modelo, identificando tanto 
+Esta estrategia permite identificar qué información cromática resulta más discriminativa para la detección de retinopatía
+diabética en sus diferentes niveles de severidad. Los resultados se presentan en dos partes.
+Primero, las matrices de confusión que permiten visualizar el patrón de clasificación de cada modelo, identificando tanto
 los aciertos en la diagonal principal como las confusiones más frecuentes entre clases adyacentes.
 Posteriormente, las tablas de métricas agregadas que sintetizan el rendimiento global mediante sensibilidad, especificidad,
 precisión y F1-score, facilitando la comparación directa entre arquitecturas y canales de color.
-La Tabla~\ref{tab:confusion-multiclase-rgb} presenta las matrices de confusión de las
+La Figura~\ref{fig:confusion-multiclase-rgb} presenta las matrices de confusión de las
 cuatro arquitecturas utilizando la imagen RGB completa, donde el lector puede observar la
 concentración de aciertos en la diagonal principal y su dispersión hacia las clases
 adyacentes.
 
-\begin{table}[H]
+\begin{figure}[H]
 	\centering
-	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle \textbf{RGB}}
-	\label{tab:confusion-multiclase-rgb}
-	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
-		\toprule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{941} & 52 & 39 & 9 & 9 \\
-		Leve & 576 & \textbf{362} & 40 & 54 & 18 \\
-		Moderada& 479 & 119 & \textbf{124} & 126 & 52 \\
-		Severa& 104 & 66 & 67 & \textbf{379} & 133\\
-		PDR & 24 & 28 & 42 & 173 & \textbf{483} \\
-		\midrule
-		\multicolumn{6}{c}{(a) MobileNetV2} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{803} & 131 & 74 & 28 & 14 \\
-		Leve & 386 & \textbf{466} & 51 & 132 & 15 \\
-		Moderada& 361 & 165 & \textbf{136} & 180 & 58 \\
-		Severa& 53 & 107 & 50 & \textbf{428} & 111\\
-		PDR & 18 & 25 & 33 & 196 & \textbf{478} \\
-		\midrule
-		\multicolumn{6}{c}{(b) ResNet50V2} \\ 
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{696} & 207 & 92 & 26 & 29 \\
-		Leve & 577 & \textbf{260} & 139 & 38 & 36 \\
-		Moderada& 325 & 202 & \textbf{174} & 91 & 108 \\
-		Severa& 87 & 110 & 132 & \textbf{150} & 270\\
-		PDR & 13 & 42 & 68 & 102 & \textbf{525} \\
-		\midrule
-		\multicolumn{6}{c}{(c) InceptionV3} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{651} & 359 & 1 & 1 & 38 \\
-		Leve & 274 & \textbf{625} & 0 & 1 & 150 \\
-		Moderada& 271 & 454 & \textbf{10} & 1 & 164 \\
-		Severa& 94 & 401 & 0 & \textbf{3} & 251\\
-		PDR & 24 & 207 & 3 & 0 & \textbf{516} \\
-		\midrule
-		\multicolumn{6}{c}{(d) VGG19} \\
-	\end{tabularx}
+	\label{fig:confusion-multiclase-rgb}
+	\includegraphics[width=\textwidth]{imágenes/resultados/confusion_multiclase_rgb.png}
 	\caption*{\textit{Fuente: Elaboración propia}}
-\end{table}
+\end{figure}
 
-La Tabla~\ref{tab:confusion-multiclase-verde} repite este ejercicio utilizando
+La Figura~\ref{fig:confusion-multiclase-verde} repite este ejercicio utilizando
 únicamente el canal verde como entrada; el lector puede comparar directamente esta
-matriz contra la de la Tabla~\ref{tab:confusion-multiclase-rgb} para observar el efecto
+matriz contra la de la Figura~\ref{fig:confusion-multiclase-rgb} para observar el efecto
 del canal sobre la distribución de aciertos y errores de cada arquitectura.
 
-\begin{table}[H]
+\begin{figure}[H]
 	\centering
-	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{VERDE}}
-	\label{tab:confusion-multiclase-verde}
-	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
-		\toprule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{872} & 49 & 121 & 5 & 3 \\
-		Leve & 471 & \textbf{387} & 131 & 49 & 12 \\
-		Moderada& 366 & 109 & \textbf{275} & 109 & 41 \\
-		Severa& 44 & 61 & 121 & \textbf{425} & 98\\
-		PDR & 5 & 22 & 81 & 138 & \textbf{504} \\
-		\midrule
-		\multicolumn{6}{c}{(a) MobileNetV2} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{901} & 19 & 121 & 6 & 3 \\
-		Leve & 437 & \textbf{365} & 178 & 63 & 7 \\
-		Moderada& 370 & 101 & \textbf{286} & 114 & 29 \\
-		Severa& 49 & 47 & 132 & \textbf{462} & 59\\
-		PDR & 7 & 21 & 75 & 186 & \textbf{461} \\
-		\midrule
-		\multicolumn{6}{c}{(b) ResNet50V2} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{724} & 234 & 87 & 3 & 2 \\
-		Leve & 422 & \textbf{441} & 130 & 45 & 12 \\
-		Moderada& 292 & 257 & \textbf{213} & 110 & 28 \\
-		Severa& 58 & 94 & 129 & \textbf{393} & 75\\
-		PDR & 4 & 29 & 106 & 239 & \textbf{372} \\
-		\midrule
-		\multicolumn{6}{c}{(c) InceptionV3} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{927} & 85 & 17 & 3 & 18 \\
-		Leve & 504 & \textbf{380} & 36 & 49 & 81 \\
-		Moderada& 543 & 185 & \textbf{41} & 31 & 100 \\
-		Severa& 205 & 269 & 30 & \textbf{66} & 179\\
-		PDR & 108 & 103 & 38 & 42 & \textbf{459} \\
-		\midrule
-		\multicolumn{6}{c}{(d) VGG19} \\
-		\bottomrule
-	\end{tabularx}
+	\label{fig:confusion-multiclase-verde}
+	\includegraphics[width=\textwidth]{imágenes/resultados/confusion_multiclase_verde.png}
 	\caption*{\textit{Fuente: Elaboración propia}}
-\end{table}
+\end{figure}
 
-La Tabla~\ref{tab:confusion-multiclase-azul} presenta el mismo ejercicio para el canal
+La Figura~\ref{fig:confusion-multiclase-azul} presenta el mismo ejercicio para el canal
 azul, uno de los dos canales individuales (junto con el rojo) que obtuvo un desempeño
 agregado considerablemente inferior al del canal verde (Sección~
 \ref{subsec:analisis-canales}).
 
-\begin{table}[H]
+\begin{figure}[H]
 	\centering
-	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{AZUL}}
-	\label{tab:confusion-multiclase-azul}
-	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
-		\toprule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{854} & 50 & 97 & 26 & 23 \\
-		Leve & 475 & \textbf{349} & 93 & 89 & 44 \\
-		Moderada& 436 & 127 & \textbf{128} & 117 & 92 \\
-		Severa& 105 & 108 & 62 & \textbf{284} & 190\\
-		PDR & 35 & 39 & 36 & 125 & \textbf{515} \\
-		\midrule
-		\multicolumn{6}{c}{(a) MobileNetV2} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{686} & 261 & 70 & 15 & 18 \\
-		Leve & 272 & \textbf{598} & 85 & 58 & 37 \\
-		Moderada& 310 & 275 & \textbf{146} & 87 & 82 \\
-		Severa& 60 & 172 & 103 & \textbf{247} & 167\\
-		PDR & 10 & 64 & 79 & 111 & \textbf{486} \\
-		\midrule
-		\multicolumn{6}{c}{(b) ResNet50V2} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{542} & 310 & 161 & 5 & 32 \\
-		Leve & 336 & \textbf{462} & 165 & 29 & 58 \\
-		Moderada& 247 & 222 & \textbf{267} & 29 & 135 \\
-		Severa& 91 & 124 & 196 & \textbf{38} & 300\\
-		PDR & 18 & 46 & 118 & 43 & \textbf{525} \\
-		\midrule
-		\multicolumn{6}{c}{(c) InceptionV3} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{874} & 113 & 0 & 0 & 63 \\
-		Leve & 576 & \textbf{288} & 0 & 0 & 186 \\
-		Moderada& 539 & 192 & \textbf{0} & 0 & 169 \\
-		Severa& 377 & 206 & 0 & \textbf{0} & 166\\
-		PDR & 265 & 219 & 0 & 0 & \textbf{266} \\
-		\midrule
-		\multicolumn{6}{c}{(d) VGG19} \\
-		\bottomrule
-	\end{tabularx}
+	\label{fig:confusion-multiclase-azul}
+	\includegraphics[width=\textwidth]{imágenes/resultados/confusion_multiclase_azul.png}
 	\caption*{\textit{Fuente: Elaboración propia}}
-\end{table}
+\end{figure}
 
-Finalmente, la Tabla~\ref{tab:confusion-multiclase-rojo} presenta las matrices de
+Finalmente, la Figura~\ref{fig:confusion-multiclase-rojo} presenta las matrices de
 confusión para el canal rojo, con el cual se completa la comparación de las cuatro
 configuraciones de entrada evaluadas.
 
-\begin{table}[H]
+\begin{figure}[H]
 	\centering
-	\renewcommand{\arraystretch}{0.8}
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{ROJO}}
-	\label{tab:confusion-multiclase-rojo}
-	\begin{tabularx}{\textwidth}{l Y Y Y Y r}
-		\toprule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{839} & 160 & 35 & 5 & 11 \\
-		Leve & 439 & \textbf{529} & 24 & 29 & 29 \\
-		Moderada& 439 & 238 & \textbf{64} & 67 & 92 \\
-		Severa& 102 & 189 & 41 & \textbf{225} & 192\\
-		PDR & 25 & 60 & 48 & 72 & \textbf{545} \\
-		\midrule
-		\multicolumn{6}{c}{(a) MobileNetV2} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{705} & 287 & 29 & 8 & 21 \\
-		Leve & 321 & \textbf{594} & 22 & 78 & 35 \\
-		Moderada& 348 & 280 & \textbf{82} & 92 & 98 \\
-		Severa& 82 & 193 & 43 & \textbf{193} & 238\\
-		PDR & 25 & 70 & 23 & 75 & \textbf{557} \\
-		\midrule
-		\multicolumn{6}{c}{(b) ResNet50V2} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{669} & 246 & 78 & 33 & 24 \\
-		Leve & 492 & \textbf{326} & 80 & 117 & 35 \\
-		Moderada& 302 & 261 & \textbf{83} & 133 & 121 \\
-		Severa& 82 & 151 & 75 & \textbf{188} & 253\\
-		PDR & 14 & 44 & 32 & 123 & \textbf{537} \\
-		\midrule
-		\multicolumn{6}{c}{(c) InceptionV3} \\
-		\midrule
-		& Normal & Leve & Moderada & Severa & PDR \\
-		\midrule
-		Normal & \textbf{785} & 212 & 0 & 0 & 53 \\
-		Leve & 526 & \textbf{296} & 0 & 0 & 228 \\
-		Moderada& 424 & 256 & \textbf{0} & 0 & 220 \\
-		Severa& 196 & 204 & 0 & \textbf{0} & 349\\
-		PDR & 64 & 130 & 0 & 0 & \textbf{556} \\
-		\midrule
-		\multicolumn{6}{c}{(d) VGG19} \\
-		\bottomrule
-	\end{tabularx}
+	\label{fig:confusion-multiclase-rojo}
+	\includegraphics[width=\textwidth]{imágenes/resultados/confusion_multiclase_rojo.png}
 	\caption*{\textit{Fuente: Elaboración propia}}
-\end{table}
+\end{figure}
 
 Para sintetizar estas 16 matrices de confusión en cifras comparables, la
 Tabla~\ref{tab:metricas-multiclase-canales} agrega sensibilidad, especificidad,
@@ -914,7 +743,7 @@ caso menos favorable (MobileNetV2 frente a RGB) el canal verde aporta una mejora
 +8.0\%, mientras que en el caso más favorable (VGG19 frente al canal azul) la mejora
 relativa alcanza +54.5\%, aunque este último valor debe interpretarse con cautela porque
 la configuración VGG19-azul corresponde a un modelo colapsado que nunca predice las clases
-Moderada ni Severa (Tabla~\ref{tab:confusion-multiclase-azul}, subtabla d). En términos de
+Moderada ni Severa (Figura~\ref{fig:confusion-multiclase-azul}, panel d). En términos de
 sensibilidad el patrón se repite: el canal verde promedia 0.52 frente a 0.46 de RGB
 (+14.2\%), 0.43 de rojo (+22.9\%) y 0.41 de azul (+26.7\%).
 
@@ -947,8 +776,8 @@ conteo de hemorragias intrarretinianas, anomalías microvasculares intrarretinia
 y arrosariamiento venoso, lesiones que, de acuerdo con el principio de absorción
 diferencial de la hemoglobina citado anteriormente \myfootcite{pao2020bichannel}, son
 precisamente las que el canal verde realza. Calculando la sensibilidad por clase a partir
-de las matrices de confusión ya presentadas (Tablas~\ref{tab:confusion-multiclase-rgb} a
-\ref{tab:confusion-multiclase-rojo}), se observa que para la clase Severa el canal verde
+de las matrices de confusión ya presentadas (Figuras~\ref{fig:confusion-multiclase-rgb} a
+\ref{fig:confusion-multiclase-rojo}), se observa que para la clase Severa el canal verde
 eleva la sensibilidad de MobileNetV2 de 0.51 (RGB) a 0.57, frente a apenas 0.30 con el
 canal rojo (+90\% relativo) y 0.38 con el canal azul (+50\% relativo); en ResNet50V2 el
 efecto es aún más marcado, con una sensibilidad de 0.62 para el canal verde frente a 0.57
