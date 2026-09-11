@@ -164,7 +164,7 @@ recolección y etiquetado entre los datasets externos utilizados para la validac
 factor que se retoma en la discusión de la capacidad de generalización del modelo
 (Capítulo~\ref{chap:discusion}).
 
-\subsection{División de datos para entrenamiento y validación}
+\subsection{División de datos para entrenamiento y validación} \label{subsec:division-datos}
 
 El dataset de Kaggle se dividió en tres subconjuntos siguiendo una estrategia de
 partición estratificada. Esta elección responde directamente al marcado desbalance de
@@ -187,9 +187,24 @@ optimización de hiperparámetros y detección de sobreajuste durante el entrena
 evaluación final del modelo antes de validación externa.
 \end{itemize}
 
-Esta división se implementó utilizando la función \texttt{train\_test\_split} de 
-scikit-learn con el parámetro \texttt{stratify} para asegurar que la distribución de 
+Esta división se implementó utilizando la función \texttt{train\_test\_split} de
+scikit-learn con el parámetro \texttt{stratify} para asegurar que la distribución de
 clases se mantuviera consistente en todos los subconjuntos.
+
+Es importante precisar el orden en que se ejecutan la partición y el balanceo de clases
+(Sección~\ref{subsec:balanceo-clases}), ya que invertirlo puede introducir fuga de
+datos (\textit{data leakage}): si el balanceo se aplicara antes de dividir el conjunto
+—por ejemplo, duplicando imágenes de las clases minoritarias mediante sobremuestreo—,
+copias de una misma imagen podrían terminar repartidas entre entrenamiento, validación y
+prueba, de modo que el modelo sería evaluado, al menos parcialmente, con imágenes que ya
+observó durante el entrenamiento. Para evitar este riesgo, la partición
+estratificada descrita en esta sección se realiza siempre \textbf{primero}, sobre las
+imágenes originales sin duplicar; el balanceo de clases (submuestreo o sobremuestreo,
+según el escenario) se aplica \textbf{después}, y únicamente sobre el conjunto de
+entrenamiento resultante. Los conjuntos de validación y prueba conservan la distribución
+de clases real del dataset, sin balancear, de manera que las métricas reportadas
+reflejan el desempeño del modelo sobre datos no vistos durante el entrenamiento y con una
+proporción de clases representativa del problema original.
 
 \section{PREPROCESAMIENTO DE LAS IMÁGENES} \label{sec:preprocesamiento}
 
@@ -253,12 +268,16 @@ potencialmente perjudiciales, se realizó primero una limpieza manual, con lo qu
 obtuvo una base más depurada que facilitó el posterior balanceo entre las cinco 
 categorías.
 
-En el clasificador binario, en cambio, el enfoque consistió en agrupar todas las 
-categorías con retinopatía en una sola clase (RD) frente a las imágenes sin enfermedad 
-(No RD). Tras esta unificación, la clase No RD seguía siendo claramente mayoritaria, por 
-lo que se aplicó un submuestreo aleatorio hasta lograr una proporción cercana al 50:50 
-entre ambas clases. Esta estrategia garantizó un entrenamiento más equilibrado y redujo 
-el riesgo de sesgo hacia la clase mayoritaria.
+En el clasificador binario, en cambio, el enfoque consistió en agrupar todas las
+categorías con retinopatía en una sola clase (RD) frente a las imágenes sin enfermedad
+(No RD). Sobre el conjunto de entrenamiento resultante de la partición
+(Sección~\ref{subsec:division-datos}) se aplicó sobremuestreo aleatorio
+(\texttt{RandomOverSampler} de la librería \texttt{imbalanced-learn}), que duplica
+imágenes de la clase minoritaria hasta lograr una proporción cercana al 50:50 entre
+ambas clases; los conjuntos de validación y prueba no se balancean y conservan la
+proporción real de clases. Aplicar el sobremuestreo después de la partición, y
+solo sobre el conjunto de entrenamiento, evita que copias duplicadas de una misma imagen
+terminen repartidas entre entrenamiento y evaluación.
 
 \subsection{Aumento de datos} \label{subsec:aumento-datos}
 
