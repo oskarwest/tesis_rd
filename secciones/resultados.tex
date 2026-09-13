@@ -531,6 +531,66 @@ configuraciones de entrada evaluadas.
 	\caption*{\textit{Fuente: Elaboración propia}}
 \end{figure}
 
+Más allá de comparar los aciertos en la diagonal principal, las matrices de confusión
+permiten caracterizar la naturaleza de los errores cometidos por cada modelo,
+distinguiendo entre confusiones clínicamente esperables —entre categorías de severidad
+adyacentes, cuyo límite diagnóstico es ambiguo incluso para observadores humanos— y
+errores clínicamente graves, en los que el modelo asigna una categoría alejada varios
+niveles de la gravedad real. Codificando las cinco clases de forma ordinal (Normal=0,
+Leve=1, Moderada=2, Severa=3, PDR=4) y sumando los errores de las cuatro arquitecturas
+para cada canal, la Tabla~\ref{tab:tipos-error-confusion} resume esta distinción.
+
+\begin{table}[H]
+	\centering
+	\caption{Distribución de errores de clasificación multiclase según distancia de
+	severidad, agregada en las cuatro arquitecturas}
+	\label{tab:tipos-error-confusion}
+	\begin{tabularx}{\textwidth}{l Y Y Y Y}
+		\toprule
+		Configuración & Adyacentes & No adyacentes & Referible$\rightarrow$No referible & Severa/PDR$\rightarrow$Normal/Leve \\
+		\midrule
+		RGB   & 57.4\% & 42.6\% & 38.6\% & 14.3\% \\
+		Verde & 56.8\% & 43.2\% & 37.0\% & 12.5\% \\
+		Azul  & 50.3\% & 49.7\% & 41.1\% & 18.6\% \\
+		Rojo  & 54.7\% & 45.3\% & 40.9\% & 16.0\% \\
+		\bottomrule
+	\end{tabularx}
+	
+	\caption*{\textit{Fuente: Elaboración propia. Porcentajes calculados sobre el total de
+	errores (celdas fuera de la diagonal) sumando las matrices de confusión de las cuatro
+	arquitecturas}}
+\end{table}
+
+En las cuatro configuraciones evaluadas, entre el 50\% y el 57\% de los errores
+corresponden a confusiones entre clases adyacentes (por ejemplo, Normal-Leve o
+Moderada-Severa), un patrón esperable dado el carácter progresivo y continuo de la
+retinopatía diabética, en el cual los casos en el límite entre dos etapas consecutivas son
+inherentemente más difíciles de separar. El resto de los errores (43\%-50\%) implica saltos
+de dos o más niveles de severidad. Dentro de este grupo, el subconjunto clínicamente más
+relevante es aquel en el que un caso de RD referible (Moderada, Severa o PDR) se clasifica
+como no referible (Normal o Leve), pues equivale a omitir un caso que requeriría derivación
+a oftalmología: este tipo de error representa entre el 37\% (canal verde) y el 41\% (canal
+azul) del total de errores, es decir, aproximadamente 4 de cada 10 errores del modelo.
+
+Un subconjunto aún más crítico dentro de esta categoría es aquel en el que casos Severos o
+de PDR —las etapas con mayor riesgo de pérdida visual— se clasifican directamente como
+Normal o Leve. Este tipo de error representa el 12.5\% de los errores totales con el canal
+verde, frente a 14.3\% con RGB, 16.0\% con el canal rojo y 18.6\% con el canal azul, lo cual
+es consistente con la mayor sensibilidad del canal verde para la clase Severa cuantificada
+más adelante en esta misma sección. En el extremo opuesto, las falsas alarmas
+(casos Normales clasificados como Severa o PDR) son poco frecuentes en las cuatro
+configuraciones (entre 0.5\% y 1.7\% de los errores), lo cual indica que el sesgo de los
+errores del modelo tiende hacia la subestimación de la severidad más que hacia la
+sobreestimación.
+
+Cabe destacar que gran parte de la proporción de errores no adyacentes se explica por el
+comportamiento de VGG19: como se observó en las matrices de confusión (Tabla~
+\ref{tab:confusion-multiclase-azul}, subtabla d, y Tabla~\ref{tab:confusion-multiclase-rojo},
+subtabla d), esta arquitectura colapsa hacia las clases Normal, Leve y PDR con los canales
+rojo y azul, sin predecir nunca Moderada ni Severa, lo que concentra artificialmente sus
+errores en saltos de severidad amplios y no necesariamente refleja un patrón generalizable
+a las demás arquitecturas.
+
 Para sintetizar estas 16 matrices de confusión en cifras comparables, la
 Tabla~\ref{tab:metricas-multiclase-canales} agrega sensibilidad, especificidad,
 precisión y F1-score de cada arquitectura para las cuatro configuraciones de entrada; en
