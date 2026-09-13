@@ -6,7 +6,7 @@ alternativa viable para la detección automatizada de retinopatía diabética en
 del fondo de ojo. A continuación se interpretan los hallazgos más relevantes,
 contrastándolos con el marco teórico y con investigaciones previas en el área.
 
-\section{Desempeño del clasificador binario y comparación con la literatura}
+\section{DESEMPEÑO DEL CLASIFICADOR BINARIO Y COMPARACIÓN CON LA LITERATURA}
 
 El modelo MobileNetV2 con filtrado y umbral óptimo alcanzó una sensibilidad de 96.5\% y
 un F1-score de 0.96 en el conjunto de prueba interno, métricas que lo posicionan
@@ -50,7 +50,7 @@ lo reportado por Kandel y Castelli, quienes identificaron que arquitecturas más
 tienden a generalizar mejor en dominios médicos con datos limitados
 \myfootcite{kandel2020transfer}.
 
-\section{Impacto del preprocesamiento en el rendimiento del modelo}
+\section{IMPACTO DEL PREPROCESAMIENTO EN EL RENDIMIENTO DEL MODELO}
 
 La implementación del algoritmo de filtrado, que incluyó normalización del color mediante
 sustracción del promedio local con filtro gaussiano y recorte del fondo oscuro de la
@@ -70,7 +70,7 @@ adquisición varían considerablemente; el recorte del fondo oscuro, por su part
 regiones no informativas que podrían introducir ruido en el proceso de extracción de
 características.
 
-\section{Validación externa y capacidad de generalización}
+\section{VALIDACIÓN EXTERNA Y CAPACIDAD DE GENERALIZACIÓN}
 
 La evaluación del modelo en conjuntos de datos externos (FOSCAL, IDRiD y MESSIDOR-2)
 mostró un desempeño variable según el conjunto, con una disminución en las métricas
@@ -102,7 +102,7 @@ entrenamiento tienden a sobreestimar el desempeño esperable en un despliegue re
 conclusión más definitiva requeriría aislar el efecto de cada fuente de variación entre
 datasets \myfootcite{hashmi2026crossdomain}.
 
-\section{Análisis del clasificador multiclase y el efecto del canal de color}
+\section{ANÁLISIS DEL CLASIFICADOR MULTICLASE Y EL EFECTO DEL CANAL DE COLOR}
 
 Los experimentos de clasificación multiclase revelaron hallazgos relevantes respecto al
 procesamiento del color en imágenes de fondo de ojo. El canal verde demostró
@@ -159,7 +159,7 @@ los errores en clases difíciles, aumento de datos específico para clases inter
 mecanismos de atención que enfoquen el análisis en regiones anatómicas específicas donde
 las lesiones discriminantes tienden a manifestarse.
 
-\section{Justificación de las decisiones arquitectónicas}
+\section{JUSTIFICACIÓN DE LAS DECISIONES ARQUITECTÓNICAS}
 
 La configuración del clasificador, que incorpora bloques Multi-Head Attention posteriores
 al extractor de características y capas GaussianNoise entre las capas densas, responde a
@@ -188,7 +188,7 @@ constituyan una distribución de probabilidad válida, facilitando la interpreta
 clínica de las predicciones y la implementación de umbrales de confianza para casos que
 requieran revisión por especialistas.
 
-\section{Análisis de errores e implicaciones clínicas}
+\section{ANÁLISIS DE ERRORES E IMPLICACIONES CLÍNICAS}
 
 El análisis de las matrices de confusión revela patrones de error con implicaciones
 clínicas diferenciadas. En el clasificador binario, la proporción de falsos negativos
@@ -210,7 +210,7 @@ ponderado, que consideran la proximidad entre clases predichas y reales, podría
 proporcionar una evaluación más apropiada del desempeño clínico del modelo que las
 métricas de clasificación exacta utilizadas en este trabajo.
 
-\section{Limitaciones del estudio y consideraciones metodológicas} \label{sec:limitaciones-discusion}
+\section{LIMITACIONES DEL ESTUDIO Y CONSIDERACIONES METODOLÓGICAS} \label{sec:limitaciones-discusion}
 
 Es necesario reconocer varias limitaciones que contextualizan los resultados obtenidos.
 El desbalance de clases presente en el conjunto de datos de Kaggle, donde la clase 0 (sin
@@ -241,7 +241,7 @@ no fueron controladas ni analizadas de forma independiente, por lo que no es pos
 determinar con precisión el peso relativo de cada factor sobre la disminución de
 desempeño observada fuera del dominio de entrenamiento.
 
-\section{Implicaciones para la práctica clínica}
+\section{IMPLICACIONES PARA LA PRÁCTICA CLÍNICA}
 
 Los resultados obtenidos sugieren que el modelo propuesto podría integrarse en programas
 de tamizaje de retinopatía diabética como herramienta de apoyo al diagnóstico,
