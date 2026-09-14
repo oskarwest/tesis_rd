@@ -403,17 +403,8 @@ en arquitecturas diseñadas para dispositivos móviles \myfootcite{dosovitskiy20
 perturbación aditiva. En términos generales, cada valor de la activación de la capa
 recibe ruido gaussiano aleatorio durante la fase de entrenamiento y la capa queda
 inactiva durante la inferencia. Esta acción puede interpretarse como una forma de aumento
-estocástico aplicado a las características internas de la red y como un regularizador que
-evita el sobreajuste al exponer al modelo a versiones ligeramente corruptas de las
-representaciones aprendidas. En redes con backbones preentrenados, las capas añadidas
-para clasificación suelen contener muchos parámetros nuevos y son especialmente propensas
-a sobreajustarse cuando los datos etiquetados disponibles son limitados. Introducir ruido
-gaussiano sobre el mapa de características sirve para forzar a que el clasificador
-aprenda patrones robustos y no dependientes de valores exactos de activación, y para
-simular variabilidad propia de la adquisición de imágenes (ruido del sensor, diferencias
-de iluminación o preprocesado). Estudios empíricos en problemas clínicos y de visión han
-mostrado mejoras en métricas de generalización y AUC cuando se usa inyección de ruido
-\myfootcite{zur2009noise}.
+estocástico aplicado a las características internas de la red; su papel como técnica de
+regularización se describe en la siguiente subsección.
 
 \textbf{Capa completamente conectada:} La capa completamente conectada (FC) está formada
 por pesos, sesgos y neuronas. Actúa como un puente que conecta las neuronas que están
@@ -496,13 +487,18 @@ Este método ha sido probado en distintas investigaciones \myfootcite{brownlee20
 donde se demuestra que el early stopping puede reducir el sobreajuste y mejorar la
 generalización de las redes neuronales profundas.
 
-\textbf{Capas GaussianNoise:} Como se describió en la subsección anterior, la inyección
-de ruido gaussiano sobre las activaciones actúa también como regularizador, al exponer al
-modelo a versiones ligeramente corruptas de las representaciones aprendidas. Esto resulta
-especialmente pertinente en este trabajo porque simula la variabilidad propia de la
-adquisición de imágenes de fondo de ojo en condiciones clínicas reales (ruido del sensor,
-diferencias de iluminación o preprocesado), a la vez que mitiga el sobreajuste de las
-capas de clasificación añadidas sobre los backbones preentrenados \myfootcite{zur2009noise}.
+\textbf{Capas GaussianNoise:} Como se describió en la subsección anterior, estas capas
+inyectan ruido gaussiano sobre las activaciones durante el entrenamiento. Esto actúa como
+regularizador, al exponer al modelo a versiones ligeramente corruptas de las
+representaciones aprendidas y forzar al clasificador a aprender patrones robustos y no
+dependientes de valores exactos de activación. Resulta especialmente pertinente en este
+trabajo por dos razones: las capas de clasificación añadidas sobre los backbones
+preentrenados contienen muchos parámetros nuevos y son propensas a sobreajustarse cuando
+los datos etiquetados disponibles son limitados, y la inyección de ruido simula la
+variabilidad propia de la adquisición de imágenes de fondo de ojo en condiciones clínicas
+reales (ruido del sensor, diferencias de iluminación o preprocesado). Estudios empíricos
+en problemas clínicos y de visión han mostrado mejoras en métricas de generalización y
+AUC cuando se usa inyección de ruido \myfootcite{zur2009noise}.
 
 \textbf{Aumento de datos (Data Augmentation):} Es el proceso de aumentar artificialmente
 el tamaño y la diversidad del conjunto de datos de entrenamiento mediante la aplicación

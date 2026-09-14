@@ -171,9 +171,9 @@ partición estratificada. Esta elección responde directamente al marcado desbal
 clases del conjunto original, descrito en la Sección~\ref{subsec:balanceo-clases}, donde
 la clase 0 (sin RD) representa aproximadamente el 73\% de las imágenes frente a apenas un
 2\% de la clase 4 (RD proliferativa): una partición completamente aleatoria podría, por
-azar, generar subconjuntos con proporciones de clase distintas entre sí —por ejemplo, un
+azar, generar subconjuntos con proporciones de clase distintas entre sí (por ejemplo, un
 conjunto de prueba con una proporción de casos severos notablemente distinta a la del
-conjunto de entrenamiento—, lo que dificultaría comparar las métricas obtenidas entre
+conjunto de entrenamiento), lo que dificultaría comparar las métricas obtenidas entre
 subconjuntos y podría sesgar la evaluación del modelo. La partición estratificada busca
 mantener aproximadamente las mismas proporciones de clase en los tres subconjuntos,
 haciendo la evaluación más comparable y confiable:
@@ -194,7 +194,7 @@ clases se mantuviera consistente en todos los subconjuntos.
 Es importante precisar el orden en que se ejecutan la partición y el balanceo de clases
 (Sección~\ref{subsec:balanceo-clases}), ya que invertirlo puede introducir fuga de
 datos (\textit{data leakage}): si el balanceo se aplicara antes de dividir el conjunto
-—por ejemplo, duplicando imágenes de las clases minoritarias mediante sobremuestreo—,
+(por ejemplo, duplicando imágenes de las clases minoritarias mediante sobremuestreo),
 copias de una misma imagen podrían terminar repartidas entre entrenamiento, validación y
 prueba, de modo que el modelo sería evaluado, al menos parcialmente, con imágenes que ya
 observó durante el entrenamiento. Para evitar este riesgo, la partición
@@ -249,7 +249,7 @@ representa un desafío importante para la construcción de clasificadores. En pa
 en el escenario multiclase, la clase 0 (pacientes sanos) representa aproximadamente el 
 73\% del total de muestras, mientras que la clase 4 (retinopatía diabética 
 proliferativa), la forma más severa de la enfermedad, apenas alcanza el 2\%. Esta 
-relación —muy superior a 4:1 en el caso multiclase— tiende a sesgar el aprendizaje hacia 
+relación, muy superior a 4:1 en el caso multiclase, tiende a sesgar el aprendizaje hacia 
 la clase mayoritaria y reduce la capacidad del modelo para detectar correctamente las 
 clases menos representadas. Este efecto del desbalance en el rendimiento de 
 clasificadores ha sido ampliamente documentado en la literatura sobre aprendizaje con 
@@ -370,7 +370,7 @@ Inicialmente las imágenes se redimensionaron para estandarizar el radio del ár
 interés en 300 o 500 píxeles, según el caso. Este paso no solo normaliza la escala entre 
 muestras, sino que también optimiza el uso de recursos computacionales en etapas 
 posteriores. A continuación se aplicó una normalización del color mediante la sustracción 
-del promedio local de intensidad —calculado con un filtro gaussiano— y su remapeo a un 
+del promedio local de intensidad (calculado con un filtro gaussiano) y su remapeo a un 
 nivel de gris medio (50\%). Esta corrección mitiga las variaciones de brillo y contraste, 
 frecuentes en entornos clínicos reales.
 
@@ -609,8 +609,8 @@ cinco neuronas, una para cada nivel de RD, y función de activación Softmax.
 
 Esta combinación de funciones de activación ha tenido bastante éxito, pues han demostrado 
 un alto rendimiento y eficiencia. En muchos trabajos recopilatorios se puede ver que esta 
-combinación de funciones de activación —ReLU para capas intermedias y Softmax para capa 
-de salida— suele ser la más común y la que mejores resultados arroja 
+combinación de funciones de activación (ReLU para capas intermedias y Softmax para capa 
+de salida) suele ser la más común y la que mejores resultados arroja 
 \myfootcite{nadeem2022deep}. En una investigación de 2020 realizada por Asadi y Jiang 
 \myfootcite{asadi2020approximation}, se demostró que ambas funciones de activación son 
 aproximadores universales, dándole un fundamento teórico más robusto a su uso práctico.
@@ -746,9 +746,9 @@ valor de AUC cercano a 1.0 indica un excelente desempeño discriminatorio.
 
 Aunque todas las métricas anteriores aportan información complementaria, no todas tienen
 la misma relevancia para el problema clínico abordado en este trabajo. Dado que el
-sistema se plantea principalmente como una herramienta de \textbf{tamizaje} —es decir,
+sistema se plantea principalmente como una herramienta de \textbf{tamizaje} (es decir,
 un primer filtro que decide qué pacientes requieren remisión a evaluación oftalmológica
-especializada—, la \textbf{sensibilidad se considera la métrica prioritaria}. Un falso
+especializada), la \textbf{sensibilidad se considera la métrica prioritaria}. Un falso
 negativo en este contexto implica que un paciente con retinopatía diabética no sea
 remitido para evaluación especializada, retrasando un diagnóstico y tratamiento
 oportunos; en cambio, un falso positivo implica, en el peor de los casos, una remisión

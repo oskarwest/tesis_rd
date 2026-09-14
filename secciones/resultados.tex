@@ -253,8 +253,8 @@ binaria utilizando el umbral fijo (0.5) y el umbral óptimo calculado}
 
 \subsection{Análisis estadístico mediante bootstrap}
 
-Es importante precisar que todos los resultados reportados en este capítulo —incluyendo
-los de la Tabla~\ref{tab:comparacion_redes} y las secciones posteriores— corresponden a
+Es importante precisar que todos los resultados reportados en este capítulo (incluyendo
+los de la Tabla~\ref{tab:comparacion_redes} y las secciones posteriores) corresponden a
 un único entrenamiento sobre una única partición de los datos (con semilla aleatoria
 fija), y no al promedio de varias ejecuciones ni a un esquema de validación cruzada
 ($k$-fold). Esta decisión responde a las restricciones computacionales del proyecto,
@@ -318,8 +318,8 @@ discriminatoria del modelo.
 
 Para evaluar la generalización del modelo, el mejor modelo obtenido (MobileNetV2 con
 filtrado y umbral óptimo), entrenado exclusivamente con el conjunto de Kaggle, fue
-evaluado directamente sobre tres conjuntos de datos externos independientes —FOSCAL,
-IDRiD y MESSIDOR-2—, sin reentrenamiento ni ajuste de pesos con estos conjuntos
+evaluado directamente sobre tres conjuntos de datos externos independientes (FOSCAL,
+IDRiD y MESSIDOR-2), sin reentrenamiento ni ajuste de pesos con estos conjuntos
 externos. El procedimiento consistió en: aplicar a las imágenes de cada conjunto externo
 el mismo preprocesamiento de filtrado y realce utilizado durante el entrenamiento
 (Sección~\ref{subsec:filtrado-realce}); generar las predicciones del modelo mediante
@@ -543,8 +543,8 @@ configuraciones de entrada evaluadas.
 
 Más allá de comparar los aciertos en la diagonal principal, las matrices de confusión
 permiten caracterizar la naturaleza de los errores cometidos por cada modelo,
-distinguiendo entre confusiones clínicamente esperables —entre categorías de severidad
-adyacentes, cuyo límite diagnóstico es ambiguo incluso para observadores humanos— y
+distinguiendo entre confusiones clínicamente esperables (entre categorías de severidad
+adyacentes, cuyo límite diagnóstico es ambiguo incluso para observadores humanos) y
 errores clínicamente graves, en los que el modelo asigna una categoría alejada varios
 niveles de la gravedad real. Codificando las cinco clases de forma ordinal (Normal=0,
 Leve=1, Moderada=2, Severa=3, RDP=4) y sumando los errores de las cuatro arquitecturas
@@ -583,7 +583,7 @@ a oftalmología: este tipo de error representa entre el 37\% (canal verde) y el 
 azul) del total de errores, es decir, aproximadamente 4 de cada 10 errores del modelo.
 
 Un subconjunto aún más crítico dentro de esta categoría es aquel en el que casos Severos o
-de RDP —las etapas con mayor riesgo de pérdida visual— se clasifican directamente como
+de RDP (las etapas con mayor riesgo de pérdida visual) se clasifican directamente como
 Normal o Leve. Este tipo de error representa el 12.5\% de los errores totales con el canal
 verde, frente a 14.3\% con RGB, 16.0\% con el canal rojo y 18.6\% con el canal azul, lo cual
 es consistente con la mayor sensibilidad del canal verde para la clase Severa cuantificada
