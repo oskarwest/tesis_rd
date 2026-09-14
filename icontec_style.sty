@@ -90,6 +90,16 @@
 \renewcommand{\rmdefault}{phv} % Arial
 \renewcommand{\sfdefault}{phv} % Arial
 % ------------------------------------------------------------------------
+% La guía UIS-ICONTEC exige una única fuente (Arial 12) en todo el
+% documento. Por defecto, LaTeX tipografía el modo matemático ($...$) con
+% Computer Modern sin importar \rmdefault/\sfdefault, lo que produce un
+% cambio visible de tipografía en expresiones como $1440 \times 960$ o
+% $3 \times 3$. sansmath hace que el modo matemático use la fuente sans
+% activa (Arial, ya fijada arriba), manteniendo una sola tipografía.
+% ------------------------------------------------------------------------
+\usepackage{sansmath}
+\sansmath
+% ------------------------------------------------------------------------
 % Selección de interlineado
 % ------------------------------------------------------------------------
 \usepackage{setspace}
