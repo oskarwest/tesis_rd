@@ -483,7 +483,7 @@ adyacentes.
 
 \begin{figure}[H]
 	\centering
-	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
+	\caption{Matrices de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle \textbf{RGB}}
 	\label{fig:confusion-multiclase-rgb}
 	\includegraphics[width=\textwidth]{imágenes/resultados/confusion_multiclase_rgb.png}
@@ -491,8 +491,8 @@ adyacentes.
 \end{figure}
 
 La Figura~\ref{fig:confusion-multiclase-verde} repite este ejercicio utilizando
-únicamente el canal verde como entrada; el lector puede comparar directamente esta
-matriz contra la de la Figura~\ref{fig:confusion-multiclase-rgb} para observar el efecto
+únicamente el canal verde como entrada; el lector puede comparar directamente estas
+matrices contra las de la Figura~\ref{fig:confusion-multiclase-rgb} para observar el efecto
 del canal sobre la distribución de aciertos y errores de cada arquitectura.
 
 % TODO (Camilo): se actualizó SOLO la matriz de MobileNetV2 (panel a) en esta figura
@@ -507,7 +507,7 @@ del canal sobre la distribución de aciertos y errores de cada arquitectura.
 % valores.
 \begin{figure}[H]
 	\centering
-	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
+	\caption{Matrices de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{VERDE}}
 	\label{fig:confusion-multiclase-verde}
 	\includegraphics[width=\textwidth]{imágenes/resultados/confusion_multiclase_verde.png}
@@ -521,7 +521,7 @@ agregado considerablemente inferior al del canal verde (Sección~
 
 \begin{figure}[H]
 	\centering
-	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
+	\caption{Matrices de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{AZUL}}
 	\label{fig:confusion-multiclase-azul}
 	\includegraphics[width=\textwidth]{imágenes/resultados/confusion_multiclase_azul.png}
@@ -534,7 +534,7 @@ configuraciones de entrada evaluadas.
 
 \begin{figure}[H]
 	\centering
-	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
+	\caption{Matrices de confusión para la evaluación de cada clasificador multiclase usando el
 	dataset de Kaggle canal \textbf{ROJO}}
 	\label{fig:confusion-multiclase-rojo}
 	\includegraphics[width=\textwidth]{imágenes/resultados/confusion_multiclase_rojo.png}
@@ -547,7 +547,7 @@ distinguiendo entre confusiones clínicamente esperables —entre categorías de
 adyacentes, cuyo límite diagnóstico es ambiguo incluso para observadores humanos— y
 errores clínicamente graves, en los que el modelo asigna una categoría alejada varios
 niveles de la gravedad real. Codificando las cinco clases de forma ordinal (Normal=0,
-Leve=1, Moderada=2, Severa=3, PDR=4) y sumando los errores de las cuatro arquitecturas
+Leve=1, Moderada=2, Severa=3, RDP=4) y sumando los errores de las cuatro arquitecturas
 para cada canal, la Tabla~\ref{tab:tipos-error-confusion} resume esta distinción.
 
 \begin{table}[H]
@@ -557,7 +557,7 @@ para cada canal, la Tabla~\ref{tab:tipos-error-confusion} resume esta distinció
 	\label{tab:tipos-error-confusion}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y}
 		\toprule
-		Configuración & Adyacentes & No adyacentes & Referible $\rightarrow$ No referible & Severa/PDR $\rightarrow$ Normal/Leve \\
+		Configuración & Adyacentes & No adyacentes & Referible $\rightarrow$ No referible & Severa/RDP $\rightarrow$ Normal/Leve \\
 		\midrule
 		RGB   & 57.4\% & 42.6\% & 38.6\% & 14.3\% \\
 		Verde & 56.8\% & 43.2\% & 37.0\% & 12.5\% \\
@@ -577,18 +577,18 @@ Moderada-Severa), un patrón esperable dado el carácter progresivo y continuo d
 retinopatía diabética, en el cual los casos en el límite entre dos etapas consecutivas son
 inherentemente más difíciles de separar. El resto de los errores (43\%-50\%) implica saltos
 de dos o más niveles de severidad. Dentro de este grupo, el subconjunto clínicamente más
-relevante es aquel en el que un caso de RD referible (Moderada, Severa o PDR) se clasifica
+relevante es aquel en el que un caso de RD referible (Moderada, Severa o RDP) se clasifica
 como no referible (Normal o Leve), pues equivale a omitir un caso que requeriría derivación
 a oftalmología: este tipo de error representa entre el 37\% (canal verde) y el 41\% (canal
 azul) del total de errores, es decir, aproximadamente 4 de cada 10 errores del modelo.
 
 Un subconjunto aún más crítico dentro de esta categoría es aquel en el que casos Severos o
-de PDR —las etapas con mayor riesgo de pérdida visual— se clasifican directamente como
+de RDP —las etapas con mayor riesgo de pérdida visual— se clasifican directamente como
 Normal o Leve. Este tipo de error representa el 12.5\% de los errores totales con el canal
 verde, frente a 14.3\% con RGB, 16.0\% con el canal rojo y 18.6\% con el canal azul, lo cual
 es consistente con la mayor sensibilidad del canal verde para la clase Severa cuantificada
 más adelante en esta misma sección. En el extremo opuesto, las falsas alarmas
-(casos Normales clasificados como Severa o PDR) son poco frecuentes en las cuatro
+(casos Normales clasificados como Severa o RDP) son poco frecuentes en las cuatro
 configuraciones (entre 0.5\% y 1.7\% de los errores), lo cual indica que el sesgo de los
 errores del modelo tiende hacia la subestimación de la severidad más que hacia la
 sobreestimación.
@@ -596,7 +596,7 @@ sobreestimación.
 Cabe destacar que gran parte de la proporción de errores no adyacentes se explica por el
 comportamiento de VGG19: como se observó en las matrices de confusión (Figura~
 \ref{fig:confusion-multiclase-azul}, panel d, y Figura~\ref{fig:confusion-multiclase-rojo},
-panel d), esta arquitectura colapsa hacia las clases Normal, Leve y PDR con los canales
+panel d), esta arquitectura colapsa hacia las clases Normal, Leve y RDP con los canales
 rojo y azul, sin predecir nunca Moderada ni Severa, lo que concentra artificialmente sus
 errores en saltos de severidad amplios y no necesariamente refleja un patrón generalizable
 a las demás arquitecturas.
@@ -708,7 +708,7 @@ hipótesis de que la ventaja del canal verde no es un artefacto estadístico, si
 responde a una mejor representación de las lesiones que definen clínicamente la severidad
 de la enfermedad.
 
-Cabe señalar que esta ventaja no se extiende de forma uniforme a la clase PDR (RD4): en
+Cabe señalar que esta ventaja no se extiende de forma uniforme a la clase RDP (RD4): en
 ambas arquitecturas el canal rojo iguala o supera al verde en la sensibilidad de esta
 categoría (0.73 frente a 0.67 en MobileNetV2 y 0.74 frente a 0.61 en ResNet50V2), lo cual
 sugiere

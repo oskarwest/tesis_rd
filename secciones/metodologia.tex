@@ -24,7 +24,7 @@ diabética mediante aprendizaje profundo}
 
 \section{CONJUNTOS DE DATOS} \label{sec:conjuntos-datos}
 
-Una etapa clave en la construcción de una red neuronal convolucional (CNN) es la 
+Una etapa clave en la construcción de una CNN es la 
 recopilación de datos, ya que el rendimiento del modelo depende en gran medida tanto de 
 la calidad como de la diversidad del conjunto utilizado. Para que el entrenamiento sea 
 efectivo, las imágenes deben reflejar con precisión las distintas condiciones del 
@@ -91,7 +91,7 @@ capturadas con cámaras no midriáticas Topcon TRC NW6, NW7 y Nidek AFC-210, con
 un campo de visión de 45°. Las imágenes presentan resoluciones variables, típicamente
 entre $1440 \times 960$ y $2304 \times 1536$ píxeles, y están centradas en la mácula.
 
-Este conjunto cuenta con: etiquetas de gradación de retinopatía diabética (RD) en una 
+Este conjunto cuenta con: etiquetas de gradación de RD en una 
 escala de 0 a 3; etiquetas de edema macular, validadas por especialistas; y metadatos 
 como el diámetro pupilar y la calidad técnica de cada imagen. Gracias a su calidad, 
 volumen y amplia adopción en la comunidad científica, MESSIDOR-2 es ampliamente empleado 
@@ -119,7 +119,7 @@ de clasificación como de segmentación.
 El dataset FOSCAL está compuesto por 1,538 imágenes de fondo de ojo, obtenidas gracias al 
 Centro de Prevención y Consultoría en Glaucoma de Bucaramanga (Fundación Oftalmológica de 
 Santander - FOSCAL). Las imágenes estaban acompañadas de un archivo plano que detalla las 
-anomalías presentes, incluyendo el nivel de retinopatía diabética (RD), lo que permitió 
+anomalías presentes, incluyendo el nivel de RD, lo que permitió 
 organizarlas con sus respectivas etiquetas.
 
 El proceso de etiquetado fue realizado por especialistas médicos mediante una plataforma 
@@ -431,7 +431,7 @@ compatibilidad con aceleradores de hardware, como GPUs y TPUs, permite el entren
 eficiente de modelos a gran escala, reduciendo significativamente el tiempo de cómputo 
 requerido.
 
-\subsection{Entorno de desarrollo integrado (IDE)}
+\subsection{Entorno de desarrollo integrado}
 
 Se evaluaron distintos entornos de desarrollo integrados (IDE), donde cada uno ofrece 
 ventajas y características específicas que pueden influir en la ejecución de los modelos. 
@@ -507,8 +507,8 @@ utilizado durante el entrenamiento, discutido más adelante en este capítulo.
 \section{CONFIGURACIÓN EXPERIMENTAL Y ENTRENAMIENTO} \label{sec:config-experimental}
 
 El proceso de entrenamiento se estructuró en dos fases consecutivas. La primera fase se 
-centró en el desarrollo de un modelo para la detección binaria de retinopatía diabética 
-(RD), discriminando entre casos positivos (presencia de la enfermedad) y negativos 
+centró en el desarrollo de un modelo para la detección binaria de RD,
+discriminando entre casos positivos (presencia de la enfermedad) y negativos 
 (ausencia de la enfermedad). Una vez validado este modelo, se procedió a una segunda fase 
 de adaptación para clasificación multiclase, orientada a la categorización de la RD en 
 los cinco niveles de gravedad definidos por los estándares clínicos (0: sin RD, 1: leve, 
@@ -740,7 +740,7 @@ $2 \cdot \frac{P \cdot S}{P + S}$ \\ \hline
 \caption*{\textit{Fuente: Elaboración propia}}
 \end{table}
 
-Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), que proporciona una
+Adicionalmente, se calculó el AUC-ROC, que proporciona una
 medida robusta del desempeño del clasificador independiente del umbral de decisión. Un
 valor de AUC cercano a 1.0 indica un excelente desempeño discriminatorio.
 
