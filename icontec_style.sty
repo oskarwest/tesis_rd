@@ -268,6 +268,12 @@
 \renewcommand{\cfttabfont}{Tabla }
 \renewcommand{\cftanexofont}{Anexo }
 % ------------------------------------------------------------------------
+% Quita la negrilla que tocloft aplica por defecto a las entradas de
+% capítulo (y su número de página) en la tabla de contenido
+% ------------------------------------------------------------------------
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+% ------------------------------------------------------------------------
 % Ajusta contador para enumeración continua de objetos en el documento
 % ------------------------------------------------------------------------
 \counterwithout{figure}{chapter}
