@@ -495,6 +495,16 @@ La Figura~\ref{fig:confusion-multiclase-verde} repite este ejercicio utilizando
 matriz contra la de la Figura~\ref{fig:confusion-multiclase-rgb} para observar el efecto
 del canal sobre la distribución de aciertos y errores de cada arquitectura.
 
+% TODO (Camilo): se actualizó SOLO la matriz de MobileNetV2 (panel a) en esta figura
+% con los nuevos valores que compartiste (matriz_confusion_organizada_2.xlsx, "Matriz 1").
+% Los siguientes elementos del documento todavía reflejan la matriz ANTERIOR de
+% MobileNetV2-verde y quedan pendientes de recalcular para que sean consistentes con
+% este cambio: la fila "MobileNetV2" del canal Verde en la Tabla de métricas agregadas
+% (sec:metricas-multiclase-canales / tab:metricas-multiclase-canales), la fila
+% "MobileNetV2" de la Tabla 19 (tab:mejora-canal-verde), y las cifras puntuales de
+% sensibilidad de MobileNetV2-verde citadas en la prosa de esta sección y en discusion.tex
+% (p. ej. "de 0.51 (RGB) a 0.57" para la clase Severa). Falta decidir y actualizar esos
+% valores.
 \begin{figure}[H]
 	\centering
 	\caption{Matriz de confusión para la evaluación de cada clasificador multiclase usando el
@@ -547,7 +557,7 @@ para cada canal, la Tabla~\ref{tab:tipos-error-confusion} resume esta distinció
 	\label{tab:tipos-error-confusion}
 	\begin{tabularx}{\textwidth}{l Y Y Y Y}
 		\toprule
-		Configuración & Adyacentes & No adyacentes & Referible$\rightarrow$No referible & Severa/PDR$\rightarrow$Normal/Leve \\
+		Configuración & Adyacentes & No adyacentes & Referible $\rightarrow$ No referible & Severa/PDR $\rightarrow$ Normal/Leve \\
 		\midrule
 		RGB   & 57.4\% & 42.6\% & 38.6\% & 14.3\% \\
 		Verde & 56.8\% & 43.2\% & 37.0\% & 12.5\% \\
