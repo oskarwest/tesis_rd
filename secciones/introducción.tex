@@ -70,3 +70,10 @@ y 4 presentan el marco teórico y los antecedentes; el Capítulo 5 describe la m
 implementada; el Capítulo 6 expone los resultados obtenidos; finalmente, los Capítulos 7,
 8 y 9 presentan la discusión, conclusiones y recomendaciones respectivamente.
 
+% Según el ejemplo de tabla de contenido de la norma ICONTEC (ICONTEC_Plantilla.pdf),
+% el espacio entre la INTRODUCCIÓN y el primer capítulo numerado debe ser sencillo
+% (igual al de una sección dentro de un capítulo), no el espacio doble que se usa
+% entre capítulos numerados consecutivos. Se cancela aquí el salto adicional que
+% tocloft inserta antes de la siguiente entrada de capítulo en la tabla de contenido.
+\addtocontents{toc}{\vspace*{-\cftbeforechapskip}}
+
