@@ -207,11 +207,12 @@ clasificación binaria}
 
 Este procedimiento identificó, para MobileNetV2 (Tabla~\ref{tab:umbral-optimo}), un
 umbral óptimo de 0.4826, que resultó en un F1-score de
-0.9519 con filtrado. El modelo muestra un balance adecuado entre la
-detección de casos positivos y la reducción de falsos positivos, lo que lo hace apropiado 
-para tareas de tamizaje. Con este umbral, por cada 1,000 pacientes examinados se 
-esperarían aproximadamente: 476 verdaderos positivos y 451 verdaderos negativos, 50 
-falsos negativos (casos no detectados de RD) y 24 falsos positivos (pacientes sin RD que 
+0.96 con filtrado (Tabla~\ref{tab:comparacion-umbral}). El modelo muestra un balance
+adecuado entre la detección de casos positivos y la reducción de falsos positivos, lo que
+lo hace apropiado para tareas de tamizaje. Con este umbral, y considerando una
+prevalencia de RD del 50\% en la población examinada, por cada 1,000 pacientes se
+esperarían aproximadamente: 480 verdaderos positivos y 480 verdaderos negativos, 20
+falsos negativos (casos no detectados de RD) y 20 falsos positivos (pacientes sin RD que
 serían derivados innecesariamente).
 
 La optimización del umbral representa una mejora sutil pero relevante en el contexto
@@ -333,12 +334,12 @@ el dataset original de Kaggle.
 
 Esta disminución es consistente con la literatura y se atribuye a diferencias en la
 calidad de las imágenes, protocolos de adquisición y distribución de clases. Según la
-Tabla~\ref{tab:validacion-externa}, MESSIDOR-2 mostró los mejores resultados (F1-score de 0.92), reflejando su
-alta calidad de imágenes y protocolo de adquisición estandarizado. IDRiD presentó 
-métricas intermedias (F1-score de 0.86) debido a su tamaño reducido y mayor 
-heterogeneidad. FOSCAL, como dataset clínico realista proveniente de un centro 
-colombiano, exhibió resultados comparables (F1-score de 0.88) que reflejan condiciones de 
-práctica clínica habitual.
+Tabla~\ref{tab:validacion-externa}, MESSIDOR-2 mostró los mejores resultados (F1-score de 0.91), reflejando su
+alta calidad de imágenes y protocolo de adquisición estandarizado. FOSCAL, como dataset
+clínico realista proveniente de un centro colombiano, exhibió resultados comparables
+(F1-score de 0.89) que reflejan condiciones de práctica clínica habitual. IDRiD presentó
+métricas intermedias (F1-score de 0.85) debido a su tamaño reducido y mayor
+heterogeneidad.
 
 \begin{figure}[H]
 	\centering
@@ -357,11 +358,11 @@ datasets externos}
 \begin{tabularx}{\textwidth}{l Y Y Y Y}
 \toprule
 Dataset & Sensibilidad & Especificidad & Precisión & F1-score \\ \midrule
-FOSCAL & 0.88 & 0.84 & 0.94 & 0.91 \\
-IDRiD & 0.82 & 0.89 & 0.84 & 0.83 \\
-MESSIDOR-2 & 0.92 & 0.89 & 0.92 & 0.92 \\
+FOSCAL & 0.90 & 0.95 & 0.87 & 0.89 \\
+IDRiD & 0.82 & 0.84 & 0.88 & 0.85 \\
+MESSIDOR-2 & 0.92 & 0.92 & 0.89 & 0.91 \\
 \midrule
-\textbf{Promedio} & \textbf{0.87} & \textbf{0.87} & \textbf{0.90} & \textbf{0.89} \\
+\textbf{Promedio} & \textbf{0.88} & \textbf{0.90} & \textbf{0.88} & \textbf{0.88} \\
 \bottomrule
 \end{tabularx}
 \caption*{\textit{Fuente: Elaboración propia}}
@@ -418,9 +419,10 @@ AUC-ROC de 0.98, situándose entre los mejores reportados en la literatura para 
 dataset. Si bien Gulshan et al. reportaron métricas ligeramente superiores (97.5\%
 sensibilidad), su modelo fue entrenado con un conjunto de datos considerablemente mayor
 (118,000 imágenes) y con múltiples evaluaciones por clínicos expertos. El modelo
-propuesto logra resultados comparables con un conjunto de datos más limitado (35,121
-imágenes), lo cual sugiere que la estrategia de preprocesamiento y las técnicas de
-regularización implementadas compensan parcialmente las limitaciones en volumen de datos.
+propuesto logra resultados comparables con un conjunto de datos considerablemente más
+limitado (2,100 imágenes: 1,050 por clase), lo cual sugiere que la estrategia de
+preprocesamiento y las técnicas de regularización implementadas compensan parcialmente
+las limitaciones en volumen de datos.
 
 La comparación se amplió además con trabajos más recientes (2024-2025) que abordan la
 misma tarea de clasificación binaria con arquitecturas y datasets comparables,

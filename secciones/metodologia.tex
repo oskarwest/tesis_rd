@@ -59,7 +59,7 @@ aspectos como la resolución, la iluminación y la orientación.
 Cada registro corresponde a un paciente, identificándose ambos ojos mediante un nombre de 
 archivo que incluye el número de paciente seguido de \enquote{izquierda} o
 \enquote{derecha} (por 
-ejemplo: \texttt{1\_izquierda.jpg}). Cada imagen fue evaluada por un especialista 
+ejemplo: 1\_izquierda.jpg). Cada imagen fue evaluada por un especialista
 clínico, quien asignó un grado de severidad de retinopatía diabética utilizando una
 escala ordinal de 0 a 4: 0, sin retinopatía diabética; 1, leve; 2, moderada; 3, severa;
 y 4, retinopatía diabética proliferativa.
@@ -75,7 +75,7 @@ presencia de muescas laterales en la imagen.
 Es importante señalar que el conjunto contiene ruido, tanto en las imágenes (como 
 artefactos, desenfoque, subexposición o sobreexposición), como en las etiquetas, debido a 
 la subjetividad inherente a la evaluación clínica. Por esta razón, uno de los retos 
-principales de este estudio es desarrollar algoritmos robustos, capaces de enfrentar 
+principales de este estudio es desarrollar algoritmos capaces de enfrentar
 dicha variabilidad y el ruido presente en los datos, asegurando un desempeño confiable en 
 escenarios reales de aplicación.
 
@@ -164,10 +164,22 @@ recolección y etiquetado entre los datasets externos utilizados para la validac
 factor que se retoma en la discusión de la capacidad de generalización del modelo
 (Capítulo~\ref{chap:discusion}).
 
+Cabe precisar que la Tabla~\ref{tab:distribucion_clases} organiza las imágenes según los
+cinco niveles de severidad empleados en la tarea multiclase. Para la clasificación
+binaria, las cuatro categorías con presencia de la enfermedad (Leve, Moderada, Severa y
+Proliferativa) se agrupan en una sola clase RD, frente a la clase No RD; la
+Sección~\ref{subsec:balanceo-clases} detalla cómo se construyó, a partir de esta
+agrupación, el conjunto de entrenamiento del clasificador binario a partir del dataset de
+Kaggle. En los tres conjuntos utilizados para validación externa (MESSIDOR-2, IDRiD y
+FOSCAL), en cambio, la versión binaria se obtuvo directamente a partir de los conteos de
+la Tabla~\ref{tab:distribucion_clases}: se conservó la cantidad de imágenes No RD
+indicada para cada dataset, y se sumaron las demás columnas de severidad para conformar
+la clase RD, sin aplicar submuestreo ni sobremuestreo sobre estos conjuntos.
+
 \subsection{División de datos para entrenamiento y validación} \label{subsec:division-datos}
 
-El dataset de Kaggle se dividió en tres subconjuntos siguiendo una estrategia de
-partición estratificada. Esta elección responde directamente al marcado desbalance de
+Para la clasificación multiclase, el dataset de Kaggle se dividió en tres subconjuntos
+siguiendo una estrategia de partición estratificada. Esta elección responde directamente al marcado desbalance de
 clases del conjunto original, descrito en la Sección~\ref{subsec:balanceo-clases}, donde
 la clase 0 (sin RD) representa aproximadamente el 73\% de las imágenes frente a apenas un
 2\% de la clase 4 (RD proliferativa): una partición completamente aleatoria podría, por
@@ -187,8 +199,8 @@ optimización de hiperparámetros y detección de sobreajuste durante el entrena
 evaluación final del modelo antes de validación externa.
 \end{itemize}
 
-Esta división se implementó utilizando la función \texttt{train\_test\_split} de
-scikit-learn con el parámetro \texttt{stratify} para asegurar que la distribución de
+Esta división se implementó utilizando la función train\_test\_split de
+scikit-learn con el parámetro stratify para asegurar que la distribución de
 clases se mantuviera consistente en todos los subconjuntos.
 
 Es importante precisar el orden en que se ejecutan la partición y el balanceo de clases
@@ -199,12 +211,15 @@ copias de una misma imagen podrían terminar repartidas entre entrenamiento, val
 prueba, de modo que el modelo sería evaluado, al menos parcialmente, con imágenes que ya
 observó durante el entrenamiento. Para evitar este riesgo, la partición
 estratificada descrita en esta sección se realiza siempre \textbf{primero}, sobre las
-imágenes originales sin duplicar; el balanceo de clases (submuestreo o sobremuestreo,
-según el escenario) se aplica \textbf{después}, y únicamente sobre el conjunto de
-entrenamiento resultante. Los conjuntos de validación y prueba conservan la distribución
-de clases real del dataset, sin balancear, de manera que las métricas reportadas
-reflejan el desempeño del modelo sobre datos no vistos durante el entrenamiento y con una
-proporción de clases representativa del problema original.
+imágenes originales sin duplicar; el balanceo de clases mediante submuestreo y aumento de
+datos (Sección~\ref{subsec:balanceo-clases}) se aplica \textbf{después}, y únicamente
+sobre el conjunto de entrenamiento resultante. Los conjuntos de validación y prueba
+conservan la distribución de clases real del dataset, sin balancear, de manera que las
+métricas reportadas reflejan el desempeño del modelo sobre datos no vistos durante el
+entrenamiento y con una proporción de clases representativa del problema original. Esta
+división estratificada corresponde específicamente al escenario multiclase; la
+construcción del conjunto de entrenamiento del clasificador binario, que no parte de esta
+partición, se describe en la Sección~\ref{subsec:balanceo-clases}.
 
 \section{PREPROCESAMIENTO DE LAS IMÁGENES} \label{sec:preprocesamiento}
 
@@ -268,16 +283,17 @@ potencialmente perjudiciales, se realizó primero una limpieza manual, con lo qu
 obtuvo una base más depurada que facilitó el posterior balanceo entre las cinco 
 categorías.
 
-En el clasificador binario, en cambio, el enfoque consistió en agrupar todas las
-categorías con retinopatía en una sola clase (RD) frente a las imágenes sin enfermedad
-(No RD). Sobre el conjunto de entrenamiento resultante de la partición
-(Sección~\ref{subsec:division-datos}) se aplicó sobremuestreo aleatorio
-(\texttt{RandomOverSampler} de la librería \texttt{imbalanced-learn}), que duplica
-imágenes de la clase minoritaria hasta lograr una proporción cercana al 50:50 entre
-ambas clases; los conjuntos de validación y prueba no se balancean y conservan la
-proporción real de clases. Aplicar el sobremuestreo después de la partición, y
-solo sobre el conjunto de entrenamiento, evita que copias duplicadas de una misma imagen
-terminen repartidas entre entrenamiento y evaluación.
+En el clasificador binario, en cambio, no se aplican las técnicas de balanceo descritas
+anteriormente para el escenario multiclase (submuestreo y aumento de datos). El enfoque
+consistió en agrupar primero todas las categorías con retinopatía en una sola clase (RD)
+frente a las imágenes sin enfermedad (No RD), y construir después el conjunto de
+entrenamiento extrayendo aleatoriamente, del dataset de Kaggle, 1,050 imágenes de la
+clase No RD y 1,050 imágenes de la clase RD (estas últimas seleccionadas aleatoriamente
+entre las cuatro categorías de severidad restantes). Esta construcción produce, por
+diseño, una proporción 50:50 entre ambas clases, sin necesidad de aplicar sobremuestreo
+ni submuestreo adicional. La construcción de los conjuntos de validación externa para
+este clasificador, que tampoco se balancean, se describe en la
+Sección~\ref{sec:conjuntos-datos}.
 
 \subsection{Aumento de datos} \label{subsec:aumento-datos}
 
@@ -292,7 +308,7 @@ variabilidad sin modificar la estructura fundamental de la imagen. Estas técnic
 preservan la integridad visual de las retinografías al tiempo que enriquecen la 
 diversidad del conjunto de entrenamiento \myfootcite{shorten2019survey}. Se implementó un 
 conjunto de transformaciones geométricas moderadas utilizando la clase 
-\texttt{ImageDataGenerator} de Keras, que permitió generar nuevas muestras a partir de 
+ImageDataGenerator de Keras, que permitió generar nuevas muestras a partir de 
 imágenes existentes de forma controlada. La Tabla~\ref{tab:data-augmentation} detalla las
 seis transformaciones aplicadas y el rango o parámetro utilizado en cada una.
 
@@ -469,7 +485,7 @@ clasificación multiclase de retinopatía. Además, su ecosistema facilita el de
 clínicas mediante TensorFlow Lite o TF Serving, crucial para una futura implementación en 
 entornos hospitalarios.
 
-La suite TensorFlow Extended incluye módulos para aumento de datos (\texttt{tf.image}) y 
+La suite TensorFlow Extended incluye módulos para aumento de datos (tf.image) y 
 preprocesamiento de imágenes médicas (normalización de histogramas, ajuste de contraste), 
 esenciales para abordar variabilidad en las imágenes de fondo de ojo (iluminación, 
 artefactos). Aunque PyTorch ofrece mayor flexibilidad para investigación experimental, 
@@ -670,7 +686,7 @@ regularización}
 
 En la Figura~\ref{fig:arquitectura-modelo} puede observarse que el flujo de información
 pasa primero por la base CNN preentrenada (congelada) y el bloque de atención, seguido de
-dos capas densas intercaladas con GaussianNoise y regularización (Dropout y L2), hasta
+varias capas densas intercaladas con GaussianNoise y regularización (Dropout y L2), hasta
 llegar a la capa de salida, cuyo número de neuronas y función de activación (Sigmoid o
 Softmax) dependen de si se trata del clasificador binario o multiclase, respectivamente.
 
