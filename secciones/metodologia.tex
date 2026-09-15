@@ -286,12 +286,19 @@ categorías.
 En el clasificador binario, en cambio, no se aplican las técnicas de balanceo descritas
 anteriormente para el escenario multiclase (submuestreo y aumento de datos). El enfoque
 consistió en agrupar primero todas las categorías con retinopatía en una sola clase (RD)
-frente a las imágenes sin enfermedad (No RD), y construir después el conjunto de
-entrenamiento extrayendo aleatoriamente, del dataset de Kaggle, 1,050 imágenes de la
-clase No RD y 1,050 imágenes de la clase RD (estas últimas seleccionadas aleatoriamente
-entre las cuatro categorías de severidad restantes). Esta construcción produce, por
-diseño, una proporción 50:50 entre ambas clases, sin necesidad de aplicar sobremuestreo
-ni submuestreo adicional. La construcción de los conjuntos de validación externa para
+frente a las imágenes sin enfermedad (No RD), y extraer después, aleatoriamente del
+dataset de Kaggle, un total de 1,050 imágenes de la clase No RD y 1,050 imágenes de la
+clase RD (estas últimas seleccionadas aleatoriamente entre las cuatro categorías de
+severidad restantes). Esta construcción produce, por diseño, una proporción 50:50 entre
+ambas clases, sin necesidad de aplicar sobremuestreo ni submuestreo adicional. Este total
+de 2,100 imágenes se dividió mediante partición estratificada en entrenamiento (80\%;
+840 imágenes por clase), validación (10\%; 105 imágenes por clase) y prueba (10\%; 105
+imágenes por clase), siguiendo el mismo principio de partición antes de cualquier
+procesamiento adicional descrito en la Sección~\ref{subsec:division-datos} para el
+escenario multiclase. El conjunto de validación se utilizó para optimizar el umbral de
+decisión (Sección~\ref{subsec:umbral-decision}), y el de prueba, de 105 imágenes por
+clase, es el que se reporta en las matrices de confusión del Capítulo~\ref{chap:resultados}.
+La construcción de los conjuntos de validación externa para
 este clasificador, que tampoco se balancean, se describe en la
 Sección~\ref{sec:conjuntos-datos}.
 

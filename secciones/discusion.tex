@@ -56,7 +56,7 @@ La implementación del algoritmo de filtrado, que incluyó normalización del co
 sustracción del promedio local con filtro gaussiano y recorte del fondo oscuro de la
 imagen, produjo mejoras consistentes en todas las arquitecturas evaluadas. El incremento
 del F1-score de 0.95 a 0.96 en MobileNetV2, aunque aparentemente modesto, se acompañó de
-una reducción de falsos positivos (de 6 a 4 casos) y de falsos negativos (de 5 a 3 casos),
+una reducción de falsos positivos (de 6 a 5 casos) y de falsos negativos (de 5 a 4 casos),
 con implicaciones clínicas relevantes al disminuir tanto las derivaciones innecesarias
 como los casos de RD no detectados en un escenario de tamizaje.
 
@@ -193,7 +193,7 @@ requieran revisión por especialistas.
 El análisis de las matrices de confusión revela patrones de error con implicaciones
 clínicas diferenciadas. En el clasificador binario, la proporción de falsos negativos
 (casos de RD no detectados) se mantuvo baja en las configuraciones con mejor desempeño
-(3 a 5 casos sobre aproximadamente 105 por clase), lo cual es relevante en un contexto de
+(4 a 5 casos sobre aproximadamente 105 por clase), lo cual es relevante en un contexto de
 tamizaje donde la prioridad es maximizar la detección de casos que requieren atención
 especializada. Los falsos positivos, aunque implican derivaciones innecesarias con su
 correspondiente costo para el sistema de salud, no conllevan el riesgo de progresión de
